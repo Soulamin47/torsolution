@@ -9,12 +9,12 @@ export default function Navbar() {
   const { lang, setLang } = useLang();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // lock scroll when menu is open
+  // Lock scroll ONLY when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
@@ -22,17 +22,17 @@ export default function Navbar() {
     };
   }, [open]);
 
-  const Item = ({
-    href,
-    label,
-  }: {
-    href: string;
-    label: string;
-  }) => (
+  const NavLink = ({ href, label }: { href: string; label: string }) => (
+    <a href={href} className="hover:text-white transition">
+      {label}
+    </a>
+  );
+
+  const MobileItem = ({ href, label }: { href: string; label: string }) => (
     <a
       href={href}
       onClick={() => setOpen(false)}
-      className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-gray-200 hover:bg-white/10 transition"
+      className="block w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-gray-200 hover:bg-white/10 transition"
     >
       {label}
     </a>
@@ -42,30 +42,30 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         scrolled || open
-          ? "backdrop-blur-md bg-black/50 border-b border-white/10"
+          ? "backdrop-blur-md bg-black/45 border-b border-white/10"
           : "bg-transparent"
       }`}
     >
       <div className="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
-        {/* Brand */}
-        <div className="text-lg font-semibold tracking-wide">Torsolution</div>
+        {/* Brand LEFT (restored) */}
+        <a href="#" className="flex flex-col leading-tight">
+          <span className="text-lg font-semibold tracking-wide">Torsolution</span>
+          <span className="text-[11px] text-gray-400">
+            Advanced Product Engineering
+          </span>
+        </a>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8 text-sm text-gray-300">
-          <a href="#systems" className="hover:text-white transition">
-            {lang === "en" ? "Systems" : "Systèmes"}
-          </a>
-          <a href="#capabilities" className="hover:text-white transition">
-            {lang === "en" ? "Capabilities" : "Compétences"}
-          </a>
-          <a href="#process" className="hover:text-white transition">
-            {lang === "en" ? "Process" : "Processus"}
-          </a>
-          <a href="#contact" className="hover:text-white transition">
-            {lang === "en" ? "Contact" : "Contact"}
-          </a>
+          <NavLink href="#systems" label={lang === "en" ? "Systems" : "Systèmes"} />
+          <NavLink
+            href="#process"
+            label={lang === "en" ? "Process" : "Processus"}
+          />
+          <NavLink href="#contact" label="Contact" />
 
-          <div className="flex items-center gap-2 text-xs text-gray-400 ml-2">
+          <div className="ml-2 flex items-center gap-2 text-xs text-gray-400">
+            <span className="opacity-40">|</span>
             <button
               onClick={() => setLang("en")}
               className={lang === "en" ? "text-white" : "hover:text-white"}
@@ -82,7 +82,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile right */}
+        {/* Mobile */}
         <div className="md:hidden flex items-center gap-3">
           <div className="flex items-center gap-2 text-xs text-gray-400">
             <button
@@ -103,50 +103,37 @@ export default function Navbar() {
           <button
             onClick={() => setOpen((v) => !v)}
             className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition"
-            aria-label="Open menu"
+            aria-label="Menu"
           >
             {open ? "✕" : "☰"}
           </button>
         </div>
       </div>
 
-      {/* Mobile overlay */}
+      {/* Mobile menu (full screen overlay, clean) */}
       {open && (
-        <div className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm">
-          <div className="mx-auto max-w-6xl px-6 py-6">
+        <div className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm md:hidden">
+          <div className="pt-[72px] px-6">
             <div className="rounded-2xl border border-white/10 bg-black/60 p-4 space-y-3">
-              <Item
+              <MobileItem
                 href="#systems"
                 label={lang === "en" ? "Systems" : "Systèmes"}
               />
-              <Item
-                href="#capabilities"
-                label={lang === "en" ? "Capabilities" : "Compétences"}
-              />
-              <Item
+              <MobileItem
                 href="#process"
                 label={lang === "en" ? "Process" : "Processus"}
               />
-              <Item
-                href="#contact"
-                label={lang === "en" ? "Contact" : "Contact"}
-              />
+              <MobileItem href="#contact" label="Contact" />
             </div>
-
-            <div className="mt-4 text-xs text-gray-400">
-              {lang === "en"
-                ? "Tip: tap outside to close."
-                : "Astuce : touche l’extérieur pour fermer."}
-            </div>
-
-            {/* Click outside area to close */}
-            <button
-              onClick={() => setOpen(false)}
-              className="fixed inset-0 w-full h-full"
-              aria-label="Close menu"
-              style={{ background: "transparent" }}
-            />
           </div>
+
+          {/* click outside closes */}
+          <button
+            onClick={() => setOpen(false)}
+            className="absolute inset-0"
+            aria-label="Close"
+            style={{ background: "transparent" }}
+          />
         </div>
       )}
     </nav>
