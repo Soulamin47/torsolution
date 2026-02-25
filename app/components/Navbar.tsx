@@ -46,78 +46,96 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
-        {/* Brand LEFT (restored) */}
-        <a href="#" className="flex flex-col leading-tight">
-          <span className="text-lg font-semibold tracking-wide">Torsolution</span>
-          <span className="text-[11px] text-gray-400">
-            Advanced Product Engineering
-          </span>
-        </a>
+      {/* FULL WIDTH BAR */}
+      <div className="w-full px-6 sm:px-10 py-4">
+        {/* Wide container (better desktop alignment) */}
+        <div className="mx-auto max-w-7xl flex items-center justify-between">
+          {/* Brand (go back to the real top) */}
+          <a href="#top" className="flex flex-col leading-tight">
+            <span className="text-lg font-semibold tracking-wide">
+              Torsolution
+            </span>
+            <span className="text-[11px] text-gray-400">
+              Advanced Product Engineering
+            </span>
+          </a>
 
-        {/* Desktop */}
-        <div className="hidden md:flex items-center gap-8 text-sm text-gray-300">
-          <NavLink href="#systems" label={lang === "en" ? "Systems" : "Systèmes"} />
-          <NavLink
-            href="#process"
-            label={lang === "en" ? "Process" : "Processus"}
-          />
-          <NavLink href="#contact" label="Contact" />
+          {/* Desktop */}
+          <div className="hidden md:flex items-center gap-8 text-sm text-gray-300">
+            <NavLink href="#systems" label={lang === "en" ? "Systems" : "Systèmes"} />
+            <NavLink
+              href="#capabilities"
+              label={lang === "en" ? "Capabilities" : "Compétences"}
+            />
+            <NavLink
+              href="#process"
+              label={lang === "en" ? "Process" : "Processus"}
+            />
+            <NavLink href="#contact" label="Contact" />
 
-          <div className="ml-2 flex items-center gap-2 text-xs text-gray-400">
-            <span className="opacity-40">|</span>
-            <button
-              onClick={() => setLang("en")}
-              className={lang === "en" ? "text-white" : "hover:text-white"}
-            >
-              EN
-            </button>
-            <span>/</span>
-            <button
-              onClick={() => setLang("fr")}
-              className={lang === "fr" ? "text-white" : "hover:text-white"}
-            >
-              FR
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile */}
-        <div className="md:hidden flex items-center gap-3">
-          <div className="flex items-center gap-2 text-xs text-gray-400">
-            <button
-              onClick={() => setLang("en")}
-              className={lang === "en" ? "text-white" : "hover:text-white"}
-            >
-              EN
-            </button>
-            <span>/</span>
-            <button
-              onClick={() => setLang("fr")}
-              className={lang === "fr" ? "text-white" : "hover:text-white"}
-            >
-              FR
-            </button>
+            <div className="ml-2 flex items-center gap-2 text-xs text-gray-400">
+              <span className="opacity-40">|</span>
+              <button
+                onClick={() => setLang("en")}
+                className={lang === "en" ? "text-white" : "hover:text-white"}
+              >
+                EN
+              </button>
+              <span>/</span>
+              <button
+                onClick={() => setLang("fr")}
+                className={lang === "fr" ? "text-white" : "hover:text-white"}
+              >
+                FR
+              </button>
+            </div>
           </div>
 
-          <button
-            onClick={() => setOpen((v) => !v)}
-            className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition"
-            aria-label="Menu"
-          >
-            {open ? "✕" : "☰"}
-          </button>
+          {/* Mobile */}
+          <div className="md:hidden flex items-center gap-3">
+            <div className="flex items-center gap-2 text-xs text-gray-400">
+              <button
+                onClick={() => setLang("en")}
+                className={lang === "en" ? "text-white" : "hover:text-white"}
+              >
+                EN
+              </button>
+              <span>/</span>
+              <button
+                onClick={() => setLang("fr")}
+                className={lang === "fr" ? "text-white" : "hover:text-white"}
+              >
+                FR
+              </button>
+            </div>
+
+            <button
+              onClick={() => setOpen((v) => !v)}
+              className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition"
+              aria-label="Menu"
+            >
+              {open ? "✕" : "☰"}
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Mobile menu (full screen overlay, clean) */}
+      {/* Mobile overlay menu */}
       {open && (
         <div className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm md:hidden">
-          <div className="pt-[72px] px-6">
-            <div className="rounded-2xl border border-white/10 bg-black/60 p-4 space-y-3">
+          {/* click outside closes */}
+          <div className="absolute inset-0" onClick={() => setOpen(false)} />
+
+          {/* menu content ABOVE overlay */}
+          <div className="relative z-10 pt-[84px] px-6">
+            <div className="mx-auto max-w-7xl rounded-2xl border border-white/10 bg-black/60 p-4 space-y-3">
               <MobileItem
                 href="#systems"
                 label={lang === "en" ? "Systems" : "Systèmes"}
+              />
+              <MobileItem
+                href="#capabilities"
+                label={lang === "en" ? "Capabilities" : "Compétences"}
               />
               <MobileItem
                 href="#process"
@@ -125,15 +143,13 @@ export default function Navbar() {
               />
               <MobileItem href="#contact" label="Contact" />
             </div>
-          </div>
 
-          {/* click outside closes */}
-          <button
-            onClick={() => setOpen(false)}
-            className="absolute inset-0"
-            aria-label="Close"
-            style={{ background: "transparent" }}
-          />
+            <div className="mx-auto max-w-7xl mt-3 text-xs text-gray-400">
+              {lang === "en"
+                ? "Tip: tap outside to close."
+                : "Astuce : touche l’extérieur pour fermer."}
+            </div>
+          </div>
         </div>
       )}
     </nav>

@@ -9,9 +9,12 @@ import SeoSync from "./components/SeoSync";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#07070A] text-white pt-28">
-      <Navbar />
+    <main className="min-h-screen bg-[#07070A] text-white">
       <SeoSync />
+      {/* Anchor used by the brand link to always bring users back to the top */}
+      <div id="top" />
+
+      <Navbar />
       <Hero />
       <Capabilities />
       <Systems />
