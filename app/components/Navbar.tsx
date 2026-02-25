@@ -14,6 +14,13 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // lock scroll when menu is open
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   const Item = ({
     href,
@@ -25,7 +32,7 @@ export default function Navbar() {
     <a
       href={href}
       onClick={() => setOpen(false)}
-      className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-gray-200 hover:bg-white/10 transition"
+      className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-gray-200 hover:bg-white/10 transition"
     >
       {label}
     </a>
@@ -105,40 +112,43 @@ export default function Navbar() {
 
       {/* Mobile overlay */}
       {open && (
-  <div className="md:hidden bg-black/95 backdrop-blur-md border-t border-white/10 px-6 py-6 flex flex-col gap-4 text-gray-200">
-    <a
-      href="#systems"
-      onClick={() => setOpen(false)}
-      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm hover:bg-white/10 transition"
-    >
-      {lang === "en" ? "Systems" : "Systèmes"}
-    </a>
+        <div className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm">
+          <div className="mx-auto max-w-6xl px-6 py-6">
+            <div className="rounded-2xl border border-white/10 bg-black/60 p-4 space-y-3">
+              <Item
+                href="#systems"
+                label={lang === "en" ? "Systems" : "Systèmes"}
+              />
+              <Item
+                href="#capabilities"
+                label={lang === "en" ? "Capabilities" : "Compétences"}
+              />
+              <Item
+                href="#process"
+                label={lang === "en" ? "Process" : "Processus"}
+              />
+              <Item
+                href="#contact"
+                label={lang === "en" ? "Contact" : "Contact"}
+              />
+            </div>
 
-    <a
-      href="#capabilities"
-      onClick={() => setOpen(false)}
-      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm hover:bg-white/10 transition"
-    >
-      {lang === "en" ? "Capabilities" : "Compétences"}
-    </a>
+            <div className="mt-4 text-xs text-gray-400">
+              {lang === "en"
+                ? "Tip: tap outside to close."
+                : "Astuce : touche l’extérieur pour fermer."}
+            </div>
 
-    <a
-      href="#process"
-      onClick={() => setOpen(false)}
-      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm hover:bg-white/10 transition"
-    >
-      {lang === "en" ? "Process" : "Processus"}
-    </a>
-
-    <a
-      href="#contact"
-      onClick={() => setOpen(false)}
-      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm hover:bg-white/10 transition"
-    >
-      {lang === "en" ? "Contact" : "Contact"}
-    </a>
-  </div>
-)}
+            {/* Click outside area to close */}
+            <button
+              onClick={() => setOpen(false)}
+              className="fixed inset-0 w-full h-full"
+              aria-label="Close menu"
+              style={{ background: "transparent" }}
+            />
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
