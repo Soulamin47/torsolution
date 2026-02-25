@@ -27,3 +27,7 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+section[id] {
+  scroll-margin-top: 96px; /* évite que la navbar cache le titre */
+}
