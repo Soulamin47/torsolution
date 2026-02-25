@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useLang } from "@/app/providers/LangProvider";
 
@@ -48,21 +49,29 @@ export default function Navbar() {
     >
       {/* FULL WIDTH BAR */}
       <div className="w-full px-6 sm:px-10 py-4">
-        {/* Wide container (better desktop alignment) */}
+        {/* NICE CONTAINER */}
         <div className="mx-auto max-w-7xl flex items-center justify-between">
-          {/* Brand (go back to the real top) */}
-          <a href="#top" className="flex flex-col leading-tight">
-            <span className="text-lg font-semibold tracking-wide">
-              Torsolution
-            </span>
-            <span className="text-[11px] text-gray-400">
-              Advanced Product Engineering
-            </span>
-          </a>
+          {/* Brand */}
+          <a href="#top" className="flex items-center gap-3">
+           <img
+            src="/logo-icon.png"
+            alt="Torsolution"
+            width={34}
+            height={34}
+            style={{ display: "block" }}
+        />
+         <div className="flex flex-col leading-tight">
+         <span className="text-lg font-semibold tracking-wide">Torsolution</span>
+         <span className="text-[11px] text-gray-400">Advanced Product Engineering</span>
+       </div>
+     </a>
 
           {/* Desktop */}
           <div className="hidden md:flex items-center gap-8 text-sm text-gray-300">
-            <NavLink href="#systems" label={lang === "en" ? "Systems" : "Systèmes"} />
+            <NavLink
+              href="#systems"
+              label={lang === "en" ? "Systems" : "Systèmes"}
+            />
             <NavLink
               href="#capabilities"
               label={lang === "en" ? "Capabilities" : "Compétences"}
@@ -142,12 +151,6 @@ export default function Navbar() {
                 label={lang === "en" ? "Process" : "Processus"}
               />
               <MobileItem href="#contact" label="Contact" />
-            </div>
-
-            <div className="mx-auto max-w-7xl mt-3 text-xs text-gray-400">
-              {lang === "en"
-                ? "Tip: tap outside to close."
-                : "Astuce : touche l’extérieur pour fermer."}
             </div>
           </div>
         </div>

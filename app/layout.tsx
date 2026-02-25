@@ -1,60 +1,21 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { LangProvider } from "./providers/LangProvider";
 import { siteConfig } from "@/lib/site";
+import { LangProvider } from "@/app/providers/LangProvider";
+import Navbar from "@/app/components/Navbar";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-
-  title: {
-    default: `${siteConfig.name} | Advanced Product Engineering`,
-    template: `%s | ${siteConfig.name}`,
-  },
-
+  title: siteConfig.name,
   description: siteConfig.description,
-
-  keywords: [
-    "Torsolution",
-    "Web Developer",
-    "Product Engineer",
-    "Next.js",
-    "Flutter",
-    "AI Automation",
-    "Web3",
-    "Cloud Architecture",
-    "Scalable Systems",
-  ],
-
-  icons: {
-    icon: "/favicon.ico",
-  },
-
+  metadataBase: new URL(siteConfig.url),
   openGraph: {
-    type: "website",
+    title: siteConfig.name,
+    description: siteConfig.description,
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: `${siteConfig.name} | Advanced Product Engineering`,
-    description: siteConfig.description,
-    images: [
-      {
-        url: "/og",
-        width: 1200,
-        height: 630,
-        alt: siteConfig.name,
-      },
-    ],
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    title: `${siteConfig.name} | Advanced Product Engineering`,
-    description: siteConfig.description,
-    images: ["/og"],
-  },
-
-  robots: {
-    index: true,
-    follow: true,
+    images: [{ url: "/opengraph-image" }],
+    locale: "en_US",
+    type: "website",
   },
 };
 
@@ -64,12 +25,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className="bg-[#07070A] text-white antialiased"
-        suppressHydrationWarning
-      >
-        <LangProvider>{children}</LangProvider>
+    <html lang="en">
+      <body className="bg-[#07070A] text-white antialiased">
+        <LangProvider>
+          <Navbar />
+          {children}
+        </LangProvider>
       </body>
     </html>
   );
