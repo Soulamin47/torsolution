@@ -74,9 +74,9 @@ export default function Navbar() {
             <Image
               src="/logo-icon.png"
               alt="Torsolution"
-              width={36}
-              height={36}
-              className="h-9 w-9 object-contain"
+              width={52}
+              height={52}
+              className="h-13 w-13 object-contain"
               priority
             />
             <div className="flex flex-col leading-tight">
