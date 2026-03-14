@@ -71,6 +71,7 @@ export type Translation = {
 
   // CTA trust badges
   ctaTrustBadges: string[];
+  ctaWhatsApp: string;
 
   // Cookie banner
   cookieText: string;
@@ -264,6 +265,7 @@ export const translations: Record<"en" | "fr", Translation> = {
       "Full code ownership transferred",
       "NDA available on request",
     ],
+    ctaWhatsApp: "Chat on WhatsApp",
 
     // Cookie banner
     cookieText: "This site uses cookies to remember your language preference and improve your experience.",
@@ -456,6 +458,7 @@ export const translations: Record<"en" | "fr", Translation> = {
       "Propriété totale du code",
       "NDA disponible sur demande",
     ],
+    ctaWhatsApp: "Discuter sur WhatsApp",
 
     // Cookie banner
     cookieText: "Ce site utilise des cookies pour mémoriser votre préférence de langue et améliorer votre expérience.",

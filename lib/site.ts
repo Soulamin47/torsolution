@@ -5,6 +5,7 @@ export const siteConfig = {
       ? "https://torsolution.be"
       : "http://localhost:3000",
   email: "info@torsolution.be",
+  whatsapp: "https://wa.me/32466386565",
   description:
     "Freelance developer based in Brussels — I build fast, reliable web & mobile products, business platforms and AI-powered tools.",
 };
