@@ -73,6 +73,17 @@ export default function CTA() {
                 </a>
               </div>
               <div className="mt-3 text-sm text-gray-400">{t.ctaResponse}</div>
+
+              <div className="mt-6 space-y-2">
+                {t.ctaTrustBadges.map((badge) => (
+                  <div key={badge} className="flex items-center gap-2 text-sm text-gray-400">
+                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-green-500/30 bg-green-500/10 text-[10px] text-green-400">
+                      ✓
+                    </span>
+                    {badge}
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Form */}

@@ -66,6 +66,12 @@ export type Translation = {
   footerPrivacy: string;
   footerCopyright: string;
 
+  // TrustBar
+  trustStats: { value: string; label: string }[];
+
+  // CTA trust badges
+  ctaTrustBadges: string[];
+
   // Cookie banner
   cookieText: string;
   cookieAccept: string;
@@ -243,6 +249,22 @@ export const translations: Record<"en" | "fr", Translation> = {
     footerPrivacy: "Privacy policy",
     footerCopyright: `© ${new Date().getFullYear()} Torsolution. All rights reserved.`,
 
+    // TrustBar
+    trustStats: [
+      { value: "8+", label: "Years of experience" },
+      { value: "< 4 wks", label: "Average delivery" },
+      { value: "< 24h", label: "Response time" },
+      { value: "100%", label: "Code ownership" },
+    ],
+
+    // CTA trust badges
+    ctaTrustBadges: [
+      "No commitment required",
+      "Clear proposal within 48h",
+      "Full code ownership transferred",
+      "NDA available on request",
+    ],
+
     // Cookie banner
     cookieText: "This site uses cookies to remember your language preference and improve your experience.",
     cookieAccept: "Accept",
@@ -418,6 +440,22 @@ export const translations: Record<"en" | "fr", Translation> = {
     footerLegal: "Mentions légales",
     footerPrivacy: "Politique de confidentialité",
     footerCopyright: `© ${new Date().getFullYear()} Torsolution. Tous droits réservés.`,
+
+    // TrustBar
+    trustStats: [
+      { value: "8+", label: "Années d'expérience" },
+      { value: "< 4 sem", label: "Délai moyen de livraison" },
+      { value: "< 24h", label: "Temps de réponse" },
+      { value: "100%", label: "Propriété du code" },
+    ],
+
+    // CTA trust badges
+    ctaTrustBadges: [
+      "Sans engagement",
+      "Proposition claire sous 48h",
+      "Propriété totale du code",
+      "NDA disponible sur demande",
+    ],
 
     // Cookie banner
     cookieText: "Ce site utilise des cookies pour mémoriser votre préférence de langue et améliorer votre expérience.",

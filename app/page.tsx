@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import TrustBar from "./components/TrustBar";
 import Capabilities from "./components/Capabilities";
 import Systems from "./components/Systems";
 import Process from "./components/Process";
@@ -18,6 +19,7 @@ export default function Home() {
       <SeoSync />
       <Navbar />
       <Hero />
+      <TrustBar />
       <Capabilities />
       <Systems />
       <Process />
