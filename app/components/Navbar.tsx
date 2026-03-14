@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useLang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
 
@@ -69,9 +70,19 @@ export default function Navbar() {
       <div className="w-full px-6 sm:px-10 py-4">
         <div className="mx-auto max-w-7xl flex items-center justify-between">
           {/* Brand */}
-          <a href="#" className="flex flex-col leading-tight">
-            <span className="text-lg font-semibold tracking-wide">Torsolution</span>
-            <span className="text-[11px] text-gray-400">{t.tagline}</span>
+          <a href="#" className="flex items-center gap-3">
+            <Image
+              src="/logo-icon.png"
+              alt="Torsolution"
+              width={36}
+              height={36}
+              className="h-9 w-9 object-contain"
+              priority
+            />
+            <div className="flex flex-col leading-tight">
+              <span className="text-lg font-semibold tracking-wide">Torsolution</span>
+              <span className="text-[11px] text-gray-400">{t.tagline}</span>
+            </div>
           </a>
 
           {/* Desktop nav */}
