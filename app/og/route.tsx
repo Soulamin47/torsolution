@@ -20,7 +20,7 @@ export async function GET() {
           position: "relative",
         }}
       >
-        {/* GRID BACKGROUND */}
+        {/* Grid background */}
         <div
           style={{
             position: "absolute",
@@ -31,8 +31,7 @@ export async function GET() {
             opacity: 0.15,
           }}
         />
-
-        {/* RADIAL GLOW */}
+        {/* Radial glow */}
         <div
           style={{
             position: "absolute",
@@ -44,8 +43,7 @@ export async function GET() {
             filter: "blur(60px)",
           }}
         />
-
-        {/* CONTENT */}
+        {/* Content */}
         <div
           style={{
             position: "relative",
@@ -54,49 +52,25 @@ export async function GET() {
             alignItems: "center",
           }}
         >
-        <img
-           src="logo.png"
-          width="160"
-          height="160"
-          style={{ marginBottom: 40 }}
-        />
-
-          <div
-            style={{
-              fontSize: 64,
-              fontWeight: 600,
-              letterSpacing: "-1px",
-            }}
-          >
+          <div style={{ fontSize: 64, fontWeight: 600, letterSpacing: "-1px" }}>
             Torsolution
           </div>
-
-          <div
-            style={{
-              fontSize: 28,
-              marginTop: 20,
-              opacity: 0.85,
-            }}
-          >
-            Advanced Product Engineering
+          <div style={{ fontSize: 28, marginTop: 20, opacity: 0.85 }}>
+            Freelance Developer — Web, Mobile & AI
           </div>
-
           <div
             style={{
-              marginTop: 30,
-              fontSize: 22,
+              marginTop: 24,
+              fontSize: 18,
               letterSpacing: "3px",
-              opacity: 0.7,
+              opacity: 0.5,
             }}
           >
-            Web · AI · Cloud · Web3
+            Brussels / Remote
           </div>
         </div>
       </div>
     ),
-    {
-      width: 1200,
-      height: 630,
-    }
+    { width: 1200, height: 630 }
   );
 }

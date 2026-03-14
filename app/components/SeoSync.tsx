@@ -2,25 +2,20 @@
 
 import { useEffect } from "react";
 import { useLang } from "@/app/providers/LangProvider";
-import { translations } from "@/lib/translations";
 
 export default function SeoSync() {
   const { lang } = useLang();
-  const t = translations[lang];
 
   useEffect(() => {
-    // Title
-    const title =
+    document.title =
       lang === "en"
-        ? "Torsolution | Advanced Product Engineering"
-        : "Torsolution | Ingénierie Produit Avancée";
-    document.title = title;
+        ? "Torsolution | Freelance Developer — Web, Mobile & AI"
+        : "Torsolution | Développeur Freelance — Web, Mobile & IA";
 
-    // Meta description
     const desc =
       lang === "en"
-        ? "Engineering high-performance digital systems: web, mobile, AI & scalable architectures."
-        : "Ingénierie de systèmes numériques haute performance : web, mobile, IA et architectures évolutives.";
+        ? "Freelance developer based in Brussels. I build fast, reliable web & mobile products, business platforms and AI-powered tools."
+        : "Développeur freelance basé à Bruxelles. Je conçois et développe des applications web, mobile, des plateformes métier et des outils IA fiables et performants.";
 
     let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
     if (!meta) {
@@ -30,9 +25,8 @@ export default function SeoSync() {
     }
     meta.content = desc;
 
-    // Update html lang
     document.documentElement.lang = lang;
-  }, [lang, t]);
+  }, [lang]); // only lang as dependency
 
   return null;
 }
