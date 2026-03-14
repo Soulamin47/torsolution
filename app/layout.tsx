@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { LangProvider } from "./providers/LangProvider";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter", preload: false });
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {

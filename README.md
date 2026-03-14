@@ -34,3 +34,24 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Contact email configuration
+
+The contact form supports two providers:
+
+1. **Resend API (recommended on Vercel)**
+   - `RESEND_API_KEY`
+   - `CONTACT_FROM` (example: `Torsolution <contact@torsolution.be>`)
+   - `CONTACT_TO` (example: `info@torsolution.be`)
+
+2. **SMTP fallback (Webador/local servers)**
+   - `SMTP_HOST`
+   - `SMTP_PORT`
+   - `SMTP_SECURE`
+   - `SMTP_USER`
+   - `SMTP_PASS`
+   - `CONTACT_TO`
+
+When `RESEND_API_KEY` is set, the API path uses Resend first.
+If it is missing, it falls back to SMTP.
+

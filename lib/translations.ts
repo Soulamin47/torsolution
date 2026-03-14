@@ -123,6 +123,13 @@ export const translations: Record<"en" | "fr", Translation> = {
         tech: "Next.js · Supabase · PostgreSQL · Recharts · Prisma",
       },
       {
+        title: "Social media platforms",
+        desc: "A platform to manage content, campaigns and interactions across your social channels in one place. Clear workflows, publishing calendar and performance tracking for your team.",
+        tag: "Social",
+        icon: "#",
+        tech: "Next.js · API Integrations · Automation · Analytics",
+      },
+      {
         title: "AI & automation",
         desc: "I integrate AI into your workflows to automate repetitive tasks, answer recurring questions and save your team hours every week — without replacing the tools they already use.",
         tag: "AI",
@@ -290,6 +297,13 @@ export const translations: Record<"en" | "fr", Translation> = {
         tag: "Plateformes",
         icon: "▦",
         tech: "Next.js · Supabase · PostgreSQL · Recharts · Prisma",
+      },
+      {
+        title: "Plateformes réseaux sociaux",
+        desc: "Une plateforme pour gérer vos contenus, campagnes et interactions sur vos réseaux sociaux au même endroit. Planning éditorial, publication et suivi des performances pour toute l'équipe.",
+        tag: "Social",
+        icon: "#",
+        tech: "Next.js · Intégrations API · Automatisation · Analytics",
       },
       {
         title: "IA & automatisation",
