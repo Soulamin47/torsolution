@@ -8,6 +8,7 @@ const iconStyles: Record<string, { bg: string; text: string; glow: string }> = {
   Web:        { bg: "bg-blue-500/15",   text: "text-blue-300",   glow: "group-hover:shadow-blue-500/20" },
   Mobile:     { bg: "bg-cyan-500/15",   text: "text-cyan-300",   glow: "group-hover:shadow-cyan-500/20" },
   Platforms:  { bg: "bg-violet-500/15", text: "text-violet-300", glow: "group-hover:shadow-violet-500/20" },
+  Social:     { bg: "bg-pink-500/15",   text: "text-pink-300",   glow: "group-hover:shadow-pink-500/20" },
   AI:         { bg: "bg-emerald-500/15",text: "text-emerald-300",glow: "group-hover:shadow-emerald-500/20" },
   Web3:       { bg: "bg-orange-500/15", text: "text-orange-300", glow: "group-hover:shadow-orange-500/20" },
   IA:         { bg: "bg-emerald-500/15",text: "text-emerald-300",glow: "group-hover:shadow-emerald-500/20" },
