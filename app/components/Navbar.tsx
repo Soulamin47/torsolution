@@ -78,7 +78,7 @@ export default function Navbar() {
               width={160}
               height={160}
               className="object-contain transition-all duration-300"
-              style={{ width: scrolled ? 72 : 160, height: scrolled ? 72 : 160 }}
+              style={{ width: scrolled ? 100 : 220, height: scrolled ? 100 : 220 }}
               priority
             />
           </a>
