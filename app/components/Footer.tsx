@@ -23,6 +23,14 @@ export default function Footer() {
               >
                 {siteConfig.email}
               </a>
+              <a
+                href={siteConfig.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-1 block text-xs text-gray-500 transition hover:text-green-400"
+              >
+                WhatsApp · +32 466 38 65 65
+              </a>
             </div>
 
             {/* Nav links */}

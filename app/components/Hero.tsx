@@ -84,12 +84,12 @@ function TerminalVisual() {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 2.6 }}
-        className="float-delay mt-4 grid grid-cols-3 gap-3"
+        className="float-delay mt-4 grid grid-cols-3 gap-3 sm:grid-cols-3"
       >
         {[
-          { label: "Delivery", value: "< 4 weeks" },
+          { label: "Experience", value: "8+ yrs" },
+          { label: "Delivery", value: "< 4 wks" },
           { label: "Response", value: "< 24 h" },
-          { label: "Stack", value: "Full" },
         ].map((s) => (
           <div
             key={s.label}
