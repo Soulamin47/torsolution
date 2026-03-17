@@ -130,8 +130,8 @@ export default function Hero() {
                 <Image
                   src="/logo-icon.png"
                   alt="Torsolution"
-                  width={100}
-                  height={100}
+                  width={180}
+                  height={180}
                   className="object-contain"
                   priority
                 />
