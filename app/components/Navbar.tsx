@@ -67,7 +67,7 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="w-full px-6 sm:px-10 py-3">
+      <div className={`w-full px-6 sm:px-10 transition-all duration-300 ${scrolled ? "py-1" : "py-3"}`}>
         <div className="mx-auto max-w-7xl flex items-center justify-between">
           {/* Brand */}
           <a href="#" className="flex items-center">
@@ -76,8 +76,8 @@ export default function Navbar() {
               alt="Torsolution"
               width={160}
               height={160}
-              className="object-contain"
-              style={{ width: 160, height: 160 }}
+              className="object-contain transition-all duration-300"
+              style={{ width: scrolled ? 72 : 160, height: scrolled ? 72 : 160 }}
               priority
             />
           </a>
