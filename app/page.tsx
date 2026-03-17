@@ -13,7 +13,7 @@ import CookieBanner from "./components/CookieBanner";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#07070A] text-white pt-28">
+    <main className="min-h-screen bg-[#07070A] text-white pt-[184px]">
       <CursorGlow />
       <ScrollProgress />
       <SeoSync />

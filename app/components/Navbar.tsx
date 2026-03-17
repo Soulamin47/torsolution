@@ -67,17 +67,17 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="w-full px-6 sm:px-10 py-2">
+      <div className="w-full px-6 sm:px-10 py-3">
         <div className="mx-auto max-w-7xl flex items-center justify-between">
           {/* Brand */}
-          <a href="#" className="flex items-center" style={{ marginTop: -65 }}>
+          <a href="#" className="flex items-center">
             <Image
               src="/logo-icon.png"
               alt="Torsolution"
-              width={280}
-              height={280}
+              width={160}
+              height={160}
               className="object-contain"
-              style={{ width: 280, height: 280 }}
+              style={{ width: 160, height: 160 }}
               priority
             />
           </a>
