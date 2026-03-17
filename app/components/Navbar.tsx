@@ -67,23 +67,19 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="w-full px-6 sm:px-10 py-4">
+      <div className="w-full px-6 sm:px-10 py-2">
         <div className="mx-auto max-w-7xl flex items-center justify-between">
           {/* Brand */}
-          <a href="#" className="flex items-center gap-3">
+          <a href="#" className="flex items-center">
             <Image
               src="/logo-icon.png"
               alt="Torsolution"
-              width={280}
-              height={280}
+              width={300}
+              height={300}
               className="object-contain"
-              style={{ width: 280, height: 280, marginTop: -40 }}
+              style={{ width: 300, height: 300 }}
               priority
             />
-            <div className="flex flex-col leading-tight">
-              <span className="text-lg font-semibold tracking-wide">Torsolution</span>
-              <span className="text-[11px] text-gray-400">{t.tagline}</span>
-            </div>
           </a>
 
           {/* Desktop nav */}
