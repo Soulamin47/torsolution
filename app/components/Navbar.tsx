@@ -74,10 +74,10 @@ export default function Navbar() {
             <Image
               src="/logo-icon.png"
               alt="Torsolution"
-              width={80}
-              height={80}
+              width={120}
+              height={120}
               className="object-contain"
-              style={{ width: 80, height: 80 }}
+              style={{ width: 120, height: 120 }}
               priority
             />
             <div className="flex flex-col leading-tight">
