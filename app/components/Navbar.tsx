@@ -73,12 +73,12 @@ export default function Navbar() {
           {/* Brand */}
           <a href="#" className="flex items-center">
             <Image
-              src="/logo-icon.png"
+              src="/logo-navbar.png"
               alt="Torsolution"
-              width={160}
-              height={160}
+              width={256}
+              height={256}
               className="object-contain transition-all duration-300"
-              style={{ width: scrolled ? 100 : 220, height: scrolled ? 100 : 220 }}
+              style={{ width: scrolled ? 70 : 140, height: scrolled ? 70 : 140 }}
               priority
             />
           </a>
