@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useLang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
 
@@ -120,6 +121,22 @@ export default function Hero() {
           <div className="relative grid gap-14 lg:grid-cols-2 lg:items-center">
             {/* Left — content */}
             <div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6 }}
+                className="mb-6"
+              >
+                <Image
+                  src="/logo-icon.png"
+                  alt="Torsolution"
+                  width={220}
+                  height={220}
+                  className="w-44 h-44 md:w-56 md:h-56 object-contain"
+                  priority
+                />
+              </motion.div>
+
               <motion.div
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
