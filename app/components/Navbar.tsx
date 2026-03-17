@@ -61,23 +61,23 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 overflow-visible ${
         scrolled || open
           ? "backdrop-blur-md bg-black/45 border-b border-white/10"
           : "bg-transparent"
       }`}
     >
-      <div className="w-full px-6 sm:px-10 py-3">
+      <div className="w-full px-6 sm:px-10 py-2">
         <div className="mx-auto max-w-7xl flex items-center justify-between">
           {/* Brand */}
-          <a href="#" className="flex items-center">
+          <a href="#" className="flex items-center" style={{ marginTop: -30 }}>
             <Image
               src="/logo-icon.png"
               alt="Torsolution"
-              width={190}
-              height={190}
+              width={240}
+              height={240}
               className="object-contain"
-              style={{ width: 190, height: 190 }}
+              style={{ width: 240, height: 240 }}
               priority
             />
           </a>
