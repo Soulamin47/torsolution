@@ -26,7 +26,7 @@ export default function Navbar() {
   }, [open]);
 
   const NavLink = ({ href, label }: { href: string; label: string }) => (
-    <a href={href} className="hover:text-white transition">
+    <a href={href} className="font-medium hover:text-white transition-colors duration-200">
       {label}
     </a>
   );
@@ -42,7 +42,7 @@ export default function Navbar() {
   );
 
   const LangToggle = () => (
-    <div className="flex items-center gap-2 text-xs text-gray-400">
+    <div className="flex items-center gap-2 text-sm text-gray-400">
       <button
         onClick={() => setLang("en")}
         className={lang === "en" ? "text-white font-medium" : "hover:text-white transition"}
@@ -70,20 +70,20 @@ export default function Navbar() {
       <div className="w-full px-6 sm:px-10 py-2">
         <div className="mx-auto max-w-7xl flex items-center justify-between">
           {/* Brand */}
-          <a href="#" className="flex items-center" style={{ marginTop: -30 }}>
+          <a href="#" className="flex items-center" style={{ marginTop: -65 }}>
             <Image
               src="/logo-icon.png"
               alt="Torsolution"
-              width={240}
-              height={240}
+              width={280}
+              height={280}
               className="object-contain"
-              style={{ width: 240, height: 240 }}
+              style={{ width: 280, height: 280 }}
               priority
             />
           </a>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-8 text-sm text-gray-300">
+          <div className="hidden md:flex items-center gap-10 text-base tracking-wide text-gray-300">
             <NavLink href="#systems" label={t.navSystems} />
             <NavLink href="#capabilities" label={t.navCapabilities} />
             <NavLink href="#process" label={t.navProcess} />
