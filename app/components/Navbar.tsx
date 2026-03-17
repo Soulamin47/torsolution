@@ -73,7 +73,7 @@ export default function Navbar() {
           {/* Brand */}
           <a href="#" className="flex items-center">
             <Image
-              src="/logo-navbar.png"
+              src="/logo-cropped.png"
               alt="Torsolution"
               width={256}
               height={256}
