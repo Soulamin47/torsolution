@@ -3,75 +3,219 @@
 import { motion } from "framer-motion";
 import { useLang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
+import { EASE } from "@/lib/animations";
 
-const iconStyles: Record<string, { bg: string; text: string; glow: string }> = {
-  Web:        { bg: "bg-blue-500/15",   text: "text-blue-300",   glow: "group-hover:shadow-blue-500/20" },
-  Mobile:     { bg: "bg-cyan-500/15",   text: "text-cyan-300",   glow: "group-hover:shadow-cyan-500/20" },
-  Platforms:  { bg: "bg-violet-500/15", text: "text-violet-300", glow: "group-hover:shadow-violet-500/20" },
-  Social:     { bg: "bg-pink-500/15",   text: "text-pink-300",   glow: "group-hover:shadow-pink-500/20" },
-  AI:         { bg: "bg-emerald-500/15",text: "text-emerald-300",glow: "group-hover:shadow-emerald-500/20" },
-  Web3:       { bg: "bg-orange-500/15", text: "text-orange-300", glow: "group-hover:shadow-orange-500/20" },
-  IA:         { bg: "bg-emerald-500/15",text: "text-emerald-300",glow: "group-hover:shadow-emerald-500/20" },
-  Plateformes:{ bg: "bg-violet-500/15", text: "text-violet-300", glow: "group-hover:shadow-violet-500/20" },
-};
+// ─── Per-service config (index matches capItems order) ────────────────────────
+
+const SERVICE_META = [
+  { accent: "#AFA9EC", symbol: "</>",  area: "web",      large: true  }, // Web
+  { accent: "#5DCAA5", symbol: "◎",    area: "mobile",   large: false }, // Mobile
+  { accent: "#EF9F27", symbol: "∿",    area: "ai",       large: false }, // AI
+  { accent: "#85B7EB", symbol: "⊞",    area: "platform", large: true  }, // Platform
+  { accent: "#F0997B", symbol: "⬡",    area: "web3",     large: false }, // Web3
+  { accent: "#D4537E", symbol: "#",    area: "social",   large: false }, // Social
+];
+
+// Tech pills shown in the "Web" large card
+const WEB_TECH = ["Next.js", "TypeScript", "Tailwind", "PostgreSQL"];
 
 export default function Capabilities() {
   const { lang } = useLang();
   const t = translations[lang];
 
+  // Re-order items to match grid-template-areas order:
+  // web(0) mobile(1) ai(2) platform(3) web3(4) social(5)
+  // capItems order: Web(0) Mobile(1) Platform(2) AI(3) Web3(4) Social(5)
+  // We map by area so the visual order matches the grid areas.
+  const ordered = [
+    { item: t.capItems[0], meta: SERVICE_META[0] }, // web
+    { item: t.capItems[1], meta: SERVICE_META[1] }, // mobile
+    { item: t.capItems[3], meta: SERVICE_META[2] }, // ai  (capItems[3])
+    { item: t.capItems[2], meta: SERVICE_META[3] }, // platform (capItems[2])
+    { item: t.capItems[4], meta: SERVICE_META[4] }, // web3
+    { item: t.capItems[5], meta: SERVICE_META[5] }, // social
+  ];
+
   return (
-    <section id="capabilities" className="px-6 py-20 sm:px-8">
-      <div className="mx-auto max-w-6xl">
+    <section id="capabilities" className="relative z-10 px-6 sm:px-10 py-20">
+      <div className="mx-auto max-w-5xl">
+
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-12"
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: EASE }}
+          className="mb-12 flex items-baseline justify-between"
         >
-          <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">{t.capTitle}</h2>
-          <p className="mt-3 max-w-2xl text-gray-400">{t.capSubtitle}</p>
+          <div>
+            <h2 className="text-[clamp(22px,3vw,32px)] font-light text-[#F0EEE8]">
+              {t.capTitle}
+            </h2>
+            <p className="mt-2 text-[13px] text-[#F0EEE8]/35 max-w-md">
+              {t.capSubtitle}
+            </p>
+          </div>
+          <span className="font-mono text-[11px] text-[#F0EEE8]/25 shrink-0 ml-6 hidden sm:block">
+            06 services
+          </span>
         </motion.div>
 
-        <div className="grid gap-5 md:grid-cols-3">
-          {t.capItems.map((it, idx) => {
-            const style = iconStyles[it.tag] ?? iconStyles["Web"];
-            return (
-              <motion.div
-                key={it.title}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.45, delay: idx * 0.06 }}
-                className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 shadow-lg transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06] hover:shadow-xl ${style.glow}`}
-              >
-                {/* Card glow on hover */}
-                <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-br from-white/[0.03] to-transparent" />
-
-                <div className="relative">
-                  {/* Icon */}
-                  <div className={`mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl ${style.bg} ${style.text} text-lg font-bold`}>
-                    {it.icon}
-                  </div>
-
-                  {/* Tag */}
-                  <div className="absolute top-0 right-0">
-                    <span className={`rounded-full border border-current/20 px-2.5 py-0.5 text-[10px] font-medium ${style.text} bg-current/10`}>
-                      {it.tag}
-                    </span>
-                  </div>
-
-                  <h3 className="text-base font-semibold">{it.title}</h3>
-
-                  <p className="mt-3 text-sm leading-relaxed text-gray-400">{it.desc}</p>
-
-                  <p className="mt-4 font-mono text-[11px] text-gray-600">{it.tech}</p>
-                </div>
-              </motion.div>
-            );
-          })}
+        {/* Bento grid — desktop */}
+        <div
+          className="hidden md:grid gap-px"
+          style={{
+            background: "rgba(255,255,255,0.06)",
+            gridTemplateAreas: `
+              "web     web     mobile"
+              "ai      platform platform"
+              "web3    social  social"
+            `,
+            gridTemplateColumns: "1fr 1fr 1fr",
+            gridTemplateRows: "auto auto auto",
+          }}
+        >
+          {ordered.map(({ item, meta }, idx) => (
+            <BentoCard
+              key={meta.area}
+              item={item}
+              meta={meta}
+              idx={idx}
+            />
+          ))}
         </div>
+
+        {/* Mobile — single column */}
+        <div
+          className="md:hidden grid gap-px"
+          style={{ background: "rgba(255,255,255,0.06)" }}
+        >
+          {ordered.map(({ item, meta }, idx) => (
+            <BentoCard
+              key={`mob-${meta.area}`}
+              item={item}
+              meta={meta}
+              idx={idx}
+            />
+          ))}
+        </div>
+
       </div>
     </section>
+  );
+}
+
+// ─── Card component ────────────────────────────────────────────────────────────
+
+function BentoCard({
+  item,
+  meta,
+  idx,
+}: {
+  item: { title: string; desc: string; tag: string; icon: string };
+  meta: { accent: string; symbol: string; area: string; large: boolean };
+  idx: number;
+}) {
+  const isWebLarge = meta.area === "web";
+  const isPlatformLarge = meta.area === "platform";
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.5, delay: idx * 0.07, ease: EASE }}
+      whileHover={{ backgroundColor: "rgba(255,255,255,0.015)" }}
+      className="relative overflow-hidden flex flex-col"
+      style={{
+        gridArea: meta.area,
+        backgroundColor: "#09080F",
+        padding: meta.large ? 32 : 24,
+      }}
+    >
+      {/* Large bg symbol */}
+      <motion.div
+        aria-hidden="true"
+        className="absolute top-4 right-6 select-none pointer-events-none font-mono"
+        style={{ fontSize: 90, opacity: 0.04, color: meta.accent, lineHeight: 1 }}
+        whileHover={{ opacity: 0.07, scale: 1.05 }}
+        transition={{ duration: 0.4 }}
+      >
+        {meta.symbol}
+      </motion.div>
+
+      {/* Icon monogram */}
+      <div
+        className="inline-flex items-center justify-center font-mono text-[12px] shrink-0"
+        style={{
+          width: 36,
+          height: 36,
+          borderRadius: 6,
+          border: "0.5px solid rgba(255,255,255,0.1)",
+          background: `${meta.accent}14`,
+          color: meta.accent,
+          marginBottom: 20,
+        }}
+      >
+        {item.icon}
+      </div>
+
+      {/* Title */}
+      <h3 className="text-[16px] font-medium text-[#F0EEE8] mb-2">{item.title}</h3>
+
+      {/* Description */}
+      <p
+        className="text-[13px] text-[#F0EEE8]/40 leading-[1.7]"
+        style={{ flex: isWebLarge || isPlatformLarge ? "unset" : 1 }}
+      >
+        {item.desc}
+      </p>
+
+      {/* Web large — tech pills */}
+      {isWebLarge && (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {["Next.js", "TypeScript", "Tailwind", "PostgreSQL"].map((tech) => (
+            <span
+              key={tech}
+              className="text-[9px] font-mono opacity-30 border border-white/10 px-2 py-1 rounded-sm"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* Platform large — mini stats */}
+      {isPlatformLarge && (
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          <div className="p-3 rounded bg-white/[0.02] border border-white/5">
+            <div className="text-[18px] font-medium text-[#F0EEE8]/80">4</div>
+            <div className="font-mono text-[9px] text-[#F0EEE8]/25 mt-1">
+              plateformes livrées
+            </div>
+          </div>
+          <div className="p-3 rounded bg-white/[0.02] border border-white/5">
+            <div className="text-[18px] font-medium text-[#F0EEE8]/80">100%</div>
+            <div className="font-mono text-[9px] text-[#F0EEE8]/25 mt-1">
+              clients satisfaits
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tag — pushed to bottom */}
+      <div className="mt-auto pt-5">
+        <span
+          className="font-mono text-[9px] px-[10px] py-[4px] rounded-[3px]"
+          style={{
+            border: `0.5px solid ${meta.accent}4D`,
+            color: meta.accent,
+            background: `${meta.accent}14`,
+          }}
+        >
+          {item.tag}
+        </span>
+      </div>
+    </motion.div>
   );
 }

@@ -3,208 +3,270 @@
 import { motion } from "framer-motion";
 import { useLang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
+import { fadeUp, stagger, EASE } from "@/lib/animations";
 
-// ── Mini app previews ──────────────────────────────────────────
-function AnalyticsPreview() {
-  const bars = [
-    { label: "Revenue", pct: 87, color: "bg-blue-400" },
-    { label: "Leads", pct: 64, color: "bg-blue-300" },
-    { label: "Uptime", pct: 99, color: "bg-cyan-400" },
-    { label: "Conversion", pct: 42, color: "bg-indigo-400" },
-  ];
-  return (
-    <div className="space-y-2.5 p-4">
-      <div className="mb-3 flex items-center justify-between">
-        <span className="text-[11px] font-semibold text-gray-300">Live Dashboard</span>
-        <span className="flex items-center gap-1 text-[10px] text-green-400">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-400" /> Live
-        </span>
-      </div>
-      {bars.map((b) => (
-        <div key={b.label} className="flex items-center gap-2">
-          <span className="w-20 shrink-0 text-[10px] text-gray-500">{b.label}</span>
-          <div className="flex-1 rounded-full bg-white/10 h-1.5">
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: `${b.pct}%` }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className={`h-1.5 rounded-full ${b.color}`}
-            />
-          </div>
-          <span className="w-8 text-right text-[10px] text-gray-400">{b.pct}%</span>
-        </div>
-      ))}
-    </div>
-  );
-}
+// ─── Per-project config ────────────────────────────────────────────────────────
 
-function ChatPreview() {
-  const msgs = [
-    { from: "user", text: "Summarize this week's KPIs" },
-    { from: "ai", text: "Sales +12%, leads at 84, avg response time down 30%." },
-    { from: "user", text: "Trigger the weekly report" },
-    { from: "ai", text: "Done — sent to 6 recipients ✓" },
-  ];
-  return (
-    <div className="space-y-2 p-4">
-      <div className="mb-3 flex items-center gap-2">
-        <div className="h-2 w-2 rounded-full bg-indigo-400" />
-        <span className="text-[11px] font-semibold text-gray-300">AI Assistant</span>
-      </div>
-      {msgs.map((m, i) => (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, x: m.from === "user" ? 10 : -10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: i * 0.15 }}
-          className={`max-w-[80%] rounded-xl px-3 py-1.5 text-[10px] leading-relaxed ${
-            m.from === "user"
-              ? "ml-auto bg-white/10 text-gray-300"
-              : "bg-indigo-500/20 text-indigo-200"
-          }`}
-        >
-          {m.text}
-        </motion.div>
-      ))}
-    </div>
-  );
-}
-
-function InventoryPreview() {
-  const rows = [
-    { name: "Product A", sku: "SKU-001", stock: 142, status: "ok" },
-    { name: "Product B", sku: "SKU-002", stock: 8,   status: "low" },
-    { name: "Product C", sku: "SKU-003", stock: 350, status: "ok" },
-    { name: "Product D", sku: "SKU-004", stock: 0,   status: "out" },
-  ];
-  const badge = { ok: "text-green-400", low: "text-orange-400", out: "text-red-400" };
-  const label = { ok: "In stock", low: "⚠ Low", out: "✕ Out" };
-  return (
-    <div className="p-4">
-      <div className="mb-3 flex items-center justify-between">
-        <span className="text-[11px] font-semibold text-gray-300">Stock Overview</span>
-        <span className="text-[10px] text-gray-500">3 warehouses · live</span>
-      </div>
-      <div className="grid grid-cols-3 px-1 mb-1 text-[10px] text-gray-600">
-        <span>Item</span><span className="text-center">Units</span><span className="text-right">Status</span>
-      </div>
-      {rows.map((r, i) => (
-        <motion.div
-          key={r.sku}
-          initial={{ opacity: 0, y: 4 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: i * 0.1 }}
-          className="grid grid-cols-3 rounded-lg px-1 py-1 text-[10px] hover:bg-white/5"
-        >
-          <span className="text-gray-300">{r.name}</span>
-          <span className={`text-center font-mono ${badge[r.status as keyof typeof badge]}`}>{r.stock}</span>
-          <span className={`text-right ${badge[r.status as keyof typeof badge]}`}>{label[r.status as keyof typeof label]}</span>
-        </motion.div>
-      ))}
-    </div>
-  );
-}
-
-const previews = [AnalyticsPreview, ChatPreview, InventoryPreview];
-
-const cardAccents = [
-  { border: "hover:border-blue-500/30",   glow: "from-blue-500/8",    num: "text-blue-400" },
-  { border: "hover:border-indigo-500/30", glow: "from-indigo-500/8",  num: "text-indigo-400" },
-  { border: "hover:border-emerald-500/30",glow: "from-emerald-500/8", num: "text-emerald-400" },
+const PROJECT_META = [
+  { accent: "#AFA9EC", tagBg: "#26215C" },
+  { accent: "#F0997B", tagBg: "#4A1B0C" },
+  { accent: "#5DCAA5", tagBg: "#04342C" },
+  { accent: "#85B7EB", tagBg: "#042C53" },
 ];
+
+// ─── Browser chrome ────────────────────────────────────────────────────────────
+
+function BrowserBar() {
+  return (
+    <div
+      className="flex items-center gap-1.5 px-3 py-2 border-b border-white/[0.06]"
+      style={{ background: "rgba(255,255,255,0.03)" }}
+    >
+      <span className="w-2 h-2 rounded-full bg-[#FF5F57] opacity-70" />
+      <span className="w-2 h-2 rounded-full bg-[#FFBD2E] opacity-70" />
+      <span className="w-2 h-2 rounded-full bg-[#28C840] opacity-70" />
+    </div>
+  );
+}
+
+// ─── Mockup UIs ────────────────────────────────────────────────────────────────
+
+function MockupBloom() {
+  return (
+    <div style={{ padding: 12, background: "#0D0B14", height: "100%" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+        <span style={{ fontFamily: "monospace", fontSize: 10, color: "#AFA9EC", letterSpacing: "0.1em" }}>BLOOM</span>
+        <span style={{ fontSize: 9, color: "rgba(255,255,255,0.3)" }}>FOR YOU</span>
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+        <div style={{ height: 72, borderRadius: 6, background: "rgba(175,169,236,0.12)", border: "0.5px solid rgba(175,169,236,0.2)", display: "flex", alignItems: "flex-end", padding: 6 }}>
+          <span style={{ fontSize: 8, color: "rgba(255,255,255,0.4)" }}>▶ AI Film · 2:34</span>
+        </div>
+        <div style={{ height: 72, borderRadius: 6, background: "rgba(175,169,236,0.08)", border: "0.5px solid rgba(175,169,236,0.15)", display: "flex", alignItems: "flex-end", padding: 6 }}>
+          <span style={{ fontSize: 8, color: "rgba(255,255,255,0.4)" }}>♪ AI Music · 3:12</span>
+        </div>
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-around", marginTop: 10, paddingTop: 8, borderTop: "0.5px solid rgba(255,255,255,0.06)" }}>
+        <span style={{ fontSize: 10, color: "#AFA9EC" }}>⊞</span>
+        <span style={{ fontSize: 10, color: "rgba(255,255,255,0.2)" }}>♡</span>
+        <span style={{ fontSize: 10, color: "rgba(255,255,255,0.2)" }}>◎</span>
+      </div>
+    </div>
+  );
+}
+
+function MockupOnstage() {
+  return (
+    <div style={{ padding: 12, background: "#0F0B09", height: "100%" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+        <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(240,153,123,0.2)", border: "0.5px solid rgba(240,153,123,0.3)", flexShrink: 0 }} />
+        <div>
+          <div style={{ fontSize: 9, color: "#F0EEE8", fontWeight: 500 }}>Aria Nova</div>
+          <div style={{ fontSize: 8, color: "rgba(255,255,255,0.3)" }}>Jazz · Brussels</div>
+        </div>
+        <div style={{ marginLeft: "auto", fontSize: 8, padding: "3px 8px", borderRadius: 3, background: "rgba(240,153,123,0.15)", color: "#F0997B", border: "0.5px solid rgba(240,153,123,0.3)", flexShrink: 0 }}>
+          Book
+        </div>
+      </div>
+      <div style={{ fontSize: 8, color: "rgba(255,255,255,0.25)", marginBottom: 6, letterSpacing: "0.08em" }}>UPCOMING DATES</div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 8, padding: "4px 6px", background: "rgba(255,255,255,0.03)", borderRadius: 3 }}>
+          <span style={{ color: "rgba(255,255,255,0.5)" }}>Jun 14 · Bozar</span>
+          <span style={{ color: "#F0997B" }}>2 left</span>
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 8, padding: "4px 6px", background: "rgba(255,255,255,0.03)", borderRadius: 3 }}>
+          <span style={{ color: "rgba(255,255,255,0.5)" }}>Jun 28 · Ancienne Belgique</span>
+          <span style={{ color: "rgba(255,255,255,0.3)" }}>Available</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MockupTorStock() {
+  return (
+    <div style={{ padding: 12, background: "#090F0D", height: "100%" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+        <span style={{ fontSize: 9, color: "#5DCAA5", fontFamily: "monospace", letterSpacing: "0.08em" }}>TORSTOCK</span>
+        <span style={{ fontSize: 8, color: "rgba(93,202,165,0.6)" }}>● 3 sites · live</span>
+      </div>
+      <table style={{ width: "100%", fontSize: 8, borderCollapse: "collapse" }}>
+        <tbody>
+          <tr style={{ color: "rgba(255,255,255,0.25)" }}>
+            <td style={{ padding: "2px 0" }}>Item</td>
+            <td style={{ textAlign: "right" }}>Units</td>
+            <td style={{ textAlign: "right" }}>Status</td>
+          </tr>
+          <tr>
+            <td style={{ padding: "3px 0", color: "rgba(255,255,255,0.6)" }}>Seringues 5ml</td>
+            <td style={{ textAlign: "right", color: "#F0EEE8" }}>1 240</td>
+            <td style={{ textAlign: "right", color: "#5DCAA5" }}>OK</td>
+          </tr>
+          <tr>
+            <td style={{ padding: "3px 0", color: "rgba(255,255,255,0.6)" }}>Gants L</td>
+            <td style={{ textAlign: "right", color: "#F0EEE8" }}>87</td>
+            <td style={{ textAlign: "right", color: "#EF9F27" }}>⚠ Low</td>
+          </tr>
+          <tr>
+            <td style={{ padding: "3px 0", color: "rgba(255,255,255,0.6)" }}>Masques FFP2</td>
+            <td style={{ textAlign: "right", color: "#F0EEE8" }}>0</td>
+            <td style={{ textAlign: "right", color: "#F0997B" }}>✕ Out</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function MockupTorfix() {
+  return (
+    <div style={{ padding: 12, background: "#090C0F", height: "100%" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
+        <span style={{ fontSize: 9, color: "#85B7EB", fontFamily: "monospace" }}>TORFIX</span>
+        <span style={{ fontSize: 8, color: "rgba(255,255,255,0.3)" }}>Dashboard</span>
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, marginBottom: 8 }}>
+        <div style={{ padding: 6, borderRadius: 4, background: "rgba(133,183,235,0.08)", border: "0.5px solid rgba(133,183,235,0.15)" }}>
+          <div style={{ fontSize: 7, color: "rgba(255,255,255,0.3)", marginBottom: 2 }}>RDV aujourd'hui</div>
+          <div style={{ fontSize: 14, fontWeight: 500, color: "#F0EEE8" }}>8</div>
+        </div>
+        <div style={{ padding: 6, borderRadius: 4, background: "rgba(133,183,235,0.05)", border: "0.5px solid rgba(133,183,235,0.1)" }}>
+          <div style={{ fontSize: 7, color: "rgba(255,255,255,0.3)", marginBottom: 2 }}>Clients actifs</div>
+          <div style={{ fontSize: 14, fontWeight: 500, color: "#F0EEE8" }}>34</div>
+        </div>
+      </div>
+      <div style={{ fontSize: 7, color: "rgba(255,255,255,0.25)", marginBottom: 4 }}>PROCHAIN RDV</div>
+      <div style={{ fontSize: 8, padding: "5px 6px", background: "rgba(255,255,255,0.03)", borderRadius: 3, borderLeft: "2px solid #85B7EB", color: "rgba(255,255,255,0.6)" }}>
+        14:30 — Marie Dubois · Coupe + couleur
+      </div>
+    </div>
+  );
+}
+
+const MOCKUPS = [MockupBloom, MockupOnstage, MockupTorStock, MockupTorfix];
+
+// ─── Main component ────────────────────────────────────────────────────────────
 
 export default function Systems() {
   const { lang } = useLang();
   const t = translations[lang];
 
   return (
-    <section id="systems" className="px-6 py-20 sm:px-8">
-      <div className="mx-auto max-w-6xl">
+    <section id="systems" className="relative z-10 px-6 sm:px-10 py-28">
+      <div className="mx-auto max-w-5xl">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-12 text-center"
+          variants={stagger}
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mb-12 flex items-baseline justify-between"
         >
-          <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">{t.sysTitle}</h2>
-          <p className="mt-3 text-gray-400">{t.sysSubtitle}</p>
+          <motion.h2
+            variants={fadeUp}
+            className="text-[clamp(22px,3vw,32px)] font-light text-[#F0EEE8]"
+          >
+            {t.sysTitle}
+          </motion.h2>
+          <motion.p
+            variants={fadeUp}
+            className="text-[13px] text-[#F0EEE8]/35 hidden sm:block"
+          >
+            {t.sysSubtitle}
+          </motion.p>
         </motion.div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        {/* 2×2 card grid */}
+        <motion.div
+          variants={stagger}
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+        >
           {t.sysItems.map((s, idx) => {
-            const Preview = previews[idx];
-            const accent = cardAccents[idx];
+            const meta = PROJECT_META[idx] ?? PROJECT_META[0];
+            const Mockup = MOCKUPS[idx] ?? MOCKUPS[0];
+
             return (
               <motion.div
                 key={s.number}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className={`group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-all duration-300 ${accent.border} hover:bg-white/[0.05]`}
+                variants={fadeUp}
+                whileHover={{ y: -4, borderColor: "rgba(255,255,255,0.15)" }}
+                transition={{ duration: 0.3, ease: EASE }}
+                className="group flex flex-col overflow-hidden rounded-xl cursor-pointer"
+                style={{
+                  border: "0.5px solid rgba(255,255,255,0.08)",
+                  background: "rgba(255,255,255,0.02)",
+                }}
+                onClick={() => {
+                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                }}
               >
-                {/* Glow on hover */}
-                <div className={`pointer-events-none absolute inset-0 bg-gradient-to-b ${accent.glow} to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100`} />
-
-                {/* Mini app preview */}
-                <div className="relative border-b border-white/10 bg-[#0d0d12]">
-                  {/* Window chrome */}
-                  <div className="flex items-center gap-1.5 border-b border-white/10 px-3 py-2">
-                    <div className="h-2 w-2 rounded-full bg-white/20" />
-                    <div className="h-2 w-2 rounded-full bg-white/20" />
-                    <div className="h-2 w-2 rounded-full bg-white/20" />
-                    <div className="ml-2 h-3.5 flex-1 rounded bg-white/5" />
+                {/* Browser mockup zone */}
+                <div className="shrink-0" style={{ height: 200 }}>
+                  <BrowserBar />
+                  <div style={{ height: "calc(200px - 33px)", overflow: "hidden" }}>
+                    <Mockup />
                   </div>
-                  <Preview />
                 </div>
 
-                {/* Content */}
-                <div className="relative flex flex-1 flex-col p-6">
-                  <div className={`mb-1 text-xs font-mono ${accent.num}`}>{s.number}</div>
-                  <h3 className="text-lg font-semibold leading-snug">{s.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-gray-400">{s.desc}</p>
-
-                  {/* Problem / Outcome */}
-                  <div className="mt-5 space-y-2 rounded-xl border border-white/10 bg-black/20 p-4 text-xs">
-                    <div className="flex gap-2">
-                      <span className="shrink-0 text-gray-500">{t.sysObjectiveLabel}</span>
-                      <span className="text-gray-300">{s.objective}</span>
-                    </div>
-                    <div className="h-px bg-white/5" />
-                    <div className="flex gap-2">
-                      <span className="shrink-0 text-gray-500">{t.sysOutcomeLabel}</span>
-                      <span className="text-gray-200">{s.outcome}</span>
+                {/* Info zone */}
+                <div className="flex flex-col flex-1 p-5">
+                  {/* Number + Live badge */}
+                  <div className="flex items-center justify-between mb-2">
+                    <span
+                      className="font-mono text-[10px] transition-colors duration-300"
+                      style={{ color: meta.accent }}
+                    >
+                      {s.number}
+                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1D9E75] opacity-75" />
+                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#1D9E75]" style={{ boxShadow: "0 0 5px #1D9E75" }} />
+                      </span>
+                      <span className="font-mono text-[10px] text-[#1D9E75]">Live</span>
                     </div>
                   </div>
 
+                  {/* Title */}
+                  <h3 className="text-[17px] font-medium text-[#F0EEE8] mb-2">
+                    {s.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-[13px] text-[#F0EEE8]/45 leading-relaxed line-clamp-3 mb-4 flex-1">
+                    {s.desc}
+                  </p>
+
                   {/* Tags */}
-                  <div className="mt-4 flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-2 mb-4">
                     {s.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-[11px] text-gray-400"
+                        className="font-mono text-[10px] px-2 py-1 rounded-[2px]"
+                        style={{ background: meta.tagBg, color: meta.accent }}
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
 
-                  {/* CTA */}
+                  {/* CTA link */}
                   <a
                     href="#contact"
-                    className={`mt-5 inline-flex items-center gap-1 text-sm font-medium transition ${accent.num} hover:gap-2`}
+                    className="text-[12px] transition-all duration-200 hover:underline underline-offset-2"
+                    style={{ color: meta.accent }}
+                    onClick={(e) => e.stopPropagation()}
                   >
-                    {t.exploreSystem}
+                    {t.exploreSystem} →
                   </a>
                 </div>
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

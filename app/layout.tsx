@@ -1,10 +1,22 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Space_Grotesk, Space_Mono } from "next/font/google";
 import { LangProvider } from "./providers/LangProvider";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", preload: false });
 import { siteConfig } from "@/lib/site";
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["300", "500", "600"],
+  variable: "--font-space-grotesk",
+  display: "swap",
+});
+
+const spaceMono = Space_Mono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-space-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -30,9 +42,7 @@ export const metadata: Metadata = {
   ],
 
   icons: {
-    icon: [{ url: "/icon.png?v=2", type: "image/png" }],
-    shortcut: "/icon.png?v=2",
-    apple: "/icon.png?v=2",
+    icon: "/favicon.ico",
   },
 
   openGraph: {
@@ -70,9 +80,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${spaceGrotesk.variable} ${spaceMono.variable}`}
+    >
       <body
-        className={`${inter.variable} font-sans bg-[#07070A] text-white antialiased`}
+        className="bg-[#09080F] text-[#F0EEE8] antialiased"
         suppressHydrationWarning
       >
         <LangProvider>{children}</LangProvider>

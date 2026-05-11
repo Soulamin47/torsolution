@@ -8,6 +8,9 @@ export type Translation = {
 
   // Hero
   heroBadge: string;
+  heroLine1: string;
+  heroLine2: string;
+  heroLine2italic: string;
   heroTitle: string;
   heroSubtitle: string;
   viewSystems: string;
@@ -15,11 +18,18 @@ export type Translation = {
   scroll: string;
   heroPoints: string[];
   availability: string;
+  heroStats: {
+    label: string;
+    value: number;
+    prefix?: string;
+    suffix: string;
+    sub: string;
+  }[];
 
   // Capabilities
   capTitle: string;
   capSubtitle: string;
-  capItems: { title: string; desc: string; tag: string; icon: string; tech: string }[];
+  capItems: { title: string; desc: string; tag: string; icon: string }[];
 
   // Systems
   sysTitle: string;
@@ -31,17 +41,19 @@ export type Translation = {
     number: string;
     title: string;
     desc: string;
-    objective: string;
-    outcome: string;
+    objective?: string;
+    outcome?: string;
     tags: string[];
-    image: string;
+    image?: string;
   }[];
 
   // Process
   procTitle: string;
   procSubtitle: string;
-  procSteps: { n: string; title: string; desc: string; icon: string; timing: string }[];
-  procGuarantees: string[];
+  procSteps: { n: string; title: string; desc: string; icon: string }[];
+
+  // Quick contact
+  quickCtaTitle: string;
 
   // CTA
   ctaTitle: string;
@@ -58,25 +70,9 @@ export type Translation = {
   contactMessage: string;
   contactSend: string;
   contactSuccess: string;
-  contactError: string;
 
   // Footer
   footerTagline: string;
-  footerLegal: string;
-  footerPrivacy: string;
-  footerCopyright: string;
-
-  // TrustBar
-  trustStats: { value: string; label: string }[];
-
-  // CTA trust badges
-  ctaTrustBadges: string[];
-  ctaWhatsApp: string;
-
-  // Cookie banner
-  cookieText: string;
-  cookieAccept: string;
-  cookieDecline: string;
 };
 
 export const translations: Record<"en" | "fr", Translation> = {
@@ -84,156 +80,150 @@ export const translations: Record<"en" | "fr", Translation> = {
     // Navbar / global
     tagline: "Web · Mobile · AI — Brussels",
     navSystems: "Work",
-    navCapabilities: "Expertise",
+    navCapabilities: "Services",
     navProcess: "Process",
     navContact: "Contact",
 
     // Hero
-    heroBadge: "Full-Stack Engineer · Brussels · Available",
+    heroBadge: "Full-stack engineer · Brussels / Remote",
+    heroLine1: "I build the product.",
+    heroLine2: "You build",
+    heroLine2italic: "the company.",
     heroTitle: "I build the product. You build the company.",
     heroSubtitle:
-      "I handle the entire technical side of your digital project — website, mobile app, internal tool or AI solution. You tell me what you need. I design, build, test and launch it.",
+      "Freelance developer based in Brussels — I help startups, agencies and businesses ship web apps, mobile apps, internal tools and AI platforms. From first commit to live product.",
     viewSystems: "See my work",
     startProject: "Let's talk",
     scroll: "Scroll",
     heroPoints: [
       "Delivered in weeks, not months",
-      "Web, mobile, AI & Web3 — all in-house",
-      "One engineer. Full ownership.",
+      "Clean code, built to last",
+      "One point of contact — no agency overhead",
     ],
-    availability: "🟢 Open to new projects · Brussels / Remote",
+    availability: "Available for new projects — Brussels / Remote",
+    heroStats: [
+      { label: "PROJECTS", value: 4, suffix: "", sub: "Live & delivered" },
+      { label: "EXPERIENCE", value: 8, suffix: "+", sub: "Years full-stack" },
+      { label: "RESPONSE", value: 24, prefix: "<", suffix: "h", sub: "Avg. reply time" },
+    ],
 
     // Capabilities
     capTitle: "What I build",
     capSubtitle:
-      "From websites to AI tools — I cover the full spectrum of digital product development, end to end.",
+      "End-to-end development for products that need to be fast, solid and maintainable.",
     capItems: [
       {
-        title: "Websites & web apps",
-        desc: "A website or web application that loads instantly, works on every screen and grows with your business. You focus on your product — I handle all the complexity behind the scenes.",
+        title: "Web applications",
+        desc: "Custom web apps built with Next.js or React — fast, responsive and ready to scale.",
         tag: "Web",
         icon: "</>",
-        tech: "Next.js · React · TypeScript · Node.js · PostgreSQL",
       },
       {
         title: "Mobile apps",
-        desc: "An app for iPhone and Android — built once, released on both stores. It looks and feels like a real native app, in half the time of traditional development.",
+        desc: "Cross-platform mobile apps with Flutter. One codebase, iOS and Android, polished UI.",
         tag: "Mobile",
-        icon: "📱",
-        tech: "Flutter · Dart · iOS · Android · REST APIs",
+        icon: "[]",
       },
       {
         title: "Business platforms",
-        desc: "A custom tool to manage your operations: dashboard, back-office, internal portal. Built around the way your team actually works — not adapted from a generic template.",
-        tag: "Platforms",
-        icon: "▦",
-        tech: "Next.js · Supabase · PostgreSQL · Recharts · Prisma",
-      },
-      {
-        title: "Social media platforms",
-        desc: "A platform to manage content, campaigns and interactions across your social channels in one place. Clear workflows, publishing calendar and performance tracking for your team.",
-        tag: "Social",
-        icon: "#",
-        tech: "Next.js · API Integrations · Automation · Analytics",
+        desc: "Dashboards, admin panels and internal tools to manage your operations and team.",
+        tag: "Platform",
+        icon: "DB",
       },
       {
         title: "AI & automation",
-        desc: "I integrate AI into your workflows to automate repetitive tasks, answer recurring questions and save your team hours every week — without replacing the tools they already use.",
+        desc: "Smart workflows, chatbots and AI integrations that save time and improve quality.",
         tag: "AI",
-        icon: "◈",
-        tech: "OpenAI · LangChain · n8n · Python · Webhooks",
+        icon: "AI",
       },
       {
         title: "Web3 & blockchain",
-        desc: "Smart contracts and blockchain systems, only when they genuinely add value to your product. I'll give you an honest answer before we build anything.",
+        desc: "Smart contracts and dApps when it genuinely makes sense for your product.",
         tag: "Web3",
         icon: "◇",
-        tech: "Solidity · Ethers.js · Hardhat · EVM · IPFS",
+      },
+      {
+        title: "Social platforms",
+        desc: "Creator-focused platforms and community tools built for engagement and growth.",
+        tag: "Social",
+        icon: "#",
       },
     ],
 
     // Systems
-    sysTitle: "Work",
-    sysSubtitle: "Real projects, built from the ground up. Each one in production, used daily.",
-    exploreSystem: "Start a similar project →",
-    sysObjectiveLabel: "Problem",
-    sysOutcomeLabel: "Outcome",
+    sysTitle: "Selected work",
+    sysSubtitle: "A few products I've shipped.",
+    exploreSystem: "Discuss a similar project",
+    sysObjectiveLabel: "Goal",
+    sysOutcomeLabel: "Result",
     sysItems: [
       {
         number: "01",
-        title: "Real-time analytics & reporting platform",
-        desc: "A B2B dashboard built from scratch — live metrics, dynamic filters, exportable reports. The kind of tool that replaces six spreadsheets and two weekly meetings.",
-        objective: "Give operations teams a single, real-time view of what's actually happening.",
-        outcome: "Hours saved on manual reporting every week. Decisions made on live data, not yesterday's exports.",
-        tags: ["Next.js", "TypeScript", "PostgreSQL", "B2B"],
-        image: "/system-1.jpg",
+        title: "Bloom",
+        desc: "AI-generated content platform — feed, music, short films",
+        tags: ["AI", "Social", "Next.js"],
       },
       {
         number: "02",
-        title: "AI assistant & workflow automation",
-        desc: "A conversational AI trained on internal knowledge — answers recurring questions, routes requests and triggers automated workflows, all inside the tools the team already uses.",
-        objective: "Kill the repetitive support load and the manual hand-offs eating up the team's time.",
-        outcome: "Support volume dropped. Response times cut. Hours of manual work automated, every single week.",
-        tags: ["AI", "LLM", "LangChain", "Next.js"],
-        image: "/system-2.jpg",
+        title: "Onstage",
+        desc: "Platform for artistic performers and event booking",
+        tags: ["Platform", "Flutter", "B2C"],
       },
       {
         number: "03",
-        title: "Inventory & stock management platform",
-        desc: "A centralized platform to track stock across multiple warehouses in real time. Automatic reorder alerts, movement history, supplier management — replacing spreadsheets and phone calls with one live system.",
-        objective: "Give a distribution business full, real-time visibility over stock levels across 3 locations.",
-        outcome: "Stockouts eliminated. Inventory accuracy drastically improved. Hours of manual reconciliation gone every week.",
-        tags: ["Next.js", "PostgreSQL", "Real-time", "ERP", "B2B"],
-        image: "/system-1.jpg",
+        title: "TorStock",
+        desc: "Real-time inventory management for hospital environments",
+        tags: ["B2B", "Healthcare", "React"],
+      },
+      {
+        number: "04",
+        title: "Torfix",
+        desc: "Digital tools & automation for local SMEs",
+        tags: ["SaaS", "SME", "Next.js"],
       },
     ],
 
     // Process
     procTitle: "How I work",
-    procSubtitle: "Transparent by design. You know exactly where things stand at every step — from brief to launch.",
+    procSubtitle: "A straightforward process — no surprises, no delays.",
     procSteps: [
       {
         n: "01",
-        title: "Understand the problem",
-        desc: "Before writing a line of code, I make sure we're solving the right thing. I ask the hard questions, push back on vague briefs and align on what success actually looks like.",
-        icon: "💡",
-        timing: "Day 1",
+        title: "Understand your goal",
+        desc: "We clarify what you need, who uses it and what success looks like. No vague briefs.",
+        icon: "01",
       },
       {
         n: "02",
-        title: "Define the build",
-        desc: "Scope, stack, timeline — written down, agreed on. You know exactly what you're getting before we start. No scope creep, no moving targets.",
-        icon: "⚡",
-        timing: "Days 2–3",
+        title: "Plan the solution",
+        desc: "I define the scope, tech stack and timeline. You know exactly what you're getting.",
+        icon: "02",
       },
       {
         n: "03",
-        title: "Build & iterate",
-        desc: "Short cycles, regular updates, real feedback loops. You follow the build as it happens — full visibility, no waiting months for a big reveal.",
-        icon: "🧱",
-        timing: "Weeks 1–4",
+        title: "Build & test",
+        desc: "I develop iteratively with quality checks. You follow progress throughout.",
+        icon: "03",
       },
       {
         n: "04",
-        title: "Ship & hand over",
-        desc: "I handle deployment, CI/CD and the first weeks post-launch. Then I hand it over clean — documented, tested and ready to grow.",
-        icon: "🚀",
-        timing: "Launch day",
+        title: "Ship & support",
+        desc: "I handle deployment, monitor the launch and stay available for what comes next.",
+        icon: "04",
       },
     ],
-    procGuarantees: [
-      "3–4 weeks on average",
-      "Weekly progress updates",
-      "Full handover included",
-    ],
+
+    // Quick contact
+    quickCtaTitle: "Got a project?",
 
     // CTA
-    ctaTitle: "Got a project?",
-    ctaSubtitle: "Tell me what you're building. I'll come back with a clear proposal — no pitch deck, no fluff.",
+    ctaTitle: "Got a project in mind?",
+    ctaSubtitle:
+      "Tell me what you're building. I'll get back to you within 24 hours.",
     ctaButton: "Send a message",
     ctaCall: "Book a 15-min call",
     ctaBrief: "Send a brief",
-    ctaResponse: "Response within 24 business hours.",
+    ctaResponse: "Reply within 24 business hours.",
 
     // Contact form
     contactName: "Your name",
@@ -242,187 +232,154 @@ export const translations: Record<"en" | "fr", Translation> = {
     contactMessage: "Tell me about your project...",
     contactSend: "Send message",
     contactSuccess: "✓ Message sent — I'll get back to you shortly.",
-    contactError: "Something went wrong. Please try again or email me directly.",
 
     // Footer
-    footerTagline: "Full-stack engineer · Brussels / Remote · Torsolution.be",
-    footerLegal: "Legal notices",
-    footerPrivacy: "Privacy policy",
-    footerCopyright: `© ${new Date().getFullYear()} Torsolution. All rights reserved.`,
-
-    // TrustBar
-    trustStats: [
-      { value: "8+", label: "Years of experience" },
-      { value: "< 4 wks", label: "Average delivery" },
-      { value: "< 24h", label: "Response time" },
-      { value: "100%", label: "Code ownership" },
-    ],
-
-    // CTA trust badges
-    ctaTrustBadges: [
-      "No commitment required",
-      "Clear proposal within 48h",
-      "Full code ownership transferred",
-      "NDA available on request",
-    ],
-    ctaWhatsApp: "Chat on WhatsApp",
-
-    // Cookie banner
-    cookieText: "This site uses cookies to remember your language preference and improve your experience.",
-    cookieAccept: "Accept",
-    cookieDecline: "Decline",
+    footerTagline: "Freelance developer · Brussels / Remote · Torsolution.be",
   },
 
   fr: {
     // Navbar / global
     tagline: "Web · Mobile · IA — Bruxelles",
-    navSystems: "Réalisations",
-    navCapabilities: "Expertise",
+    navSystems: "Projets",
+    navCapabilities: "Services",
     navProcess: "Méthode",
     navContact: "Contact",
 
     // Hero
-    heroBadge: "Ingénieur full-stack · Bruxelles · Disponible",
-    heroTitle: "Je construis le produit. Vous construisez l'entreprise.",
+    heroBadge: "Ingénieur full-stack · Bruxelles / Remote",
+    heroLine1: "Je conçois le produit.",
+    heroLine2: "Vous bâtissez",
+    heroLine2italic: "l'entreprise.",
+    heroTitle: "Je conçois le produit. Vous bâtissez l'entreprise.",
     heroSubtitle:
-      "Je prends en charge toute la partie technique de votre projet digital — site web, application mobile, outil interne ou solution IA. Vous décrivez ce dont vous avez besoin. Je conçois, développe, teste et lance.",
+      "Développeur freelance basé à Bruxelles — j'accompagne startups, agences et entreprises dans la création d'apps web, mobile, d'outils internes et de plateformes IA. Du premier commit au produit en ligne.",
     viewSystems: "Voir mes projets",
     startProject: "Parlons-en",
     scroll: "Défiler",
     heroPoints: [
       "Livré en semaines, pas en mois",
-      "Web, mobile, IA & Web3 — tout en interne",
-      "Un seul interlocuteur, de A à Z.",
+      "Code propre, pensé pour durer",
+      "Un seul interlocuteur — sans overhead d'agence",
     ],
-    availability: "🟢 Disponible · Bruxelles / Remote",
+    availability: "Disponible pour de nouveaux projets — Bruxelles / Remote",
+    heroStats: [
+      { label: "PROJETS", value: 4, suffix: "", sub: "Livrés en production" },
+      { label: "EXPÉRIENCE", value: 8, suffix: "+", sub: "Ans full-stack" },
+      { label: "RÉPONSE", value: 24, prefix: "<", suffix: "h", sub: "Délai moyen" },
+    ],
 
     // Capabilities
-    capTitle: "Ce que je construis",
+    capTitle: "Ce que je développe",
     capSubtitle:
-      "Du site vitrine à la solution IA sur mesure — je prends en charge l'intégralité du développement, de la conception au déploiement.",
+      "Du développement complet pour des produits rapides, fiables et maintenables.",
     capItems: [
       {
-        title: "Sites & applications web",
-        desc: "Un site ou une application web qui charge instantanément, fonctionne sur tous les écrans et grandit avec votre activité. Vous vous concentrez sur votre produit — je gère toute la complexité technique en coulisses.",
+        title: "Applications web",
+        desc: "Applications web sur mesure avec Next.js ou React — rapides, responsives et prêtes à évoluer.",
         tag: "Web",
         icon: "</>",
-        tech: "Next.js · React · TypeScript · Node.js · PostgreSQL",
       },
       {
         title: "Applications mobile",
-        desc: "Une app pour iPhone et Android — développée une fois, publiée sur les deux stores. Elle ressemble et se comporte comme une vraie app native, en deux fois moins de temps qu'un développement traditionnel.",
+        desc: "Apps cross-platform avec Flutter. Un seul codebase, iOS et Android, UI soignée.",
         tag: "Mobile",
-        icon: "📱",
-        tech: "Flutter · Dart · iOS · Android · REST APIs",
+        icon: "[]",
       },
       {
         title: "Plateformes métier",
-        desc: "Un outil sur mesure pour piloter votre activité : dashboard, back-office, portail interne. Conçu autour de la façon dont votre équipe travaille vraiment — pas adapté d'un template générique.",
-        tag: "Plateformes",
-        icon: "▦",
-        tech: "Next.js · Supabase · PostgreSQL · Recharts · Prisma",
-      },
-      {
-        title: "Plateformes réseaux sociaux",
-        desc: "Une plateforme pour gérer vos contenus, campagnes et interactions sur vos réseaux sociaux au même endroit. Planning éditorial, publication et suivi des performances pour toute l'équipe.",
-        tag: "Social",
-        icon: "#",
-        tech: "Next.js · Intégrations API · Automatisation · Analytics",
+        desc: "Dashboards, back-offices et outils internes pour piloter vos opérations.",
+        tag: "Plateforme",
+        icon: "DB",
       },
       {
         title: "IA & automatisation",
-        desc: "J'intègre l'intelligence artificielle dans vos processus pour automatiser les tâches répétitives, répondre aux questions récurrentes et faire gagner des heures à votre équipe chaque semaine — sans remplacer les outils qu'elle utilise déjà.",
+        desc: "Workflows intelligents, chatbots et intégrations IA pour gagner du temps.",
         tag: "IA",
-        icon: "◈",
-        tech: "OpenAI · LangChain · n8n · Python · Webhooks",
+        icon: "AI",
       },
       {
         title: "Web3 & blockchain",
-        desc: "Des smart contracts et systèmes blockchain, uniquement quand ils apportent une vraie valeur à votre produit. Je vous donne une réponse honnête avant de construire quoi que ce soit.",
+        desc: "Smart contracts et dApps quand c'est vraiment pertinent pour votre produit.",
         tag: "Web3",
         icon: "◇",
-        tech: "Solidity · Ethers.js · Hardhat · EVM · IPFS",
+      },
+      {
+        title: "Plateformes sociales",
+        desc: "Plateformes sociales pour créateurs et communautés, pensées pour l'engagement.",
+        tag: "Social",
+        icon: "#",
       },
     ],
 
     // Systems
-    sysTitle: "Réalisations",
-    sysSubtitle: "Des projets construits de A à Z. Chacun en production, utilisé au quotidien.",
-    exploreSystem: "Démarrer un projet similaire →",
-    sysObjectiveLabel: "Problème",
+    sysTitle: "Projets réalisés",
+    sysSubtitle: "Quelques produits que j'ai livrés.",
+    exploreSystem: "Discuter d'un projet similaire",
+    sysObjectiveLabel: "Objectif",
     sysOutcomeLabel: "Résultat",
     sysItems: [
       {
         number: "01",
-        title: "Plateforme d'analytics & reporting en temps réel",
-        desc: "Un dashboard B2B construit de zéro — métriques live, filtres dynamiques, rapports exportables. Le genre d'outil qui remplace six tableurs et deux réunions hebdomadaires.",
-        objective: "Donner aux équipes opérationnelles une vue unique et temps réel de ce qui se passe vraiment.",
-        outcome: "Des heures de reporting manuel économisées chaque semaine. Des décisions prises sur des données en temps réel, plus sur les exports de la veille.",
-        tags: ["Next.js", "TypeScript", "PostgreSQL", "B2B"],
-        image: "/system-1.jpg",
+        title: "Bloom",
+        desc: "Plateforme de contenu généré par IA — feed, musique, courts-métrages",
+        tags: ["IA", "Social", "Next.js"],
       },
       {
         number: "02",
-        title: "Assistant IA & automatisation de workflows",
-        desc: "Un assistant IA entraîné sur la base de connaissance interne — répond aux questions récurrentes, oriente les demandes et déclenche des traitements automatisés, directement depuis les outils que l'équipe utilise déjà.",
-        objective: "Supprimer la charge de support répétitive et les transferts manuels qui grignotent le temps de l'équipe.",
-        outcome: "Volume de support en baisse. Temps de réponse réduits. Des heures de travail manuel automatisées, chaque semaine.",
-        tags: ["IA", "LLM", "LangChain", "Next.js"],
-        image: "/system-2.jpg",
+        title: "Onstage",
+        desc: "Plateforme pour artistes et réservation d'événements",
+        tags: ["Plateforme", "Flutter", "B2C"],
       },
       {
         number: "03",
-        title: "Plateforme de gestion des stocks & inventaire",
-        desc: "Une plateforme centralisée pour suivre les stocks sur plusieurs entrepôts en temps réel. Alertes de réapprovisionnement automatiques, historique des mouvements, gestion des fournisseurs — pour remplacer tableurs et appels téléphoniques par un seul système live.",
-        objective: "Donner à une entreprise de distribution une visibilité totale et temps réel sur ses stocks dans 3 sites.",
-        outcome: "Ruptures de stock éliminées. Précision de l'inventaire nettement améliorée. Des heures de réconciliation manuelle supprimées chaque semaine.",
-        tags: ["Next.js", "PostgreSQL", "Temps réel", "ERP", "B2B"],
-        image: "/system-1.jpg",
+        title: "TorStock",
+        desc: "Gestion d'inventaire en temps réel pour environnements hospitaliers",
+        tags: ["B2B", "Santé", "React"],
+      },
+      {
+        number: "04",
+        title: "Torfix",
+        desc: "Outils digitaux & automatisation pour PME locales",
+        tags: ["SaaS", "PME", "Next.js"],
       },
     ],
 
     // Process
     procTitle: "Ma méthode",
-    procSubtitle: "Tout est transparent. Vous savez à chaque étape où en est votre projet — du brief au lancement.",
+    procSubtitle: "Un processus clair et honnête — sans surprises, sans retards.",
     procSteps: [
       {
         n: "01",
-        title: "Comprendre le problème",
-        desc: "Avant d'écrire une ligne de code, je m'assure qu'on résout le bon problème. Je pose les questions difficiles, je pousse sur les briefs vagues et je verrouille ce que le succès veut dire concrètement.",
-        icon: "💡",
-        timing: "Jour 1",
+        title: "Comprendre votre besoin",
+        desc: "On clarifie ensemble ce dont vous avez besoin, qui l'utilise et ce que le succès veut dire.",
+        icon: "01",
       },
       {
         n: "02",
-        title: "Cadrer le projet",
-        desc: "Périmètre, choix techniques, planning — écrit noir sur blanc, validé ensemble. Vous savez exactement ce que vous obtenez avant qu'on commence. Le budget est connu, les délais sont tenus.",
-        icon: "⚡",
-        timing: "Jours 2–3",
+        title: "Planifier la solution",
+        desc: "Je définis le périmètre, la stack et le calendrier. Vous savez exactement ce que vous obtenez.",
+        icon: "02",
       },
       {
         n: "03",
-        title: "Construire & itérer",
-        desc: "Développement en cycles courts, retours réguliers, ajustements au fil de l'eau. Vous suivez l'avancement en continu — pas d'attente de plusieurs semaines sans nouvelles.",
-        icon: "🧱",
-        timing: "Semaines 1–4",
+        title: "Développer & tester",
+        desc: "Je développe en itérations avec des contrôles qualité. Vous suivez l'avancement tout au long.",
+        icon: "03",
       },
       {
         n: "04",
-        title: "Livrer & transmettre",
-        desc: "Je gère le déploiement, la CI/CD et les premières semaines post-lancement. Puis je transmets proprement — documenté, testé, prêt à évoluer.",
-        icon: "🚀",
-        timing: "Jour J",
+        title: "Livrer & accompagner",
+        desc: "Je gère le déploiement, surveille le lancement et reste disponible pour la suite.",
+        icon: "04",
       },
     ],
-    procGuarantees: [
-      "3–4 semaines en moyenne",
-      "Points hebdomadaires",
-      "Passation complète incluse",
-    ],
+
+    // Quick contact
+    quickCtaTitle: "Un projet en tête ?",
 
     // CTA
-    ctaTitle: "Un projet ?",
-    ctaSubtitle: "Dites-moi ce que vous construisez. Je reviens avec une proposition claire — pas de pitch deck, pas de blabla.",
+    ctaTitle: "Un projet en tête ?",
+    ctaSubtitle: "Dites-moi ce que vous construisez. Je vous réponds sous 24h.",
     ctaButton: "Envoyer un message",
     ctaCall: "Réserver un appel de 15 min",
     ctaBrief: "Envoyer un brief",
@@ -432,37 +389,11 @@ export const translations: Record<"en" | "fr", Translation> = {
     contactName: "Votre nom",
     contactEmail: "Votre email",
     contactSubject: "Sujet (optionnel)",
-    contactMessage: "Décrivez votre projet...",
+    contactMessage: "Parlez-moi de votre projet...",
     contactSend: "Envoyer",
     contactSuccess: "✓ Message envoyé — je reviens vers vous rapidement.",
-    contactError: "Une erreur s'est produite. Réessayez ou contactez-moi directement par email.",
 
     // Footer
-    footerTagline: "Ingénieur full-stack · Bruxelles / Remote · Torsolution.be",
-    footerLegal: "Mentions légales",
-    footerPrivacy: "Politique de confidentialité",
-    footerCopyright: `© ${new Date().getFullYear()} Torsolution. Tous droits réservés.`,
-
-    // TrustBar
-    trustStats: [
-      { value: "8+", label: "Années d'expérience" },
-      { value: "< 4 sem", label: "Délai moyen de livraison" },
-      { value: "< 24h", label: "Temps de réponse" },
-      { value: "100%", label: "Propriété du code" },
-    ],
-
-    // CTA trust badges
-    ctaTrustBadges: [
-      "Sans engagement",
-      "Proposition claire sous 48h",
-      "Propriété totale du code",
-      "NDA disponible sur demande",
-    ],
-    ctaWhatsApp: "Discuter sur WhatsApp",
-
-    // Cookie banner
-    cookieText: "Ce site utilise des cookies pour mémoriser votre préférence de langue et améliorer votre expérience.",
-    cookieAccept: "Accepter",
-    cookieDecline: "Refuser",
+    footerTagline: "Développeur freelance · Bruxelles / Remote · Torsolution.be",
   },
 };

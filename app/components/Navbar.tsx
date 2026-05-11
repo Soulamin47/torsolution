@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { useLang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
 
@@ -13,12 +12,10 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll(); // check position on mount
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
@@ -26,34 +23,26 @@ export default function Navbar() {
     };
   }, [open]);
 
-  const NavLink = ({ href, label }: { href: string; label: string }) => (
-    <a href={href} className="font-medium hover:text-white transition-colors duration-200">
-      {label}
-    </a>
-  );
-
-  const MobileItem = ({ href, label }: { href: string; label: string }) => (
-    <a
-      href={href}
-      onClick={() => setOpen(false)}
-      className="block w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-gray-200 hover:bg-white/10 transition"
-    >
-      {label}
-    </a>
-  );
-
   const LangToggle = () => (
-    <div className="flex items-center gap-2 text-sm text-gray-400">
+    <div className="flex items-center gap-2 font-mono text-[11px] text-[#F0EEE8]/30">
       <button
         onClick={() => setLang("en")}
-        className={lang === "en" ? "text-white font-medium" : "hover:text-white transition"}
+        className={
+          lang === "en"
+            ? "text-[#F0EEE8]/80"
+            : "hover:text-[#F0EEE8]/60 transition-colors"
+        }
       >
         EN
       </button>
-      <span className="opacity-40">/</span>
+      <span>/</span>
       <button
         onClick={() => setLang("fr")}
-        className={lang === "fr" ? "text-white font-medium" : "hover:text-white transition"}
+        className={
+          lang === "fr"
+            ? "text-[#F0EEE8]/80"
+            : "hover:text-[#F0EEE8]/60 transition-colors"
+        }
       >
         FR
       </button>
@@ -62,65 +51,99 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 overflow-visible ${
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         scrolled || open
-          ? "backdrop-blur-md bg-black/45 border-b border-white/10"
+          ? "border-b border-white/[0.06] bg-[#09080F]/90 backdrop-blur-sm"
           : "bg-transparent"
       }`}
     >
-      <div className={`w-full px-6 sm:px-10 transition-all duration-300 ${scrolled ? "py-1" : "py-3"}`}>
-        <div className="mx-auto max-w-7xl flex items-center justify-between">
-          {/* Brand */}
-          <a href="#" className="flex items-center">
-            <Image
-              src="/logo-cropped.png"
-              alt="Torsolution"
-              width={256}
-              height={256}
-              className="object-contain transition-all duration-300"
-              style={{ width: scrolled ? 70 : 140, height: scrolled ? 70 : 140 }}
-              priority
-            />
-          </a>
+      <div className="mx-auto max-w-6xl px-6 sm:px-10 py-4 flex items-center justify-between">
+        {/* Logo */}
+        <a href="#" className="font-mono text-[13px] tracking-widest text-[#F0EEE8]/80 hover:text-[#F0EEE8] transition-colors">
+          TOR<span className="text-[#AFA9EC]">_</span>SOLUTION
+        </a>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-10 text-base tracking-wide text-gray-300">
-            <NavLink href="#systems" label={t.navSystems} />
-            <NavLink href="#capabilities" label={t.navCapabilities} />
-            <NavLink href="#process" label={t.navProcess} />
-            <NavLink href="#contact" label={t.navContact} />
-            <span className="opacity-20">|</span>
-            <LangToggle />
-          </div>
-
-          {/* Mobile */}
-          <div className="md:hidden flex items-center gap-3">
-            <LangToggle />
-            <button
-              onClick={() => setOpen((v) => !v)}
-              className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition"
-              aria-label="Menu"
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-8">
+          {[
+            { href: "#systems", label: t.navSystems },
+            { href: "#capabilities", label: t.navCapabilities },
+            { href: "#process", label: t.navProcess },
+            { href: "#contact", label: t.navContact },
+          ].map(({ href, label }) => (
+            <a
+              key={href}
+              href={href}
+              className="text-[11px] uppercase tracking-[0.1em] text-[#F0EEE8]/40 hover:text-[#F0EEE8]/80 transition-colors"
             >
-              {open ? "✕" : "☰"}
-            </button>
+              {label}
+            </a>
+          ))}
+
+          <div className="h-3 w-px bg-white/10" />
+
+          {/* Status */}
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1D9E75] opacity-75" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#1D9E75]" />
+            </span>
+            <span className="font-mono text-[10px] text-[#F0EEE8]/30 tracking-wide">
+              Available · Brussels
+            </span>
           </div>
+
+          <div className="h-3 w-px bg-white/10" />
+          <LangToggle />
+        </div>
+
+        {/* Mobile */}
+        <div className="md:hidden flex items-center gap-4">
+          <LangToggle />
+          <button
+            onClick={() => setOpen((v) => !v)}
+            className="font-mono text-[11px] text-[#F0EEE8]/40 hover:text-[#F0EEE8]/80 transition-colors"
+            aria-label="Menu"
+          >
+            {open ? "CLOSE" : "MENU"}
+          </button>
         </div>
       </div>
 
       {/* Mobile overlay */}
       {open && (
-        <div className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm md:hidden">
+        <div className="fixed inset-0 z-40 bg-[#09080F]/95 backdrop-blur-sm md:hidden">
           <div
             className="absolute inset-0"
             onClick={() => setOpen(false)}
             aria-label="Close menu"
           />
-          <div className="relative z-10 pt-[84px] px-6">
-            <div className="mx-auto max-w-7xl rounded-2xl border border-white/10 bg-black/60 p-4 space-y-3">
-              <MobileItem href="#systems" label={t.navSystems} />
-              <MobileItem href="#capabilities" label={t.navCapabilities} />
-              <MobileItem href="#process" label={t.navProcess} />
-              <MobileItem href="#contact" label={t.navContact} />
+          <div className="relative z-10 pt-20 px-6">
+            <div className="space-y-1">
+              {[
+                { href: "#systems", label: t.navSystems },
+                { href: "#capabilities", label: t.navCapabilities },
+                { href: "#process", label: t.navProcess },
+                { href: "#contact", label: t.navContact },
+              ].map(({ href, label }) => (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={() => setOpen(false)}
+                  className="block py-4 border-b border-white/[0.06] font-mono text-[11px] uppercase tracking-[0.1em] text-[#F0EEE8]/40 hover:text-[#F0EEE8]/80 transition-colors"
+                >
+                  {label}
+                </a>
+              ))}
+              <div className="pt-6 flex items-center gap-2">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1D9E75] opacity-75" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#1D9E75]" />
+                </span>
+                <span className="font-mono text-[10px] text-[#F0EEE8]/30 tracking-wide">
+                  Available · Brussels
+                </span>
+              </div>
             </div>
           </div>
         </div>
