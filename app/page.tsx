@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import ProjectLauncher from "./components/ProjectLauncher";
 import TechStack from "./components/TechStack";
 import Capabilities from "./components/Capabilities";
 import Systems from "./components/Systems";
@@ -10,6 +11,7 @@ import CursorSpotlight from "./components/CursorSpotlight";
 import BackgroundOrbs from "./components/BackgroundOrbs";
 import SeoSync from "./components/SeoSync";
 import CookieBanner from "./components/CookieBanner";
+import FloatingWhatsApp from "./components/FloatingWhatsApp";
 
 export default function Home() {
   return (
@@ -20,6 +22,7 @@ export default function Home() {
         <SeoSync />
         <Navbar />
         <Hero />
+        <ProjectLauncher />
         <TechStack />
         <Capabilities />
         <Systems />
@@ -27,6 +30,7 @@ export default function Home() {
         <CTA />
         <Footer />
         <CookieBanner />
+        <FloatingWhatsApp />
       </div>
     </main>
   );
