@@ -7,6 +7,29 @@ import { translations } from "@/lib/translations";
 import { siteConfig } from "@/lib/site";
 import { fadeUp, stagger } from "@/lib/animations";
 
+function WhatsAppIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+    >
+      <path
+        d="M5.6 18.5 6.5 15A7.4 7.4 0 1 1 9 17.4l-3.4 1.1Z"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9.4 8.7c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.6 1.4c.1.3.1.5-.1.7l-.4.5c.5.9 1.2 1.6 2.2 2.1l.5-.5c.2-.2.4-.2.7-.1l1.4.6c.3.1.4.3.4.6v.4c0 .4-.2.7-.5.9-.5.3-1.4.4-2.7-.2-1.4-.6-2.6-1.5-3.6-2.7-1-1.1-1.6-2.5-1.6-3.2 0-.2.1-.4.2-.5Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
 export default function CTA() {
   const { lang } = useLang();
   const t = translations[lang];
@@ -95,6 +118,16 @@ export default function CTA() {
                 className="inline-flex items-center justify-center rounded-[4px] border border-white/[0.15] px-6 py-3 text-[13px] font-medium text-[#F0EEE8] transition-colors hover:bg-white/[0.04]"
               >
                 {t.ctaBrief}
+              </a>
+              <a
+                href={siteConfig.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-[4px] border border-[#1D9E75]/40 bg-[#1D9E75]/10 px-6 py-3 text-[13px] font-medium text-[#5DCAA5] transition-colors hover:bg-[#1D9E75]/15"
+                aria-label={`${t.ctaWhatsapp} +32466386565`}
+              >
+                <WhatsAppIcon className="h-4 w-4" />
+                {t.ctaWhatsapp}
               </a>
             </motion.div>
 

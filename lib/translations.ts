@@ -63,6 +63,7 @@ export type Translation = {
   ctaButton: string;
   ctaCall: string;
   ctaBrief: string;
+  ctaWhatsapp: string;
   ctaResponse: string;
 
   // Contact form
@@ -239,6 +240,7 @@ export const translations: Record<"en" | "fr", Translation> = {
     ctaButton: "Send a message",
     ctaCall: "Book a 15-min call",
     ctaBrief: "Send a brief",
+    ctaWhatsapp: "WhatsApp",
     ctaResponse: "Reply within 24 business hours.",
 
     // Contact form
@@ -413,6 +415,7 @@ export const translations: Record<"en" | "fr", Translation> = {
     ctaButton: "Envoyer un message",
     ctaCall: "Réserver un appel de 15 min",
     ctaBrief: "Envoyer un brief",
+    ctaWhatsapp: "WhatsApp",
     ctaResponse: "Réponse sous 24h ouvrées.",
 
     // Contact form
