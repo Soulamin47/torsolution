@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import CursorSpotlight from "./components/CursorSpotlight";
 import BackgroundOrbs from "./components/BackgroundOrbs";
 import SeoSync from "./components/SeoSync";
+import CookieBanner from "./components/CookieBanner";
 
 export default function Home() {
   return (
@@ -25,6 +26,7 @@ export default function Home() {
         <Process />
         <CTA />
         <Footer />
+        <CookieBanner />
       </div>
     </main>
   );

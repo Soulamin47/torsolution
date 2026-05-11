@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useLang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
 import { siteConfig } from "@/lib/site";
@@ -35,6 +36,18 @@ export default function Footer() {
                 {label}
               </a>
             ))}
+            <Link
+              href="/privacy"
+              className="font-mono text-[11px] text-[#F0EEE8]/30 hover:text-[#F0EEE8]/60 transition-colors"
+            >
+              {lang === "fr" ? "Confidentialité" : "Privacy"}
+            </Link>
+            <Link
+              href="/legal"
+              className="font-mono text-[11px] text-[#F0EEE8]/30 hover:text-[#F0EEE8]/60 transition-colors"
+            >
+              {lang === "fr" ? "Mentions légales" : "Legal"}
+            </Link>
           </div>
         </div>
 

@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 export type Lang = "en" | "fr";
 
@@ -13,26 +20,29 @@ type LangContextValue = {
 const LangContext = createContext<LangContextValue | null>(null);
 
 export function LangProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("en");
+  const [lang, setLangState] = useState<Lang>(() => {
+    if (typeof window === "undefined") return "en";
+    const saved = window.localStorage.getItem("lang");
+    return saved === "en" || saved === "fr" ? saved : "en";
+  });
 
-  // Hydrate from localStorage once on mount — no flash, no null render
   useEffect(() => {
-    const saved = window.localStorage.getItem("lang") as Lang | null;
-    if (saved === "en" || saved === "fr") {
-      setLangState(saved);
-      document.documentElement.lang = saved;
-    }
-  }, []);
+    document.documentElement.lang = lang;
+  }, [lang]);
 
-  const setLang = (l: Lang) => {
+  const setLang = useCallback((l: Lang) => {
     setLangState(l);
     window.localStorage.setItem("lang", l);
-    document.documentElement.lang = l;
-  };
+  }, []);
 
-  const toggleLang = () => setLang(lang === "en" ? "fr" : "en");
+  const toggleLang = useCallback(() => {
+    setLang(lang === "en" ? "fr" : "en");
+  }, [lang, setLang]);
 
-  const value = useMemo(() => ({ lang, setLang, toggleLang }), [lang]);
+  const value = useMemo(
+    () => ({ lang, setLang, toggleLang }),
+    [lang, setLang, toggleLang],
+  );
 
   return <LangContext.Provider value={value}>{children}</LangContext.Provider>;
 }

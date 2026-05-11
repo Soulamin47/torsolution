@@ -8,16 +8,35 @@ type ContactPayload = {
   message?: string;
 };
 
-function buildHtml(name: string, email: string, subject: string | undefined, message: string) {
+function escapeHtml(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function buildHtml(
+  name: string,
+  email: string,
+  subject: string | undefined,
+  message: string,
+) {
+  const safeName = escapeHtml(name);
+  const safeEmail = escapeHtml(email);
+  const safeSubject = subject ? escapeHtml(subject) : undefined;
+  const safeMessage = escapeHtml(message);
+
   return `
     <div style="font-family:sans-serif;max-width:600px;margin:auto;background:#07070A;color:#fff;padding:32px;border-radius:12px;border:1px solid rgba(255,255,255,0.1)">
-      <h2 style="color:#60a5fa;margin:0 0 24px">New contact — Torsolution</h2>
+      <h2 style="color:#60a5fa;margin:0 0 24px">New contact - Torsolution</h2>
       <table style="width:100%;border-collapse:collapse;font-size:14px">
-        <tr><td style="color:#9ca3af;padding:6px 0;width:80px">Name</td><td style="color:#fff">${name}</td></tr>
-        <tr><td style="color:#9ca3af;padding:6px 0">Email</td><td style="color:#60a5fa"><a href="mailto:${email}" style="color:#60a5fa">${email}</a></td></tr>
-        ${subject ? `<tr><td style="color:#9ca3af;padding:6px 0">Subject</td><td style="color:#fff">${subject}</td></tr>` : ""}
+        <tr><td style="color:#9ca3af;padding:6px 0;width:80px">Name</td><td style="color:#fff">${safeName}</td></tr>
+        <tr><td style="color:#9ca3af;padding:6px 0">Email</td><td style="color:#60a5fa"><a href="mailto:${safeEmail}" style="color:#60a5fa">${safeEmail}</a></td></tr>
+        ${safeSubject ? `<tr><td style="color:#9ca3af;padding:6px 0">Subject</td><td style="color:#fff">${safeSubject}</td></tr>` : ""}
       </table>
-      <div style="margin-top:24px;padding:16px;background:rgba(255,255,255,0.05);border-radius:8px;font-size:14px;line-height:1.7;white-space:pre-wrap;color:#e5e7eb">${message}</div>
+      <div style="margin-top:24px;padding:16px;background:rgba(255,255,255,0.05);border-radius:8px;font-size:14px;line-height:1.7;white-space:pre-wrap;color:#e5e7eb">${safeMessage}</div>
     </div>
   `;
 }

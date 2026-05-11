@@ -174,7 +174,7 @@ function BentoCard({
       {/* Web large — tech pills */}
       {isWebLarge && (
         <div className="mt-4 flex flex-wrap gap-2">
-          {["Next.js", "TypeScript", "Tailwind", "PostgreSQL"].map((tech) => (
+          {WEB_TECH.map((tech) => (
             <span
               key={tech}
               className="text-[9px] font-mono opacity-30 border border-white/10 px-2 py-1 rounded-sm"

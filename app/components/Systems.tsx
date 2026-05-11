@@ -127,7 +127,7 @@ function MockupTorfix() {
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, marginBottom: 8 }}>
         <div style={{ padding: 6, borderRadius: 4, background: "rgba(133,183,235,0.08)", border: "0.5px solid rgba(133,183,235,0.15)" }}>
-          <div style={{ fontSize: 7, color: "rgba(255,255,255,0.3)", marginBottom: 2 }}>RDV aujourd'hui</div>
+          <div style={{ fontSize: 7, color: "rgba(255,255,255,0.3)", marginBottom: 2 }}>RDV aujourd&apos;hui</div>
           <div style={{ fontSize: 14, fontWeight: 500, color: "#F0EEE8" }}>8</div>
         </div>
         <div style={{ padding: 6, borderRadius: 4, background: "rgba(133,183,235,0.05)", border: "0.5px solid rgba(133,183,235,0.1)" }}>

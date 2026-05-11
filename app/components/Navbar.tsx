@@ -2,7 +2,46 @@
 
 import { useEffect, useState } from "react";
 import { useLang } from "@/app/providers/LangProvider";
+import type { Lang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
+
+function LangToggle({
+  lang,
+  setLang,
+}: {
+  lang: Lang;
+  setLang: (lang: Lang) => void;
+}) {
+  return (
+    <div className="flex items-center gap-2 font-mono text-[11px] text-[#F0EEE8]/30">
+      <button
+        type="button"
+        onClick={() => setLang("en")}
+        className={
+          lang === "en"
+            ? "text-[#F0EEE8]/80"
+            : "hover:text-[#F0EEE8]/60 transition-colors"
+        }
+        aria-pressed={lang === "en"}
+      >
+        EN
+      </button>
+      <span>/</span>
+      <button
+        type="button"
+        onClick={() => setLang("fr")}
+        className={
+          lang === "fr"
+            ? "text-[#F0EEE8]/80"
+            : "hover:text-[#F0EEE8]/60 transition-colors"
+        }
+        aria-pressed={lang === "fr"}
+      >
+        FR
+      </button>
+    </div>
+  );
+}
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -22,32 +61,6 @@ export default function Navbar() {
       document.body.style.overflow = "";
     };
   }, [open]);
-
-  const LangToggle = () => (
-    <div className="flex items-center gap-2 font-mono text-[11px] text-[#F0EEE8]/30">
-      <button
-        onClick={() => setLang("en")}
-        className={
-          lang === "en"
-            ? "text-[#F0EEE8]/80"
-            : "hover:text-[#F0EEE8]/60 transition-colors"
-        }
-      >
-        EN
-      </button>
-      <span>/</span>
-      <button
-        onClick={() => setLang("fr")}
-        className={
-          lang === "fr"
-            ? "text-[#F0EEE8]/80"
-            : "hover:text-[#F0EEE8]/60 transition-colors"
-        }
-      >
-        FR
-      </button>
-    </div>
-  );
 
   return (
     <nav
@@ -89,17 +102,17 @@ export default function Navbar() {
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#1D9E75]" />
             </span>
             <span className="font-mono text-[10px] text-[#F0EEE8]/30 tracking-wide">
-              Available · Brussels
+              {t.navStatus}
             </span>
           </div>
 
           <div className="h-3 w-px bg-white/10" />
-          <LangToggle />
+          <LangToggle lang={lang} setLang={setLang} />
         </div>
 
         {/* Mobile */}
         <div className="md:hidden flex items-center gap-4">
-          <LangToggle />
+          <LangToggle lang={lang} setLang={setLang} />
           <button
             onClick={() => setOpen((v) => !v)}
             className="font-mono text-[11px] text-[#F0EEE8]/40 hover:text-[#F0EEE8]/80 transition-colors"
@@ -141,7 +154,7 @@ export default function Navbar() {
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#1D9E75]" />
                 </span>
                 <span className="font-mono text-[10px] text-[#F0EEE8]/30 tracking-wide">
-                  Available · Brussels
+                  {t.navStatus}
                 </span>
               </div>
             </div>

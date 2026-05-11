@@ -59,8 +59,10 @@ export default function OpenGraphImage() {
             alignItems: "center",
           }}
         >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={logoUrl}
+            alt=""
             width="160"
             height="160"
             style={{ marginBottom: 40 }}

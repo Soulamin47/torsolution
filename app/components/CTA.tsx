@@ -11,8 +11,10 @@ export default function CTA() {
   const { lang } = useLang();
   const t = translations[lang];
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState(false);
+  const [sending, setSending] = useState(false);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const form = e.currentTarget;
@@ -21,12 +23,26 @@ export default function CTA() {
     const subject = (form.elements.namedItem("subject") as HTMLInputElement).value;
     const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
 
-    const mailSubject = encodeURIComponent(subject || `Project inquiry from ${name}`);
-    const mailBody = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+    setSending(true);
+    setSent(false);
+    setError(false);
 
-    window.location.href = `mailto:${siteConfig.email}?subject=${mailSubject}&body=${mailBody}`;
-    setSent(true);
-    form.reset();
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, subject, message }),
+      });
+
+      if (!response.ok) throw new Error("Contact request failed");
+
+      setSent(true);
+      form.reset();
+    } catch {
+      setError(true);
+    } finally {
+      setSending(false);
+    }
   }
 
   // Shared input style — focus ring via inline style on focus event
@@ -106,11 +122,21 @@ export default function CTA() {
               </div>
             )}
 
+            {error && (
+              <div className="border border-[#F0997B]/30 bg-[#F0997B]/10 px-4 py-3 text-[13px] text-[#F0997B] rounded-[4px]">
+                {t.contactError}{" "}
+                <a href={`mailto:${siteConfig.email}`} className="underline underline-offset-2">
+                  {siteConfig.email}
+                </a>
+              </div>
+            )}
+
             <div className="grid gap-3 sm:grid-cols-2">
               <input
                 name="name"
                 required
                 placeholder={t.contactName}
+                aria-label={t.contactName}
                 className={baseInput}
               />
               <input
@@ -118,6 +144,7 @@ export default function CTA() {
                 type="email"
                 required
                 placeholder={t.contactEmail}
+                aria-label={t.contactEmail}
                 className={baseInput}
               />
             </div>
@@ -125,6 +152,7 @@ export default function CTA() {
             <input
               name="subject"
               placeholder={t.contactSubject}
+              aria-label={t.contactSubject}
               className={baseInput}
             />
 
@@ -133,14 +161,16 @@ export default function CTA() {
               required
               rows={5}
               placeholder={t.contactMessage}
+              aria-label={t.contactMessage}
               className={`${baseInput} resize-none`}
             />
 
             <button
               type="submit"
-              className="w-full rounded-[4px] bg-[#AFA9EC] px-6 py-3 text-[13px] font-medium text-[#09080F] transition-opacity hover:opacity-90"
+              disabled={sending}
+              className="w-full rounded-[4px] bg-[#AFA9EC] px-6 py-3 text-[13px] font-medium text-[#09080F] transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {t.contactSend}
+              {sending ? t.contactSending : t.contactSend}
             </button>
           </motion.form>
         </div>

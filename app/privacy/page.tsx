@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useLang } from "@/app/providers/LangProvider";
 import { siteConfig } from "@/lib/site";
 
@@ -121,9 +122,9 @@ export default function PrivacyPage() {
   return (
     <main className="min-h-screen bg-[#07070A] text-white px-6 py-24 sm:px-8">
       <div className="mx-auto max-w-2xl">
-        <a href="/" className="mb-10 inline-flex items-center gap-2 text-sm text-gray-400 transition hover:text-white">
+        <Link href="/" className="mb-10 inline-flex items-center gap-2 text-sm text-gray-400 transition hover:text-white">
           ← {lang === "fr" ? "Retour" : "Back"}
-        </a>
+        </Link>
         <h1 className="text-3xl font-semibold tracking-tight">{c.title}</h1>
         <p className="mt-4 text-sm leading-relaxed text-gray-400">{c.intro}</p>
         <div className="mt-10 space-y-8">

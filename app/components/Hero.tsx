@@ -50,7 +50,7 @@ function StatItem({
   const count = useCountUp(value, 1800);
 
   return (
-    <div className="px-8 first:pl-0 last:pr-0 flex-1">
+    <div className="min-w-0 px-4 py-4 sm:flex-1 sm:px-8 sm:py-0 sm:first:pl-0 sm:last:pr-0">
       <div className="font-mono text-[10px] uppercase tracking-wider text-[#F0EEE8]/25 mb-2.5">
         {label}
       </div>
@@ -158,7 +158,7 @@ export default function Hero() {
         <div className="h-px bg-white/[0.06]" />
 
         {/* Zone basse — stats */}
-        <div className="flex divide-x divide-white/[0.06] py-10">
+        <div className="grid grid-cols-1 divide-y divide-white/[0.06] py-6 sm:flex sm:divide-x sm:divide-y-0 sm:py-10">
           {t.heroStats.map((stat) => (
             <StatItem
               key={stat.label}

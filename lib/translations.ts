@@ -5,6 +5,7 @@ export type Translation = {
   navCapabilities: string;
   navProcess: string;
   navContact: string;
+  navStatus: string;
 
   // Hero
   heroBadge: string;
@@ -70,7 +71,9 @@ export type Translation = {
   contactSubject: string;
   contactMessage: string;
   contactSend: string;
+  contactSending: string;
   contactSuccess: string;
+  contactError: string;
 
   // Cookie banner
   cookieText: string;
@@ -89,6 +92,7 @@ export const translations: Record<"en" | "fr", Translation> = {
     navCapabilities: "Services",
     navProcess: "Process",
     navContact: "Contact",
+    navStatus: "Available · Brussels",
 
     // Hero
     heroBadge: "Full-stack engineer · Brussels / Remote",
@@ -243,7 +247,9 @@ export const translations: Record<"en" | "fr", Translation> = {
     contactSubject: "Subject (optional)",
     contactMessage: "Tell me about your project...",
     contactSend: "Send message",
+    contactSending: "Sending...",
     contactSuccess: "✓ Message sent — I'll get back to you shortly.",
+    contactError: "The message could not be sent. Please email me directly.",
 
     // Cookie banner
     cookieText: "We use essential cookies to keep the site running smoothly.",
@@ -261,6 +267,7 @@ export const translations: Record<"en" | "fr", Translation> = {
     navCapabilities: "Services",
     navProcess: "Méthode",
     navContact: "Contact",
+    navStatus: "Disponible · Bruxelles",
 
     // Hero
     heroBadge: "Ingénieur full-stack · Bruxelles / Remote",
@@ -414,7 +421,9 @@ export const translations: Record<"en" | "fr", Translation> = {
     contactSubject: "Sujet (optionnel)",
     contactMessage: "Parlez-moi de votre projet...",
     contactSend: "Envoyer",
+    contactSending: "Envoi...",
     contactSuccess: "✓ Message envoyé — je reviens vers vous rapidement.",
+    contactError: "Le message n'a pas pu être envoyé. Écrivez-moi directement par email.",
 
     // Cookie banner
     cookieText: "Nous utilisons des cookies essentiels pour assurer le bon fonctionnement du site.",
