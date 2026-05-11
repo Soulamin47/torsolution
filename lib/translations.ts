@@ -25,6 +25,7 @@ export type Translation = {
     suffix: string;
     sub: string;
   }[];
+  trustStats: { value: string; label: string }[];
 
   // Capabilities
   capTitle: string;
@@ -71,6 +72,11 @@ export type Translation = {
   contactSend: string;
   contactSuccess: string;
 
+  // Cookie banner
+  cookieText: string;
+  cookieDecline: string;
+  cookieAccept: string;
+
   // Footer
   footerTagline: string;
 };
@@ -105,6 +111,12 @@ export const translations: Record<"en" | "fr", Translation> = {
       { label: "PROJECTS", value: 4, suffix: "", sub: "Live & delivered" },
       { label: "EXPERIENCE", value: 8, suffix: "+", sub: "Years full-stack" },
       { label: "RESPONSE", value: 24, prefix: "<", suffix: "h", sub: "Avg. reply time" },
+    ],
+    trustStats: [
+      { value: "4+", label: "Products shipped" },
+      { value: "8+", label: "Years experience" },
+      { value: "<24h", label: "Average reply" },
+      { value: "BE", label: "Brussels based" },
     ],
 
     // Capabilities
@@ -233,6 +245,11 @@ export const translations: Record<"en" | "fr", Translation> = {
     contactSend: "Send message",
     contactSuccess: "✓ Message sent — I'll get back to you shortly.",
 
+    // Cookie banner
+    cookieText: "We use essential cookies to keep the site running smoothly.",
+    cookieDecline: "Decline",
+    cookieAccept: "Accept",
+
     // Footer
     footerTagline: "Freelance developer · Brussels / Remote · Torsolution.be",
   },
@@ -266,6 +283,12 @@ export const translations: Record<"en" | "fr", Translation> = {
       { label: "PROJETS", value: 4, suffix: "", sub: "Livrés en production" },
       { label: "EXPÉRIENCE", value: 8, suffix: "+", sub: "Ans full-stack" },
       { label: "RÉPONSE", value: 24, prefix: "<", suffix: "h", sub: "Délai moyen" },
+    ],
+    trustStats: [
+      { value: "4+", label: "Produits livrés" },
+      { value: "8+", label: "Ans d'expérience" },
+      { value: "<24h", label: "Réponse moyenne" },
+      { value: "BE", label: "Basé à Bruxelles" },
     ],
 
     // Capabilities
@@ -392,6 +415,11 @@ export const translations: Record<"en" | "fr", Translation> = {
     contactMessage: "Parlez-moi de votre projet...",
     contactSend: "Envoyer",
     contactSuccess: "✓ Message envoyé — je reviens vers vous rapidement.",
+
+    // Cookie banner
+    cookieText: "Nous utilisons des cookies essentiels pour assurer le bon fonctionnement du site.",
+    cookieDecline: "Refuser",
+    cookieAccept: "Accepter",
 
     // Footer
     footerTagline: "Développeur freelance · Bruxelles / Remote · Torsolution.be",
