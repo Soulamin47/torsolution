@@ -24,7 +24,9 @@
       "Bash(node scripts/process-logo.mjs)",
       "Bash(npm list *)",
       "Bash(npx tsc *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
