@@ -22,11 +22,17 @@ import NowWidget from "./NowWidget";
 const IntroOverlay = dynamic(() => import("./IntroOverlay"), { ssr: false });
 
 export default function HomeClient() {
-  const [introDone, setIntroDone] = useState(false);
+  const alreadySeen = typeof window !== "undefined" && sessionStorage.getItem("intro_seen") === "1";
+  const [introDone, setIntroDone] = useState(alreadySeen);
+
+  const handleIntroDone = () => {
+    sessionStorage.setItem("intro_seen", "1");
+    setIntroDone(true);
+  };
 
   return (
     <main className="min-h-screen bg-[#09080F] text-[#F0EEE8] pt-20 overflow-x-hidden">
-      <IntroOverlay onDone={() => setIntroDone(true)} />
+      {!alreadySeen && <IntroOverlay onDone={handleIntroDone} />}
 
       <BackgroundOrbs />
       <CursorSpotlight />
