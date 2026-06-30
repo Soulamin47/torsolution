@@ -309,7 +309,7 @@ function useIntroCanvas(
         ctx.fillStyle   = `rgba(232,234,240,${0.5 + pulseT2 * 0.4})`;
         ctx.textAlign   = "center";
         ctx.textBaseline = "top";
-        const textY = cy() + 68 * (s / scale);
+        const textY = cy() + 58 * scale;
         ctx.shadowBlur  = 12 + pulseT2 * 20;
         ctx.shadowColor = "#A78BFA";
         ctx.fillText("TOR_SOLUTION", cx(), textY);
