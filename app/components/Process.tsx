@@ -5,10 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
 import { EASE } from "@/lib/animations";
+import { siteConfig } from "@/lib/site";
 
 const ACCENT_COLORS = ["#AFA9EC", "#85B7EB", "#5DCAA5", "#5DCAA5"];
 
-// ─── Step visuals (JSX, not translated) ───────────────────────────────────────
+// ─── Step visuals (left panel mockups) ────────────────────────────────────────
 
 const stepVisuals = [
   // 01 — Understand: project brief
@@ -240,12 +241,161 @@ const stepVisuals = [
   </div>,
 ];
 
+// ─── Pill choice component ─────────────────────────────────────────────────────
+
+function Pills({
+  options,
+  value,
+  onChange,
+  accent,
+}: {
+  options: string[];
+  value: string;
+  onChange: (v: string) => void;
+  accent: string;
+}) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {options.map((opt) => (
+        <button
+          key={opt}
+          type="button"
+          onClick={() => onChange(opt)}
+          className="px-3 py-1.5 text-[11px] rounded-[4px] border transition-all duration-200"
+          style={{
+            borderColor: value === opt ? accent : "rgba(255,255,255,0.12)",
+            color: value === opt ? accent : "rgba(255,255,255,0.4)",
+            background: value === opt ? `${accent}18` : "transparent",
+          }}
+        >
+          {opt}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// ─── Form state type ───────────────────────────────────────────────────────────
+
+type FormData = {
+  projectType: string;
+  projectDesc: string;
+  budget: string;
+  deadline: string;
+  hasDesign: string;
+  name: string;
+  email: string;
+  whatsapp: string;
+};
+
+const INIT: FormData = {
+  projectType: "",
+  projectDesc: "",
+  budget: "",
+  deadline: "",
+  hasDesign: "",
+  name: "",
+  email: "",
+  whatsapp: "",
+};
+
 // ─── Component ─────────────────────────────────────────────────────────────────
 
 export default function Process() {
   const { lang } = useLang();
   const t = translations[lang];
+  const w = t.procWizard;
   const [active, setActive] = useState(0);
+  const [form, setForm] = useState<FormData>(INIT);
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  function setField(field: keyof FormData, value: string) {
+    setForm((prev) => ({ ...prev, [field]: value }));
+  }
+
+  function buildWhatsAppUrl() {
+    const lines = [
+      `*${lang === "fr" ? "Brief TorSolution" : "TorSolution Brief"}*`,
+      "",
+      `*${w.summaryLabels.type}:* ${form.projectType || "—"}`,
+      `*${w.summaryLabels.desc}:* ${form.projectDesc || "—"}`,
+      `*${w.summaryLabels.budget}:* ${form.budget || "—"}`,
+      `*${w.summaryLabels.deadline}:* ${form.deadline || "—"}`,
+      `*${w.summaryLabels.design}:* ${form.hasDesign || "—"}`,
+      `*${w.summaryLabels.name}:* ${form.name || "—"}`,
+      `*${w.summaryLabels.email}:* ${form.email || "—"}`,
+      ...(form.whatsapp ? [`*${w.summaryLabels.whatsapp}:* ${form.whatsapp}`] : []),
+    ].join("\n");
+    return `${siteConfig.whatsapp}?text=${encodeURIComponent(lines)}`;
+  }
+
+  async function handleSubmit() {
+    setSending(true);
+    const message = [
+      `${w.summaryLabels.type}: ${form.projectType}`,
+      `${w.summaryLabels.desc}: ${form.projectDesc}`,
+      `${w.summaryLabels.budget}: ${form.budget}`,
+      `${w.summaryLabels.deadline}: ${form.deadline}`,
+      `${w.summaryLabels.design}: ${form.hasDesign}`,
+      form.whatsapp ? `${w.summaryLabels.whatsapp}: ${form.whatsapp}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    try {
+      await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          subject: `Brief: ${form.projectType}`,
+          message,
+        }),
+      });
+    } catch {
+      // WhatsApp still opens if email fails
+    }
+
+    window.open(buildWhatsAppUrl(), "_blank");
+    setSending(false);
+    setSent(true);
+  }
+
+  const accent = ACCENT_COLORS[active];
+
+  const labelStyle: React.CSSProperties = {
+    display: "block",
+    fontFamily: "monospace",
+    fontSize: 9,
+    letterSpacing: "0.1em",
+    textTransform: "uppercase",
+    color: "rgba(255,255,255,0.3)",
+    marginBottom: 8,
+  };
+
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    background: "rgba(255,255,255,0.03)",
+    border: "0.5px solid rgba(255,255,255,0.1)",
+    borderRadius: 4,
+    padding: "8px 10px",
+    fontSize: 12,
+    color: "#F0EEE8",
+    outline: "none",
+  };
+
+  const summaryRows = [
+    { label: w.summaryLabels.type, value: form.projectType },
+    { label: w.summaryLabels.desc, value: form.projectDesc },
+    { label: w.summaryLabels.budget, value: form.budget },
+    { label: w.summaryLabels.deadline, value: form.deadline },
+    { label: w.summaryLabels.design, value: form.hasDesign },
+    { label: w.summaryLabels.name, value: form.name },
+    { label: w.summaryLabels.email, value: form.email },
+    ...(form.whatsapp ? [{ label: w.summaryLabels.whatsapp, value: form.whatsapp }] : []),
+  ];
 
   return (
     <section id="process" className="relative z-10 px-6 sm:px-10 py-28">
@@ -261,13 +411,11 @@ export default function Process() {
 
         {/* Step nav */}
         <div className="relative mb-0">
-          {/* Connecting line */}
           <div
             aria-hidden="true"
             className="absolute top-[4px] left-0 right-0 h-px z-0"
             style={{ background: "rgba(255,255,255,0.08)" }}
           />
-
           <div className="relative grid grid-cols-4 z-10">
             {t.procSteps.map((s, idx) => (
               <button
@@ -275,7 +423,6 @@ export default function Process() {
                 onClick={() => setActive(idx)}
                 className="flex flex-col items-start pr-4 text-left"
               >
-                {/* Dot */}
                 <div
                   className="w-[10px] h-[10px] rounded-full border mb-5 transition-all duration-300"
                   style={{
@@ -286,8 +433,6 @@ export default function Process() {
                       active === idx ? `0 0 8px ${ACCENT_COLORS[idx]}60` : "none",
                   }}
                 />
-
-                {/* Large number */}
                 <div
                   aria-hidden="true"
                   className="font-mono text-[40px] font-bold leading-none select-none mb-2 transition-all duration-300"
@@ -298,13 +443,10 @@ export default function Process() {
                 >
                   {s.n}
                 </div>
-
-                {/* Title */}
                 <div
                   className="text-[12px] font-medium transition-colors duration-300 hidden sm:block"
                   style={{
-                    color:
-                      active === idx ? "#F0EEE8" : "rgba(255,255,255,0.3)",
+                    color: active === idx ? "#F0EEE8" : "rgba(255,255,255,0.3)",
                   }}
                 >
                   {s.title}
@@ -322,12 +464,11 @@ export default function Process() {
             border: "0.5px solid rgba(255,255,255,0.08)",
           }}
         >
-          {/* Mockup */}
+          {/* Left — mockup visual */}
           <div
             className="overflow-hidden"
             style={{ borderBottom: "0.5px solid rgba(255,255,255,0.06)" }}
           >
-            <div className="md:hidden" />
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
@@ -342,7 +483,7 @@ export default function Process() {
             </AnimatePresence>
           </div>
 
-          {/* Text */}
+          {/* Right — wizard form */}
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
@@ -350,44 +491,204 @@ export default function Process() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.28, ease: EASE }}
-              className="p-8 flex flex-col justify-center"
+              className="p-8 flex flex-col justify-between"
               style={{ borderLeft: "0.5px solid rgba(255,255,255,0.06)" }}
             >
-              <div
-                className="font-mono text-[10px] tracking-widest uppercase mb-4"
-                style={{ color: ACCENT_COLORS[active] }}
-              >
-                {String(active + 1).padStart(2, "0")} / 04
-              </div>
-              <h3 className="text-[20px] font-medium text-[#F0EEE8] mb-3">
-                {t.procSteps[active].title}
-              </h3>
-              <p className="text-[13px] text-[#F0EEE8]/45 leading-relaxed">
-                {t.procSteps[active].desc}
-              </p>
+              <div>
+                {/* Step counter + title */}
+                <div
+                  className="font-mono text-[10px] tracking-widest uppercase mb-3"
+                  style={{ color: accent }}
+                >
+                  {String(active + 1).padStart(2, "0")} / 04
+                </div>
+                <h3 className="text-[18px] font-medium text-[#F0EEE8] mb-5">
+                  {t.procSteps[active].title}
+                </h3>
 
-              {/* Prev / Next */}
+                {/* ── Step 0: Understand ── */}
+                {active === 0 && (
+                  <div className="flex flex-col gap-5">
+                    <div>
+                      <label style={labelStyle}>{w.projectTypeQ}</label>
+                      <Pills
+                        options={w.projectTypeOptions}
+                        value={form.projectType}
+                        onChange={(v) => setField("projectType", v)}
+                        accent={accent}
+                      />
+                    </div>
+                    <div>
+                      <label style={labelStyle}>{w.projectDescQ}</label>
+                      <textarea
+                        value={form.projectDesc}
+                        onChange={(e) => setField("projectDesc", e.target.value)}
+                        placeholder={w.projectDescPlaceholder}
+                        rows={3}
+                        style={{ ...inputStyle, resize: "none", lineHeight: 1.6 }}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* ── Step 1: Plan ── */}
+                {active === 1 && (
+                  <div className="flex flex-col gap-5">
+                    <div>
+                      <label style={labelStyle}>{w.budgetQ}</label>
+                      <Pills
+                        options={w.budgetOptions}
+                        value={form.budget}
+                        onChange={(v) => setField("budget", v)}
+                        accent={accent}
+                      />
+                    </div>
+                    <div>
+                      <label style={labelStyle}>{w.deadlineQ}</label>
+                      <Pills
+                        options={w.deadlineOptions}
+                        value={form.deadline}
+                        onChange={(v) => setField("deadline", v)}
+                        accent={accent}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* ── Step 2: Build ── */}
+                {active === 2 && (
+                  <div className="flex flex-col gap-5">
+                    <div>
+                      <label style={labelStyle}>{w.designQ}</label>
+                      <Pills
+                        options={w.designOptions}
+                        value={form.hasDesign}
+                        onChange={(v) => setField("hasDesign", v)}
+                        accent={accent}
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label style={labelStyle}>{w.nameLabel}</label>
+                        <input
+                          type="text"
+                          value={form.name}
+                          onChange={(e) => setField("name", e.target.value)}
+                          style={inputStyle}
+                        />
+                      </div>
+                      <div>
+                        <label style={labelStyle}>{w.emailLabel}</label>
+                        <input
+                          type="email"
+                          value={form.email}
+                          onChange={(e) => setField("email", e.target.value)}
+                          style={inputStyle}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label style={labelStyle}>{w.whatsappLabel}</label>
+                      <input
+                        type="tel"
+                        value={form.whatsapp}
+                        onChange={(e) => setField("whatsapp", e.target.value)}
+                        placeholder={w.whatsappPlaceholder}
+                        style={inputStyle}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* ── Step 3: Ship — Summary brief card ── */}
+                {active === 3 && (
+                  <div
+                    style={{
+                      background: "rgba(93,202,165,0.04)",
+                      border: "0.5px solid rgba(93,202,165,0.15)",
+                      borderRadius: 8,
+                      padding: "14px 16px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontFamily: "monospace",
+                        fontSize: 9,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        color: "#5DCAA5",
+                        marginBottom: 12,
+                      }}
+                    >
+                      {w.summaryTitle}
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      {summaryRows.map((row) => (
+                        <div key={row.label} className="flex gap-2 text-[11px]">
+                          <span
+                            style={{
+                              color: "rgba(255,255,255,0.3)",
+                              minWidth: 72,
+                              flexShrink: 0,
+                            }}
+                          >
+                            {row.label}
+                          </span>
+                          <span
+                            style={{
+                              color: row.value
+                                ? "rgba(255,255,255,0.75)"
+                                : "rgba(255,255,255,0.2)",
+                            }}
+                          >
+                            {row.value || "—"}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Navigation */}
               <div className="flex gap-3 mt-8">
                 <button
                   onClick={() => setActive(Math.max(0, active - 1))}
                   disabled={active === 0}
                   className="px-4 py-2 text-[12px] border border-white/[0.1] rounded-[4px] text-[#F0EEE8]/50 disabled:opacity-20 hover:border-white/25 hover:text-[#F0EEE8]/80 transition"
                 >
-                  ← Prev
+                  ← {w.prev}
                 </button>
-                <button
-                  onClick={() =>
-                    setActive(Math.min(t.procSteps.length - 1, active + 1))
-                  }
-                  disabled={active === t.procSteps.length - 1}
-                  className="px-4 py-2 text-[12px] rounded-[4px] disabled:opacity-20 hover:opacity-80 transition"
-                  style={{
-                    border: `0.5px solid ${ACCENT_COLORS[active]}`,
-                    color: ACCENT_COLORS[active],
-                  }}
-                >
-                  Next →
-                </button>
+
+                {active < 3 ? (
+                  <button
+                    onClick={() => setActive(active + 1)}
+                    className="px-4 py-2 text-[12px] rounded-[4px] hover:opacity-80 transition"
+                    style={{
+                      border: `0.5px solid ${accent}`,
+                      color: accent,
+                    }}
+                  >
+                    {w.next} →
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleSubmit}
+                    disabled={sending || sent || !form.name || !form.email}
+                    className="px-5 py-2 text-[12px] rounded-[4px] transition disabled:opacity-40"
+                    style={{
+                      background: "rgba(93,202,165,0.1)",
+                      border: "0.5px solid #5DCAA5",
+                      color: "#5DCAA5",
+                    }}
+                  >
+                    {sent
+                      ? `✓ ${lang === "fr" ? "Envoyé !" : "Sent!"}`
+                      : sending
+                      ? w.sendingBtn
+                      : w.sendBtn}
+                  </button>
+                )}
               </div>
             </motion.div>
           </AnimatePresence>

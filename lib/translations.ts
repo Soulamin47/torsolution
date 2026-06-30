@@ -56,6 +56,37 @@ export type Translation = {
   procTitle: string;
   procSubtitle: string;
   procSteps: { n: string; title: string; desc: string; icon: string }[];
+  procWizard: {
+    projectTypeQ: string;
+    projectTypeOptions: string[];
+    projectDescQ: string;
+    projectDescPlaceholder: string;
+    budgetQ: string;
+    budgetOptions: string[];
+    deadlineQ: string;
+    deadlineOptions: string[];
+    designQ: string;
+    designOptions: string[];
+    nameLabel: string;
+    emailLabel: string;
+    whatsappLabel: string;
+    whatsappPlaceholder: string;
+    summaryTitle: string;
+    summaryLabels: {
+      type: string;
+      desc: string;
+      budget: string;
+      deadline: string;
+      design: string;
+      name: string;
+      email: string;
+      whatsapp: string;
+    };
+    sendBtn: string;
+    sendingBtn: string;
+    prev: string;
+    next: string;
+  };
 
   // Quick contact
   quickCtaTitle: string;
@@ -236,6 +267,38 @@ export const translations: Record<"en" | "fr", Translation> = {
       },
     ],
 
+    procWizard: {
+      projectTypeQ: "What type of project?",
+      projectTypeOptions: ["MVP", "Mobile App", "AI Automation", "Business Platform", "Other"],
+      projectDescQ: "Describe in one sentence what you want to build",
+      projectDescPlaceholder: "e.g. A platform that lets users book…",
+      budgetQ: "What is your estimated budget?",
+      budgetOptions: ["< 5k€", "5–15k€", "15–30k€", "30k€+", "Let's discuss"],
+      deadlineQ: "What is your deadline?",
+      deadlineOptions: ["ASAP", "1 month", "2–3 months", "6 months+"],
+      designQ: "Do you already have a design or mockups?",
+      designOptions: ["Yes", "No", "In progress"],
+      nameLabel: "Your name",
+      emailLabel: "Your email",
+      whatsappLabel: "WhatsApp number (optional)",
+      whatsappPlaceholder: "+32 4XX XXX XXX",
+      summaryTitle: "YOUR BRIEF",
+      summaryLabels: {
+        type: "Type",
+        desc: "Idea",
+        budget: "Budget",
+        deadline: "Deadline",
+        design: "Design",
+        name: "Name",
+        email: "Email",
+        whatsapp: "WhatsApp",
+      },
+      sendBtn: "Send my brief",
+      sendingBtn: "Sending…",
+      prev: "Prev",
+      next: "Next",
+    },
+
     // Quick contact
     quickCtaTitle: "Got a project?",
 
@@ -414,6 +477,38 @@ export const translations: Record<"en" | "fr", Translation> = {
         icon: "04",
       },
     ],
+
+    procWizard: {
+      projectTypeQ: "Quel type de projet ?",
+      projectTypeOptions: ["MVP", "App mobile", "Automation IA", "Plateforme métier", "Autre"],
+      projectDescQ: "Décrivez en une phrase ce que vous voulez construire",
+      projectDescPlaceholder: "ex. Une plateforme qui permet aux utilisateurs de…",
+      budgetQ: "Quel est votre budget estimé ?",
+      budgetOptions: ["< 5k€", "5–15k€", "15–30k€", "30k€+", "À discuter"],
+      deadlineQ: "Quelle est votre deadline ?",
+      deadlineOptions: ["ASAP", "1 mois", "2–3 mois", "6 mois+"],
+      designQ: "Avez-vous déjà un design ou des maquettes ?",
+      designOptions: ["Oui", "Non", "En cours"],
+      nameLabel: "Votre nom",
+      emailLabel: "Votre email",
+      whatsappLabel: "Votre numéro WhatsApp (optionnel)",
+      whatsappPlaceholder: "+32 4XX XXX XXX",
+      summaryTitle: "VOTRE BRIEF",
+      summaryLabels: {
+        type: "Type",
+        desc: "Idée",
+        budget: "Budget",
+        deadline: "Deadline",
+        design: "Design",
+        name: "Nom",
+        email: "Email",
+        whatsapp: "WhatsApp",
+      },
+      sendBtn: "Envoyer mon brief",
+      sendingBtn: "Envoi en cours…",
+      prev: "Préc.",
+      next: "Suivant",
+    },
 
     // Quick contact
     quickCtaTitle: "Un projet en tête ?",
