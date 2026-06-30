@@ -34,20 +34,81 @@ function easeIn(t: number)  { return t * t * t; }
 function clamp(v: number, lo: number, hi: number) { return Math.max(lo, Math.min(hi, v)); }
 function lerp(a: number, b: number, t: number) { return a + (b - a) * t; }
 
+type Particle = {
+  x: number; y: number; ox: number; oy: number;
+  vx: number; vy: number;
+  color: string; r: number; alpha: number; trail: number;
+};
+
 export default function IntroOverlay({ onDone }: { onDone: () => void }) {
   const canvasRef   = useRef<HTMLCanvasElement>(null);
   const [visible, setVisible] = useState(true);
-  const [ready, setReady]     = useState(false);   // assembly done
-  const [exitT, setExitT]     = useState<number | null>(null); // scroll exit start
+  const [ready, setReady]     = useState(false);
   const exitRef    = useRef<number | null>(null);
   const startRef   = useRef<number | null>(null);
   const rafRef     = useRef<number>(0);
   const doneRef    = useRef(false);
+  const particles  = useRef<Particle[]>([]);
 
   const triggerExit = useCallback(() => {
     if (exitRef.current !== null || doneRef.current) return;
     exitRef.current = performance.now();
-    setExitT(exitRef.current);
+
+    // Spawn particles from every node + edge fragment
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const s = Math.min(canvas.width, canvas.height) * 0.48 / 120;
+    const cx = canvas.width  / 2;
+    const cy = canvas.height / 2 - canvas.height * 0.04;
+    const tx = (x: number) => cx + (x - 60) * s;
+    const ty = (y: number) => cy + (y - 60) * s;
+
+    const pts: Particle[] = [];
+
+    // From nodes — big bright pieces
+    for (const n of NODES) {
+      const nx = tx(n.x), ny = ty(n.y);
+      const dx = nx - cx, dy = ny - cy;
+      const angle = Math.atan2(dy, dx);
+      for (let k = 0; k < 6; k++) {
+        const a = angle + (Math.random() - 0.5) * 1.2;
+        const spd = 8 + Math.random() * 18;
+        pts.push({ x: nx, y: ny, ox: nx, oy: ny,
+          vx: Math.cos(a) * spd, vy: Math.sin(a) * spd,
+          color: n.color, r: n.r * s * (0.8 + Math.random()), alpha: 1, trail: 0.85 });
+      }
+    }
+
+    // From edge midpoints — smaller streaks
+    for (const [ai, bi] of EDGES) {
+      const a = NODES[ai], b = NODES[bi];
+      for (let k = 0; k < 5; k++) {
+        const t2 = 0.1 + Math.random() * 0.8;
+        const ex = tx(lerp(a.x, b.x, t2)), ey = ty(lerp(a.y, b.y, t2));
+        const dx = ex - cx, dy = ey - cy;
+        const angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 0.9;
+        const spd = 6 + Math.random() * 22;
+        pts.push({ x: ex, y: ey, ox: ex, oy: ey,
+          vx: Math.cos(angle) * spd, vy: Math.sin(angle) * spd,
+          color: Math.random() > 0.5 ? "#A78BFA" : "#5EEAD4",
+          r: (0.8 + Math.random() * 2) * s, alpha: 0.8 + Math.random() * 0.2, trail: 0.78 });
+      }
+    }
+
+    // Extra ambient sparks filling the whole screen
+    for (let k = 0; k < 60; k++) {
+      const angle = Math.random() * Math.PI * 2;
+      const dist  = 20 + Math.random() * 80;
+      const ex = cx + Math.cos(angle) * dist * s / 10;
+      const ey = cy + Math.sin(angle) * dist * s / 10;
+      const spd = 4 + Math.random() * 26;
+      pts.push({ x: ex, y: ey, ox: ex, oy: ey,
+        vx: Math.cos(angle) * spd, vy: Math.sin(angle) * spd,
+        color: ["#A78BFA","#5EEAD4","#E8EAF0","#85B7EB"][Math.floor(Math.random()*4)],
+        r: (0.4 + Math.random() * 1.8) * s, alpha: 0.6 + Math.random() * 0.4, trail: 0.72 });
+    }
+
+    particles.current = pts;
   }, []);
 
   const skip = useCallback(() => { triggerExit(); }, [triggerExit]);
@@ -90,14 +151,13 @@ export default function IntroOverlay({ onDone }: { onDone: () => void }) {
       const H = canvas.height;
       const s = logoScale();
 
-      // ── Exit animation (scroll triggered) ──────────────────────────────────
+      // ── Exit animation ──────────────────────────────────────────────────────
       let exitProgress = 0;
       if (exitRef.current !== null) {
-        const exitElapsed = ts - exitRef.current;
-        exitProgress = clamp(exitElapsed / 900, 0, 1);
-        exitProgress = easeIn(exitProgress);
+        const ee = ts - exitRef.current;
+        exitProgress = clamp(ee / 1100, 0, 1);
 
-        if (exitElapsed > 950 && !doneRef.current) {
+        if (ee > 1200 && !doneRef.current) {
           doneRef.current = true;
           setVisible(false);
           onDone();
@@ -106,17 +166,20 @@ export default function IntroOverlay({ onDone }: { onDone: () => void }) {
         }
       }
 
-      // ── Background ──────────────────────────────────────────────────────────
-      // During exit: bg fades out AND scales up (zoom into logo feel)
-      const bgAlpha = exitProgress > 0 ? 1 - exitProgress : 1;
+      // Background fades out with slight delay (site shows behind)
+      const bgAlpha = exitProgress > 0
+        ? Math.max(0, 1 - easeIn(clamp(exitProgress / 0.7, 0, 1)))
+        : 1;
+
       ctx.clearRect(0, 0, W, H);
       ctx.fillStyle = `rgba(9,8,15,${bgAlpha})`;
       ctx.fillRect(0, 0, W, H);
 
-      // ── Logo zoom-into during exit ──────────────────────────────────────────
-      const zoomScale = exitProgress > 0 ? 1 + exitProgress * 3.5 : 1;
+      // Logo scale: stays normal then zooms hard on exit
+      const zoomScale = exitProgress > 0 ? 1 + easeIn(exitProgress) * 4 : 1;
       const scale = s * zoomScale;
-      const alpha = exitProgress > 0 ? 1 - exitProgress : 1;
+      // Logo fades fast at the start of exit
+      const alpha = exitProgress > 0 ? Math.max(0, 1 - exitProgress * 3) : 1;
 
       ctx.globalAlpha = alpha;
 
@@ -203,6 +266,66 @@ export default function IntroOverlay({ onDone }: { onDone: () => void }) {
       }
 
       ctx.globalAlpha = 1;
+
+      // ── Explosion particles ─────────────────────────────────────────────────
+      if (exitRef.current !== null && particles.current.length > 0) {
+        for (const p of particles.current) {
+          p.ox = p.x; p.oy = p.y;
+          p.vx *= 1.09; p.vy *= 1.09; // accelerate outward
+          p.vy += 0.18;               // slight gravity pull down (toward page)
+          p.x += p.vx; p.y += p.vy;
+          p.alpha *= p.trail;
+          if (p.alpha < 0.01) continue;
+
+          // Streak from old to new pos
+          const len = Math.sqrt((p.x-p.ox)**2 + (p.y-p.oy)**2);
+          if (len > 2) {
+            ctx.save();
+            ctx.globalAlpha = p.alpha * 0.5;
+            ctx.strokeStyle = p.color;
+            ctx.lineWidth   = p.r * 0.7;
+            ctx.shadowBlur  = 10; ctx.shadowColor = p.color;
+            ctx.beginPath(); ctx.moveTo(p.ox, p.oy); ctx.lineTo(p.x, p.y); ctx.stroke();
+            ctx.restore();
+          }
+
+          ctx.save();
+          ctx.globalAlpha = p.alpha;
+          ctx.shadowBlur  = 14; ctx.shadowColor = p.color;
+          ctx.fillStyle   = p.color;
+          ctx.beginPath(); ctx.arc(p.x, p.y, Math.max(0.3, p.r), 0, Math.PI * 2); ctx.fill();
+          ctx.restore();
+        }
+
+        // Shockwave ring
+        const sw = clamp((ts - exitRef.current) / 400, 0, 1);
+        const swR = easeOut(sw) * Math.max(W, H) * 0.75;
+        const swA = (1 - sw) * 0.8;
+        if (swA > 0) {
+          ctx.save();
+          ctx.strokeStyle = `rgba(167,139,250,${swA})`;
+          ctx.lineWidth   = 3 - sw * 2;
+          ctx.shadowBlur  = 30; ctx.shadowColor = "#A78BFA";
+          ctx.beginPath(); ctx.arc(cx(), cy(), swR, 0, Math.PI * 2); ctx.stroke();
+          // Second ring delayed
+          const sw2 = clamp((ts - exitRef.current - 120) / 400, 0, 1);
+          if (sw2 > 0) {
+            const swR2 = easeOut(sw2) * Math.max(W, H) * 0.75;
+            ctx.strokeStyle = `rgba(94,234,212,${(1-sw2)*0.5})`;
+            ctx.shadowColor = "#5EEAD4";
+            ctx.beginPath(); ctx.arc(cx(), cy(), swR2, 0, Math.PI * 2); ctx.stroke();
+          }
+          ctx.restore();
+        }
+
+        // White flash at impact
+        const flashT = clamp((ts - exitRef.current) / 180, 0, 1);
+        const flashA = flashT < 0.5 ? flashT / 0.5 : 1 - (flashT - 0.5) / 0.5;
+        if (flashA > 0) {
+          ctx.fillStyle = `rgba(255,255,255,${flashA * 0.45})`;
+          ctx.fillRect(0, 0, W, H);
+        }
+      }
 
       // ── Scroll hint ─────────────────────────────────────────────────────────
       if (ready && exitRef.current === null) {
