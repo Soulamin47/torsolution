@@ -1,8 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Space_Grotesk, Space_Mono } from "next/font/google";
 import { LangProvider } from "./providers/LangProvider";
 import { siteConfig } from "@/lib/site";
+import { detectLocale } from "@/lib/locale";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -42,7 +44,8 @@ export const metadata: Metadata = {
   ],
 
   icons: {
-    icon: "/favicon.ico",
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    apple: "/app-icon.svg",
   },
 
   openGraph: {
@@ -74,14 +77,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Detect locale server-side from the pathname injected by middleware.
+  // This guarantees the SSR'd <html lang="..."> matches the page content.
+  const headerList = await headers();
+  const pathname = headerList.get("x-pathname") ?? "/";
+  const lang = detectLocale(pathname);
+
   return (
     <html
-      lang="en"
+      lang={lang}
       suppressHydrationWarning
       className={`${spaceGrotesk.variable} ${spaceMono.variable}`}
     >
@@ -89,7 +98,7 @@ export default function RootLayout({
         className="bg-[#09080F] text-[#F0EEE8] antialiased"
         suppressHydrationWarning
       >
-        <LangProvider>{children}</LangProvider>
+        <LangProvider initialLang={lang}>{children}</LangProvider>
       </body>
     </html>
   );

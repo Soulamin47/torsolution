@@ -1,5 +1,6 @@
 "use client";
 
+import { useLang } from "@/app/providers/LangProvider";
 import { siteConfig } from "@/lib/site";
 
 function WhatsAppIcon({ className = "" }: { className?: string }) {
@@ -25,18 +26,49 @@ function WhatsAppIcon({ className = "" }: { className?: string }) {
   );
 }
 
+// Soft ripple wrapper for the button: two concentric rings offset by half
+// the cycle, so the wave is continuous. `borderRadius: inherit` makes the
+// rings hug both the mobile circle shape and the desktop pill shape.
+function RippleRing({ delay = "0s" }: { delay?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className="pointer-events-none absolute -inset-1"
+      style={{
+        borderRadius: "inherit",
+        border: "1px solid rgba(93,202,165,0.35)",
+        animation: `whatsapp-pulse 2.8s ease-out infinite`,
+        animationDelay: delay,
+      }}
+    />
+  );
+}
+
+const MESSAGES = {
+  en: "Hi, I'm coming from the Torsolution website and I'd like to discuss a project.",
+  fr: "Bonjour, je viens du site Torsolution et j'aimerais discuter d'un projet.",
+};
+
 export default function FloatingWhatsApp() {
+  const { lang } = useLang();
+
   return (
     <a
-      href={`${siteConfig.whatsapp}?text=${encodeURIComponent("Bonjour, je viens du site Torsolution et j'aimerais discuter d'un projet.")}`}
+      href={`${siteConfig.whatsapp}?text=${encodeURIComponent(MESSAGES[lang])}`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contact WhatsApp"
-      className="fixed bottom-5 right-5 z-[280] inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#5DCAA5]/40 bg-[#10231E]/90 text-[#5DCAA5] shadow-2xl shadow-black/40 backdrop-blur transition hover:scale-105 hover:bg-[#5DCAA5] hover:text-[#06100D] sm:h-auto sm:w-auto sm:gap-2 sm:rounded-[6px] sm:px-4 sm:py-3"
+      className="group fixed bottom-5 right-5 z-30 inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#5DCAA5]/40 bg-[#10231E]/90 text-[#5DCAA5] shadow-2xl shadow-black/40 backdrop-blur transition hover:scale-105 hover:bg-[#5DCAA5] hover:text-[#06100D] sm:h-auto sm:w-auto sm:gap-2 sm:rounded-[6px] sm:px-4 sm:py-3"
     >
-      <span className="absolute inset-0 rounded-full border border-[#5DCAA5]/25 animate-ping sm:hidden" />
+      {/* Two soft pulsing rings, offset by half the cycle for a
+          continuous outward ripple — visible on every breakpoint. */}
+      <RippleRing delay="0s" />
+      <RippleRing delay="1.4s" />
+
       <WhatsAppIcon className="relative h-5 w-5" />
-      <span className="hidden font-mono text-[11px] sm:inline">WhatsApp</span>
+      <span className="relative hidden font-mono text-[11px] sm:inline">
+        WhatsApp
+      </span>
     </a>
   );
 }

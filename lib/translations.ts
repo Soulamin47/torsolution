@@ -31,6 +31,9 @@ export type Translation = {
   // Capabilities
   capTitle: string;
   capSubtitle: string;
+  capServicesLabel: string;
+  capPlatformsDelivered: string;
+  capClientsSatisfied: string;
   capItems: { title: string; desc: string; tag: string; icon: string }[];
 
   // Systems
@@ -128,6 +131,9 @@ export const translations: Record<"en" | "fr", Translation> = {
     capTitle: "What I build",
     capSubtitle:
       "End-to-end development for products that need to be fast, solid and maintainable.",
+    capServicesLabel: "services",
+    capPlatformsDelivered: "platforms delivered",
+    capClientsSatisfied: "happy clients",
     capItems: [
       {
         title: "Web applications",
@@ -189,8 +195,8 @@ export const translations: Record<"en" | "fr", Translation> = {
       {
         number: "03",
         title: "TorStock",
-        desc: "Real-time inventory management for hospital environments",
-        tags: ["B2B", "Healthcare", "React"],
+        desc: "Real-time IT asset inventory for hospital environments",
+        tags: ["B2B", "Healthcare IT", "React"],
       },
       {
         number: "04",
@@ -273,80 +279,83 @@ export const translations: Record<"en" | "fr", Translation> = {
 
     // Hero
     heroBadge: "Ingénieur full-stack · Bruxelles / Remote",
-    heroLine1: "Je conçois le produit.",
-    heroLine2: "Vous bâtissez",
+    heroLine1: "Je construis le produit.",
+    heroLine2: "Vous construisez",
     heroLine2italic: "l'entreprise.",
-    heroTitle: "Je conçois le produit. Vous bâtissez l'entreprise.",
+    heroTitle: "Je construis le produit. Vous construisez l'entreprise.",
     heroSubtitle:
-      "Développeur freelance basé à Bruxelles — j'accompagne startups, agences et entreprises dans la création d'apps web, mobile, d'outils internes et de plateformes IA. Du premier commit au produit en ligne.",
+      "Développeur freelance à Bruxelles. J'aide startups, agences et entreprises à concevoir et déployer leurs applications web et mobiles, leurs outils internes et leurs plateformes IA. De la première ligne de code à la mise en production.",
     viewSystems: "Voir mes projets",
-    startProject: "Parlons-en",
+    startProject: "On en parle",
     scroll: "Défiler",
     heroPoints: [
-      "Livré en semaines, pas en mois",
-      "Code propre, pensé pour durer",
-      "Un seul interlocuteur — sans overhead d'agence",
+      "En semaines, pas en mois",
+      "Un code propre, pensé pour durer",
+      "Un seul interlocuteur — pas trois chefs de projet",
     ],
     availability: "Disponible pour de nouveaux projets — Bruxelles / Remote",
     heroStats: [
-      { label: "PROJETS", value: 4, suffix: "", sub: "Livrés en production" },
-      { label: "EXPÉRIENCE", value: 8, suffix: "+", sub: "Ans full-stack" },
+      { label: "PROJETS", value: 4, suffix: "", sub: "En production" },
+      { label: "EXPÉRIENCE", value: 8, suffix: "+", sub: "Années de code" },
       { label: "RÉPONSE", value: 24, prefix: "<", suffix: "h", sub: "Délai moyen" },
     ],
     trustStats: [
       { value: "4+", label: "Produits livrés" },
-      { value: "8+", label: "Ans d'expérience" },
+      { value: "8+", label: "Années d'expérience" },
       { value: "<24h", label: "Réponse moyenne" },
       { value: "BE", label: "Basé à Bruxelles" },
     ],
 
     // Capabilities
-    capTitle: "Ce que je développe",
+    capTitle: "Ce que je construis",
     capSubtitle:
-      "Du développement complet pour des produits rapides, fiables et maintenables.",
+      "Du développement de bout en bout, pour des produits rapides, solides et évolutifs.",
+    capServicesLabel: "services",
+    capPlatformsDelivered: "plateformes livrées",
+    capClientsSatisfied: "clients satisfaits",
     capItems: [
       {
         title: "Applications web",
-        desc: "Applications web sur mesure avec Next.js ou React — rapides, responsives et prêtes à évoluer.",
+        desc: "Des apps web sur mesure en Next.js ou React. Rapides, responsives, prêtes à grandir avec vous.",
         tag: "Web",
         icon: "</>",
       },
       {
-        title: "Applications mobile",
-        desc: "Apps cross-platform avec Flutter. Un seul codebase, iOS et Android, UI soignée.",
+        title: "Applications mobiles",
+        desc: "Des apps iOS et Android en Flutter. Un seul code, deux stores, une UI vraiment soignée.",
         tag: "Mobile",
         icon: "[]",
       },
       {
         title: "Plateformes métier",
-        desc: "Dashboards, back-offices et outils internes pour piloter vos opérations.",
+        desc: "Dashboards, back-offices et outils internes pour piloter vos opérations et votre équipe.",
         tag: "Plateforme",
         icon: "DB",
       },
       {
         title: "IA & automatisation",
-        desc: "Workflows intelligents, chatbots et intégrations IA pour gagner du temps.",
+        desc: "Workflows intelligents, chatbots et intégrations IA qui font gagner du temps et améliorent la qualité.",
         tag: "IA",
         icon: "AI",
       },
       {
         title: "Web3 & blockchain",
-        desc: "Smart contracts et dApps quand c'est vraiment pertinent pour votre produit.",
+        desc: "Smart contracts et dApps, quand ça a vraiment du sens pour votre produit. Pas pour le hype.",
         tag: "Web3",
         icon: "◇",
       },
       {
         title: "Plateformes sociales",
-        desc: "Plateformes sociales pour créateurs et communautés, pensées pour l'engagement.",
+        desc: "Plateformes pour créateurs et outils communautaires, pensés pour l'engagement et la croissance.",
         tag: "Social",
         icon: "#",
       },
     ],
 
     // Systems
-    sysTitle: "Projets réalisés",
-    sysSubtitle: "Quelques produits que j'ai livrés.",
-    exploreSystem: "Discuter d'un projet similaire",
+    sysTitle: "Sélection de projets",
+    sysSubtitle: "Quelques produits livrés.",
+    exploreSystem: "Parler d'un projet similaire",
     sysObjectiveLabel: "Objectif",
     sysOutcomeLabel: "Résultat",
     sysItems: [
@@ -359,49 +368,49 @@ export const translations: Record<"en" | "fr", Translation> = {
       {
         number: "02",
         title: "Onstage",
-        desc: "Plateforme pour artistes et réservation d'événements",
+        desc: "Plateforme de booking pour artistes et organisateurs d'événements",
         tags: ["Plateforme", "Flutter", "B2C"],
       },
       {
         number: "03",
         title: "TorStock",
-        desc: "Gestion d'inventaire en temps réel pour environnements hospitaliers",
-        tags: ["B2B", "Santé", "React"],
+        desc: "Gestion de parc IT en temps réel pour environnements hospitaliers",
+        tags: ["B2B", "IT Santé", "React"],
       },
       {
         number: "04",
         title: "Torfix",
-        desc: "Outils digitaux & automatisation pour PME locales",
+        desc: "Outils numériques et automatisation pour PME locales",
         tags: ["SaaS", "PME", "Next.js"],
       },
     ],
 
     // Process
     procTitle: "Ma méthode",
-    procSubtitle: "Un processus clair et honnête — sans surprises, sans retards.",
+    procSubtitle: "Une méthode claire. Pas de mauvaise surprise, pas de retard.",
     procSteps: [
       {
         n: "01",
-        title: "Comprendre votre besoin",
-        desc: "On clarifie ensemble ce dont vous avez besoin, qui l'utilise et ce que le succès veut dire.",
+        title: "Comprendre votre objectif",
+        desc: "On clarifie ce dont vous avez besoin, qui va l'utiliser et à quoi ressemble la réussite. Pas de brief flou.",
         icon: "01",
       },
       {
         n: "02",
-        title: "Planifier la solution",
-        desc: "Je définis le périmètre, la stack et le calendrier. Vous savez exactement ce que vous obtenez.",
+        title: "Cadrer la solution",
+        desc: "Je définis le périmètre, la stack et le planning. Vous savez exactement ce qui sera livré.",
         icon: "02",
       },
       {
         n: "03",
         title: "Développer & tester",
-        desc: "Je développe en itérations avec des contrôles qualité. Vous suivez l'avancement tout au long.",
+        desc: "Je développe par itérations, avec des contrôles qualité à chaque étape. Vous voyez le produit avancer en direct.",
         icon: "03",
       },
       {
         n: "04",
         title: "Livrer & accompagner",
-        desc: "Je gère le déploiement, surveille le lancement et reste disponible pour la suite.",
+        desc: "Je gère la mise en production, je surveille le lancement, et je reste là pour la suite.",
         icon: "04",
       },
     ],
@@ -413,7 +422,7 @@ export const translations: Record<"en" | "fr", Translation> = {
     ctaTitle: "Un projet en tête ?",
     ctaSubtitle: "Dites-moi ce que vous construisez. Je vous réponds sous 24h.",
     ctaButton: "Envoyer un message",
-    ctaCall: "Réserver un appel de 15 min",
+    ctaCall: "Planifier un appel de 15 min",
     ctaBrief: "Envoyer un brief",
     ctaWhatsapp: "WhatsApp",
     ctaResponse: "Réponse sous 24h ouvrées.",
@@ -421,15 +430,15 @@ export const translations: Record<"en" | "fr", Translation> = {
     // Contact form
     contactName: "Votre nom",
     contactEmail: "Votre email",
-    contactSubject: "Sujet (optionnel)",
-    contactMessage: "Parlez-moi de votre projet...",
+    contactSubject: "Sujet (facultatif)",
+    contactMessage: "Parlez-moi de votre projet…",
     contactSend: "Envoyer",
-    contactSending: "Envoi...",
-    contactSuccess: "✓ Message envoyé — je reviens vers vous rapidement.",
-    contactError: "Le message n'a pas pu être envoyé. Écrivez-moi directement par email.",
+    contactSending: "Envoi…",
+    contactSuccess: "✓ Message bien reçu — je reviens vers vous rapidement.",
+    contactError: "Le message n'est pas parti. Écrivez-moi directement par email.",
 
     // Cookie banner
-    cookieText: "Nous utilisons des cookies essentiels pour assurer le bon fonctionnement du site.",
+    cookieText: "On utilise uniquement des cookies essentiels au bon fonctionnement du site.",
     cookieDecline: "Refuser",
     cookieAccept: "Accepter",
 

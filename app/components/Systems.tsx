@@ -1,9 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useLang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
 import { fadeUp, stagger, EASE } from "@/lib/animations";
+import { localizedHref } from "@/lib/locale";
+import TiltCard from "./TiltCard";
+
+// Map the home-section ordering to the /work/[slug] URLs.
+const PROJECT_SLUGS = ["bloom", "onstage", "torstock", "torfix"];
 
 // ─── Per-project config ────────────────────────────────────────────────────────
 
@@ -93,22 +99,22 @@ function MockupTorStock() {
       <table style={{ width: "100%", fontSize: 8, borderCollapse: "collapse" }}>
         <tbody>
           <tr style={{ color: "rgba(255,255,255,0.25)" }}>
-            <td style={{ padding: "2px 0" }}>Item</td>
+            <td style={{ padding: "2px 0" }}>Asset</td>
             <td style={{ textAlign: "right" }}>Units</td>
             <td style={{ textAlign: "right" }}>Status</td>
           </tr>
           <tr>
-            <td style={{ padding: "3px 0", color: "rgba(255,255,255,0.6)" }}>Seringues 5ml</td>
+            <td style={{ padding: "3px 0", color: "rgba(255,255,255,0.6)" }}>Laptops cliniciens</td>
             <td style={{ textAlign: "right", color: "#F0EEE8" }}>1 240</td>
             <td style={{ textAlign: "right", color: "#5DCAA5" }}>OK</td>
           </tr>
           <tr>
-            <td style={{ padding: "3px 0", color: "rgba(255,255,255,0.6)" }}>Gants L</td>
+            <td style={{ padding: "3px 0", color: "rgba(255,255,255,0.6)" }}>Tablettes consult.</td>
             <td style={{ textAlign: "right", color: "#F0EEE8" }}>87</td>
             <td style={{ textAlign: "right", color: "#EF9F27" }}>⚠ Low</td>
           </tr>
           <tr>
-            <td style={{ padding: "3px 0", color: "rgba(255,255,255,0.6)" }}>Masques FFP2</td>
+            <td style={{ padding: "3px 0", color: "rgba(255,255,255,0.6)" }}>Casques VoIP</td>
             <td style={{ textAlign: "right", color: "#F0EEE8" }}>0</td>
             <td style={{ textAlign: "right", color: "#F0997B" }}>✕ Out</td>
           </tr>
@@ -150,6 +156,8 @@ const MOCKUPS = [MockupBloom, MockupOnstage, MockupTorStock, MockupTorfix];
 export default function Systems() {
   const { lang } = useLang();
   const t = translations[lang];
+  const workIndexHref = localizedHref("/work", lang);
+  const viewAllLabel = lang === "fr" ? "Voir tous les projets →" : "View all work →";
 
   return (
     <section id="systems" className="relative z-10 px-6 sm:px-10 py-28">
@@ -187,22 +195,23 @@ export default function Systems() {
           {t.sysItems.map((s, idx) => {
             const meta = PROJECT_META[idx] ?? PROJECT_META[0];
             const Mockup = MOCKUPS[idx] ?? MOCKUPS[0];
+            const slug = PROJECT_SLUGS[idx] ?? PROJECT_SLUGS[0];
+            const detailHref = localizedHref(`/work/${slug}`, lang);
 
             return (
               <motion.div
                 key={s.number}
                 variants={fadeUp}
-                whileHover={{ y: -4, borderColor: "rgba(255,255,255,0.15)" }}
-                transition={{ duration: 0.3, ease: EASE }}
-                className="group flex flex-col overflow-hidden rounded-xl cursor-pointer"
+              >
+              <TiltCard
+                accent={meta.accent}
+                className="group flex flex-col overflow-hidden rounded-xl h-full"
                 style={{
                   border: "0.5px solid rgba(255,255,255,0.08)",
                   background: "rgba(255,255,255,0.02)",
                 }}
-                onClick={() => {
-                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-                }}
               >
+                <Link href={detailHref} className="flex flex-col h-full">
                 {/* Browser mockup zone */}
                 <div className="shrink-0" style={{ height: 200 }}>
                   <BrowserBar />
@@ -254,19 +263,29 @@ export default function Systems() {
                   </div>
 
                   {/* CTA link */}
-                  <a
-                    href="#contact"
-                    className="text-[12px] transition-all duration-200 hover:underline underline-offset-2"
+                  <span
+                    className="text-[12px] transition-all duration-200 group-hover:underline underline-offset-2"
                     style={{ color: meta.accent }}
-                    onClick={(e) => e.stopPropagation()}
                   >
                     {t.exploreSystem} →
-                  </a>
+                  </span>
                 </div>
+                </Link>
+              </TiltCard>
               </motion.div>
             );
           })}
         </motion.div>
+
+        {/* View all */}
+        <div className="mt-10 flex justify-center">
+          <Link
+            href={workIndexHref}
+            className="inline-flex items-center gap-2 rounded-[4px] border border-white/[0.15] px-6 py-3 font-mono text-[11px] uppercase tracking-[0.14em] text-[#F0EEE8]/55 transition-colors hover:bg-white/[0.04] hover:text-[#F0EEE8]"
+          >
+            {viewAllLabel}
+          </Link>
+        </div>
       </div>
     </section>
   );

@@ -1,19 +1,22 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useLang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
 import { EASE } from "@/lib/animations";
+import { localizedHref } from "@/lib/locale";
 
 // ─── Per-service config (index matches capItems order) ────────────────────────
+// `slug` matches the /services/[slug] route.
 
 const SERVICE_META = [
-  { accent: "#AFA9EC", symbol: "</>",  area: "web",      large: true  }, // Web
-  { accent: "#5DCAA5", symbol: "◎",    area: "mobile",   large: false }, // Mobile
-  { accent: "#EF9F27", symbol: "∿",    area: "ai",       large: false }, // AI
-  { accent: "#85B7EB", symbol: "⊞",    area: "platform", large: true  }, // Platform
-  { accent: "#F0997B", symbol: "⬡",    area: "web3",     large: false }, // Web3
-  { accent: "#D4537E", symbol: "#",    area: "social",   large: false }, // Social
+  { accent: "#AFA9EC", symbol: "</>",  area: "web",      large: true,  slug: "web" },
+  { accent: "#5DCAA5", symbol: "◎",    area: "mobile",   large: false, slug: "mobile" },
+  { accent: "#EF9F27", symbol: "∿",    area: "ai",       large: false, slug: "ai-automation" },
+  { accent: "#85B7EB", symbol: "⊞",    area: "platform", large: true,  slug: "platforms" },
+  { accent: "#F0997B", symbol: "⬡",    area: "web3",     large: false, slug: "web3" },
+  { accent: "#D4537E", symbol: "#",    area: "social",   large: false, slug: "social" },
 ];
 
 // Tech pills shown in the "Web" large card
@@ -22,6 +25,8 @@ const WEB_TECH = ["Next.js", "TypeScript", "Tailwind", "PostgreSQL"];
 export default function Capabilities() {
   const { lang } = useLang();
   const t = translations[lang];
+  const servicesIndexHref = localizedHref("/services", lang);
+  const viewAllLabel = lang === "fr" ? "Voir tous les services →" : "View all services →";
 
   // Re-order items to match grid-template-areas order:
   // web(0) mobile(1) ai(2) platform(3) web3(4) social(5)
@@ -57,7 +62,7 @@ export default function Capabilities() {
             </p>
           </div>
           <span className="font-mono text-[11px] text-[#F0EEE8]/25 shrink-0 ml-6 hidden sm:block">
-            06 services
+            {String(t.capItems.length).padStart(2, "0")} {t.capServicesLabel}
           </span>
         </motion.div>
 
@@ -81,6 +86,10 @@ export default function Capabilities() {
               item={item}
               meta={meta}
               idx={idx}
+              labels={{
+                platforms: t.capPlatformsDelivered,
+                clients: t.capClientsSatisfied,
+              }}
             />
           ))}
         </div>
@@ -96,8 +105,22 @@ export default function Capabilities() {
               item={item}
               meta={meta}
               idx={idx}
+              labels={{
+                platforms: t.capPlatformsDelivered,
+                clients: t.capClientsSatisfied,
+              }}
             />
           ))}
+        </div>
+
+        {/* View all */}
+        <div className="mt-10 flex justify-center">
+          <Link
+            href={servicesIndexHref}
+            className="inline-flex items-center gap-2 rounded-[4px] border border-white/[0.15] px-6 py-3 font-mono text-[11px] uppercase tracking-[0.14em] text-[#F0EEE8]/55 transition-colors hover:bg-white/[0.04] hover:text-[#F0EEE8]"
+          >
+            {viewAllLabel}
+          </Link>
         </div>
 
       </div>
@@ -111,13 +134,17 @@ function BentoCard({
   item,
   meta,
   idx,
+  labels,
 }: {
   item: { title: string; desc: string; tag: string; icon: string };
-  meta: { accent: string; symbol: string; area: string; large: boolean };
+  meta: { accent: string; symbol: string; area: string; large: boolean; slug: string };
   idx: number;
+  labels: { platforms: string; clients: string };
 }) {
+  const { lang } = useLang();
   const isWebLarge = meta.area === "web";
   const isPlatformLarge = meta.area === "platform";
+  const detailHref = localizedHref(`/services/${meta.slug}`, lang);
 
   return (
     <motion.div
@@ -126,13 +153,18 @@ function BentoCard({
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.5, delay: idx * 0.07, ease: EASE }}
       whileHover={{ backgroundColor: "rgba(255,255,255,0.015)" }}
-      className="relative overflow-hidden flex flex-col"
+      className="group relative overflow-hidden flex flex-col"
       style={{
         gridArea: meta.area,
         backgroundColor: "#09080F",
         padding: meta.large ? 32 : 24,
       }}
     >
+      <Link
+        href={detailHref}
+        className="absolute inset-0 z-10"
+        aria-label={item.title}
+      />
       {/* Large bg symbol */}
       <motion.div
         aria-hidden="true"
@@ -191,13 +223,13 @@ function BentoCard({
           <div className="p-3 rounded bg-white/[0.02] border border-white/5">
             <div className="text-[18px] font-medium text-[#F0EEE8]/80">4</div>
             <div className="font-mono text-[9px] text-[#F0EEE8]/25 mt-1">
-              plateformes livrées
+              {labels.platforms}
             </div>
           </div>
           <div className="p-3 rounded bg-white/[0.02] border border-white/5">
             <div className="text-[18px] font-medium text-[#F0EEE8]/80">100%</div>
             <div className="font-mono text-[9px] text-[#F0EEE8]/25 mt-1">
-              clients satisfaits
+              {labels.clients}
             </div>
           </div>
         </div>

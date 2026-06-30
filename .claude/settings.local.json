@@ -5,7 +5,26 @@
       "Bash(npx next:*)",
       "Bash(pnpm dev:*)",
       "Bash(npx kill-port:*)",
-      "Bash(taskkill /PID 18484 /F)"
+      "Bash(taskkill /PID 18484 /F)",
+      "Bash(npm run *)",
+      "Bash(netstat -ano)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(curl -s -o NUL -w \"HTTP %{http_code}\\\\n\" http://localhost:3000)",
+      "Bash(curl -s http://localhost:3000/services/ai-automation)",
+      "Bash(curl -s http://localhost:3000/fr/services/ai-automation)",
+      "Bash(curl -s http://localhost:3000/work/torstock)",
+      "Bash(curl -s http://localhost:3000/sitemap.xml)",
+      "Bash(curl -s http://localhost:3000/fr)",
+      "Bash(curl -s 'http://localhost:3000/_next/static/chunks/%5Broot-of-the-server%5D__393847e9._.css')",
+      "Bash(curl -s -o NUL -w \"HTTP %{http_code}\\\\n\" http://localhost:3000/fr)",
+      "Bash(curl -s -o NUL -w \"EN: HTTP %{http_code}\\\\n\" http://localhost:3000)",
+      "Bash(curl -s -o NUL -w \"FR: HTTP %{http_code}\\\\n\" http://localhost:3000/fr)",
+      "Bash(curl -s -o NUL -w \"EN: %{http_code}\\\\n\" http://localhost:3000)",
+      "Bash(curl -s -o NUL -w \"FR: %{http_code}\\\\n\" http://localhost:3000/fr)",
+      "Bash(node scripts/process-logo.mjs)",
+      "Bash(npm list *)",
+      "Bash(npx tsc *)",
+      "Bash(git add *)"
     ]
   }
 }

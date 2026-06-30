@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useLang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
 import { siteConfig } from "@/lib/site";
+import { localizedHref } from "@/lib/locale";
 
 const PROJECTS = ["Bloom", "Onstage", "TorStock", "Torfix"];
 
@@ -33,30 +34,41 @@ function WhatsAppIcon({ className = "" }: { className?: string }) {
 export default function Footer() {
   const { lang } = useLang();
   const t = translations[lang];
+  const homeRoot = localizedHref("/", lang);
+
+  const links = [
+    { href: localizedHref("/work", lang), label: t.navSystems },
+    { href: localizedHref("/services", lang), label: t.navCapabilities },
+    { href: `${homeRoot}#process`, label: t.navProcess },
+    { href: `${homeRoot}#contact`, label: t.navContact },
+    { href: `mailto:${siteConfig.email}`, label: siteConfig.email },
+  ];
 
   return (
     <footer className="border-t border-white/[0.06]">
       <div className="mx-auto max-w-5xl px-6 sm:px-10 py-8 space-y-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <span className="font-mono text-[11px] tracking-widest text-[#F0EEE8]/30">
-            TOR<span className="text-[#AFA9EC]/50">_</span>SOLUTION
-          </span>
+          <Link
+            href={homeRoot}
+            className="inline-flex items-center transition-opacity hover:opacity-80"
+            aria-label="Torsolution"
+          >
+            <img
+              src="/logo-horizontal.svg"
+              alt="TOR_SOLUTION"
+              className="h-9 w-auto opacity-80"
+            />
+          </Link>
 
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            {[
-              { href: "#systems", label: t.navSystems },
-              { href: "#capabilities", label: t.navCapabilities },
-              { href: "#process", label: t.navProcess },
-              { href: "#contact", label: t.navContact },
-              { href: `mailto:${siteConfig.email}`, label: siteConfig.email },
-            ].map(({ href, label }) => (
-              <a
-                key={href}
+            {links.map(({ href, label }) => (
+              <Link
+                key={href + label}
                 href={href}
                 className="font-mono text-[11px] text-[#F0EEE8]/30 hover:text-[#F0EEE8]/60 transition-colors"
               >
                 {label}
-              </a>
+              </Link>
             ))}
             <a
               href={siteConfig.whatsapp}
@@ -69,13 +81,13 @@ export default function Footer() {
               WhatsApp
             </a>
             <Link
-              href="/privacy"
+              href={localizedHref("/privacy", lang)}
               className="font-mono text-[11px] text-[#F0EEE8]/30 hover:text-[#F0EEE8]/60 transition-colors"
             >
               {lang === "fr" ? "Confidentialité" : "Privacy"}
             </Link>
             <Link
-              href="/legal"
+              href={localizedHref("/legal", lang)}
               className="font-mono text-[11px] text-[#F0EEE8]/30 hover:text-[#F0EEE8]/60 transition-colors"
             >
               {lang === "fr" ? "Mentions légales" : "Legal"}
@@ -86,12 +98,13 @@ export default function Footer() {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-t border-white/[0.04] pt-5">
           <div className="flex flex-wrap gap-x-5 gap-y-2">
             {PROJECTS.map((p) => (
-              <span
+              <Link
                 key={p}
-                className="font-mono text-[10px] text-[#F0EEE8]/20"
+                href={localizedHref(`/work/${p.toLowerCase()}`, lang)}
+                className="font-mono text-[10px] text-[#F0EEE8]/20 hover:text-[#F0EEE8]/50 transition-colors"
               >
                 {p}
-              </span>
+              </Link>
             ))}
           </div>
           <span className="font-mono text-[11px] text-[#F0EEE8]/20">

@@ -1,10 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useLang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
 import { EASE, fadeUp, stagger } from "@/lib/animations";
+import { localizedHref } from "@/lib/locale";
+import MagneticButton from "./MagneticButton";
+import dynamic from "next/dynamic";
+const HeroParticles = dynamic(() => import("./HeroParticles"), { ssr: false });
 
 function useCountUp(target: number, duration = 1800) {
   const [count, setCount] = useState(0);
@@ -140,12 +145,16 @@ function HeroConsole() {
 export default function Hero() {
   const { lang } = useLang();
   const t = translations[lang];
+  const workHref = localizedHref("/work", lang);
 
   return (
     <section className="relative px-6 sm:px-10 pt-36 pb-0 overflow-hidden">
-      {/* Dot grid background */}
+      {/* 3D particle background */}
+      <HeroParticles />
+
+      {/* Dot grid — subtle, behind particles */}
       <div
-        className="pointer-events-none absolute inset-0 z-0"
+        className="pointer-events-none absolute inset-0 z-0 opacity-30"
         style={{
           backgroundImage:
             "radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px)",
@@ -199,18 +208,22 @@ export default function Hero() {
               variants={fadeUp}
               className="mt-8 flex flex-wrap gap-3 items-center"
             >
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center rounded-[4px] bg-[#AFA9EC] px-6 py-3 text-[13px] font-medium text-[#09080F] transition-opacity hover:opacity-90"
-              >
-                {t.startProject}
-              </a>
-              <a
-                href="#systems"
-                className="inline-flex items-center justify-center rounded-[4px] border border-white/[0.15] px-6 py-3 text-[13px] font-medium text-[#F0EEE8] transition-colors hover:bg-white/[0.04]"
-              >
-                {t.viewSystems}
-              </a>
+              <MagneticButton>
+                <a
+                  href="#contact"
+                  className="inline-flex items-center justify-center rounded-[4px] bg-[#AFA9EC] px-6 py-3 text-[13px] font-medium text-[#09080F] transition-opacity hover:opacity-90"
+                >
+                  {t.startProject}
+                </a>
+              </MagneticButton>
+              <MagneticButton>
+                <Link
+                  href={workHref}
+                  className="inline-flex items-center justify-center rounded-[4px] border border-white/[0.15] px-6 py-3 text-[13px] font-medium text-[#F0EEE8] transition-colors hover:bg-white/[0.04]"
+                >
+                  {t.viewSystems}
+                </Link>
+              </MagneticButton>
 
               <div className="flex items-center gap-2 ml-2">
                 <span className="relative flex h-1.5 w-1.5 shrink-0">

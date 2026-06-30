@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useLang } from "@/app/providers/LangProvider";
 import { siteConfig } from "@/lib/site";
 import { EASE } from "@/lib/animations";
+import MagneticButton from "./MagneticButton";
 
 type OptionKey = "mvp" | "automation" | "mobile" | "platform";
 
@@ -64,56 +65,56 @@ const COPY = {
     },
   },
   fr: {
-    eyebrow: "Scan projet interactif",
+    eyebrow: "Diagnostic projet interactif",
     title: "On construit quoi en premier ?",
     subtitle:
-      "Choisissez une direction et le site esquisse un premier plan de livraison. Rapide, concret, et pensé pour lancer une vraie discussion.",
+      "Choisissez une direction, le site vous esquisse un premier plan de livraison. Rapide, concret, et pensé pour lancer une vraie discussion.",
     cta: "Envoyer ce plan sur WhatsApp",
-    email: "Préférer l'email",
+    email: "Plutôt par email",
     timeline: "Première version estimée",
     deliverable: "Premier livrable",
     stack: "Stack probable",
-    momentum: "Potentiel de lancement",
+    momentum: "Élan de lancement",
     options: {
       mvp: {
         label: "MVP startup",
-        title: "MVP prêt à lancer",
-        time: "3-6 semaines",
-        deliverable: "Produit cliquable, flux principal, déploiement",
-        stack: ["Next.js", "Auth", "Database", "Paiements"],
+        title: "Un MVP prêt à lancer",
+        time: "3 à 6 semaines",
+        deliverable: "Produit utilisable, parcours principal, mise en ligne",
+        stack: ["Next.js", "Auth", "Base de données", "Paiements"],
         score: 86,
         message:
-          "Bonjour, je veux discuter d'un MVP startup avec Torsolution. Peut-on planifier une première version ?",
+          "Bonjour, je voudrais discuter d'un MVP startup avec Torsolution. On peut planifier une première version ?",
       },
       automation: {
         label: "Automatisation IA",
-        title: "Workflow IA",
-        time: "1-3 semaines",
-        deliverable: "Process automatisé, vue admin, documentation",
+        title: "Un workflow IA",
+        time: "1 à 3 semaines",
+        deliverable: "Process automatisé, vue admin, documentation pour l'équipe",
         stack: ["OpenAI", "API", "n8n", "Dashboard"],
         score: 92,
         message:
-          "Bonjour, je veux discuter d'un projet d'automatisation IA avec Torsolution.",
+          "Bonjour, je voudrais discuter d'un projet d'automatisation IA avec Torsolution.",
       },
       mobile: {
         label: "App mobile",
-        title: "Produit mobile",
-        time: "4-8 semaines",
-        deliverable: "App iOS/Android, UI soignée, build production",
+        title: "Un produit mobile",
+        time: "4 à 8 semaines",
+        deliverable: "App iOS/Android, UI soignée, build de production",
         stack: ["Flutter", "Firebase", "API", "Analytics"],
         score: 78,
         message:
-          "Bonjour, je veux discuter d'une application mobile avec Torsolution.",
+          "Bonjour, je voudrais discuter d'un projet d'application mobile avec Torsolution.",
       },
       platform: {
         label: "Plateforme métier",
-        title: "Plateforme interne",
-        time: "3-7 semaines",
+        title: "Une plateforme interne",
+        time: "3 à 7 semaines",
         deliverable: "Dashboard, rôles, workflows, reporting",
         stack: ["Next.js", "PostgreSQL", "Prisma", "Vercel"],
         score: 88,
         message:
-          "Bonjour, je veux discuter d'une plateforme métier avec Torsolution.",
+          "Bonjour, je voudrais discuter d'une plateforme métier avec Torsolution.",
       },
     },
   },
@@ -254,20 +255,24 @@ export default function ProjectLauncher() {
               </div>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <a
-                  href={whatsappHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-[4px] bg-[#5DCAA5] px-5 py-3 text-[13px] font-medium text-[#06100D] transition hover:bg-[#76ddb9]"
-                >
-                  {copy.cta}
-                </a>
-                <a
-                  href={`mailto:${siteConfig.email}`}
-                  className="inline-flex items-center justify-center rounded-[4px] border border-white/[0.12] px-5 py-3 text-[13px] font-medium text-[#F0EEE8]/65 transition hover:bg-white/[0.04] hover:text-[#F0EEE8]"
-                >
-                  {copy.email}
-                </a>
+                <MagneticButton>
+                  <a
+                    href={whatsappHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center rounded-[4px] bg-[#5DCAA5] px-5 py-3 text-[13px] font-medium text-[#06100D] transition hover:bg-[#76ddb9]"
+                  >
+                    {copy.cta}
+                  </a>
+                </MagneticButton>
+                <MagneticButton>
+                  <a
+                    href={`mailto:${siteConfig.email}`}
+                    className="inline-flex items-center justify-center rounded-[4px] border border-white/[0.12] px-5 py-3 text-[13px] font-medium text-[#F0EEE8]/65 transition hover:bg-white/[0.04] hover:text-[#F0EEE8]"
+                  >
+                    {copy.email}
+                  </a>
+                </MagneticButton>
               </div>
             </div>
           </motion.div>

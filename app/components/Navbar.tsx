@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useLang } from "@/app/providers/LangProvider";
 import type { Lang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
+import { localizedHref } from "@/lib/locale";
 
 function LangToggle({
   lang,
@@ -62,6 +64,17 @@ export default function Navbar() {
     };
   }, [open]);
 
+  // Real pages get full URLs (locale-aware). Anchors (#process, #contact)
+  // live on the home page — we prefix them with the locale root so they
+  // also work when the user is currently on /services/* or /work/*.
+  const homeRoot = localizedHref("/", lang);
+  const links = [
+    { href: localizedHref("/work", lang), label: t.navSystems, real: true },
+    { href: localizedHref("/services", lang), label: t.navCapabilities, real: true },
+    { href: `${homeRoot}#process`, label: t.navProcess, real: false },
+    { href: `${homeRoot}#contact`, label: t.navContact, real: false },
+  ];
+
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
@@ -72,25 +85,29 @@ export default function Navbar() {
     >
       <div className="mx-auto max-w-6xl px-6 sm:px-10 py-4 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="font-mono text-[13px] tracking-widest text-[#F0EEE8]/80 hover:text-[#F0EEE8] transition-colors">
-          TOR<span className="text-[#AFA9EC]">_</span>SOLUTION
-        </a>
+        <Link
+          href={homeRoot}
+          className="group transition-opacity hover:opacity-90"
+          aria-label="Torsolution"
+        >
+          <img
+            src="/logo-horizontal.svg"
+            alt="TOR_SOLUTION"
+            height={32}
+            className="h-11 w-auto"
+          />
+        </Link>
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
-          {[
-            { href: "#systems", label: t.navSystems },
-            { href: "#capabilities", label: t.navCapabilities },
-            { href: "#process", label: t.navProcess },
-            { href: "#contact", label: t.navContact },
-          ].map(({ href, label }) => (
-            <a
+          {links.map(({ href, label }) => (
+            <Link
               key={href}
               href={href}
               className="text-[11px] uppercase tracking-[0.1em] text-[#F0EEE8]/40 hover:text-[#F0EEE8]/80 transition-colors"
             >
               {label}
-            </a>
+            </Link>
           ))}
 
           <div className="h-3 w-px bg-white/10" />
@@ -133,20 +150,15 @@ export default function Navbar() {
           />
           <div className="relative z-10 pt-20 px-6">
             <div className="space-y-1">
-              {[
-                { href: "#systems", label: t.navSystems },
-                { href: "#capabilities", label: t.navCapabilities },
-                { href: "#process", label: t.navProcess },
-                { href: "#contact", label: t.navContact },
-              ].map(({ href, label }) => (
-                <a
+              {links.map(({ href, label }) => (
+                <Link
                   key={href}
                   href={href}
                   onClick={() => setOpen(false)}
                   className="block py-4 border-b border-white/[0.06] font-mono text-[11px] uppercase tracking-[0.1em] text-[#F0EEE8]/40 hover:text-[#F0EEE8]/80 transition-colors"
                 >
                   {label}
-                </a>
+                </Link>
               ))}
               <div className="pt-6 flex items-center gap-2">
                 <span className="relative flex h-1.5 w-1.5">

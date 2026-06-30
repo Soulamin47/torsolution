@@ -1,37 +1,31 @@
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import ProjectLauncher from "./components/ProjectLauncher";
-import TechStack from "./components/TechStack";
-import Capabilities from "./components/Capabilities";
-import Systems from "./components/Systems";
-import Process from "./components/Process";
-import CTA from "./components/CTA";
-import Footer from "./components/Footer";
-import CursorSpotlight from "./components/CursorSpotlight";
-import BackgroundOrbs from "./components/BackgroundOrbs";
-import SeoSync from "./components/SeoSync";
-import CookieBanner from "./components/CookieBanner";
-import FloatingWhatsApp from "./components/FloatingWhatsApp";
+import type { Metadata } from "next";
+import HomeClient from "./components/HomeClient";
+import JsonLd from "./components/JsonLd";
+import { homeSchemas } from "@/lib/schemas";
+import { buildAlternates } from "@/lib/locale";
+import { siteConfig } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: `${siteConfig.name} | Freelance Developer — Web, Mobile & AI`,
+  description: siteConfig.description,
+  alternates: buildAlternates("/"),
+  openGraph: {
+    type: "website",
+    url: `${siteConfig.url}/`,
+    siteName: siteConfig.name,
+    title: `${siteConfig.name} | Freelance Developer — Web, Mobile & AI`,
+    description: siteConfig.description,
+    locale: "en_US",
+    alternateLocale: ["fr_BE"],
+    images: ["/og"],
+  },
+};
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#09080F] text-[#F0EEE8] pt-20 overflow-x-hidden">
-      <BackgroundOrbs />
-      <CursorSpotlight />
-      <div className="relative z-10">
-        <SeoSync />
-        <Navbar />
-        <Hero />
-        <ProjectLauncher />
-        <TechStack />
-        <Capabilities />
-        <Systems />
-        <Process />
-        <CTA />
-        <Footer />
-        <CookieBanner />
-        <FloatingWhatsApp />
-      </div>
-    </main>
+    <>
+      <JsonLd schemas={homeSchemas("en")} />
+      <HomeClient />
+    </>
   );
 }

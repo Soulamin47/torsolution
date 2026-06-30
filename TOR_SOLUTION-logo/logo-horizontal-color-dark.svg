@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 140" width="560" height="140" fill="none">
+<defs></defs>
+<g transform="translate(6,17) scale(0.875)">
+
+  <g stroke="#E8EAF0" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" opacity="0.92">
+    <polyline points="60,12 99,33 106,74 75,105 33,101 14,63 27,25 60,12"></polyline>
+    <path d="M27,25 57,50 M60,12 57,50 M99,33 57,50 M14,63 57,50 M99,33 80,64 M106,74 80,64 M75,105 80,64 M57,50 80,64 M75,105 49,80 M33,101 49,80 M14,63 49,80 M57,50 49,80 M80,64 49,80"></path>
+  </g>
+  <circle cx="60" cy="12" r="2.6" fill="#E8EAF0"></circle><circle cx="99" cy="33" r="2.6" fill="#E8EAF0"></circle><circle cx="106" cy="74" r="2.6" fill="#E8EAF0"></circle><circle cx="75" cy="105" r="2.6" fill="#E8EAF0"></circle><circle cx="33" cy="101" r="2.6" fill="#E8EAF0"></circle><circle cx="14" cy="63" r="2.6" fill="#E8EAF0"></circle><circle cx="27" cy="25" r="2.6" fill="#E8EAF0"></circle>
+  <circle cx="80" cy="64" r="4.6" fill="#5EEAD4"></circle><circle cx="57" cy="50" r="3.8" fill="#A78BFA"></circle><circle cx="49" cy="80" r="3.2" fill="#5EEAD4"></circle>
+</g>
+<text x="158" y="84" font-family="&#39;JetBrains Mono&#39;, ui-monospace, &#39;SFMono-Regular&#39;, Menlo, monospace" font-size="42" font-weight="700" letter-spacing="0.5"><tspan fill="#E8EAF0">TOR</tspan><tspan fill="#5EEAD4">_</tspan><tspan fill="#8A8FA0" font-weight="500">SOLUTION</tspan></text>
+</svg>

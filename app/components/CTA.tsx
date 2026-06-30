@@ -6,6 +6,7 @@ import { useLang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
 import { siteConfig } from "@/lib/site";
 import { fadeUp, stagger } from "@/lib/animations";
+import MagneticButton from "./MagneticButton";
 
 function WhatsAppIcon({ className = "" }: { className?: string }) {
   return (
@@ -107,28 +108,34 @@ export default function CTA() {
               variants={fadeUp}
               className="mt-8 flex flex-col gap-3 sm:flex-row"
             >
-              <a
-                href={`mailto:${siteConfig.email}?subject=${encodeURIComponent("15-min call request")}`}
-                className="inline-flex items-center justify-center rounded-[4px] bg-[#AFA9EC] px-6 py-3 text-[13px] font-medium text-[#09080F] transition-opacity hover:opacity-90"
-              >
-                {t.ctaCall}
-              </a>
-              <a
-                href="#contact-form"
-                className="inline-flex items-center justify-center rounded-[4px] border border-white/[0.15] px-6 py-3 text-[13px] font-medium text-[#F0EEE8] transition-colors hover:bg-white/[0.04]"
-              >
-                {t.ctaBrief}
-              </a>
-              <a
-                href={siteConfig.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-[4px] border border-[#1D9E75]/40 bg-[#1D9E75]/10 px-6 py-3 text-[13px] font-medium text-[#5DCAA5] transition-colors hover:bg-[#1D9E75]/15"
-                aria-label={`${t.ctaWhatsapp} +32466386565`}
-              >
-                <WhatsAppIcon className="h-4 w-4" />
-                {t.ctaWhatsapp}
-              </a>
+              <MagneticButton>
+                <a
+                  href={`mailto:${siteConfig.email}?subject=${encodeURIComponent("15-min call request")}`}
+                  className="inline-flex items-center justify-center rounded-[4px] bg-[#AFA9EC] px-6 py-3 text-[13px] font-medium text-[#09080F] transition-opacity hover:opacity-90"
+                >
+                  {t.ctaCall}
+                </a>
+              </MagneticButton>
+              <MagneticButton>
+                <a
+                  href="#contact-form"
+                  className="inline-flex items-center justify-center rounded-[4px] border border-white/[0.15] px-6 py-3 text-[13px] font-medium text-[#F0EEE8] transition-colors hover:bg-white/[0.04]"
+                >
+                  {t.ctaBrief}
+                </a>
+              </MagneticButton>
+              <MagneticButton>
+                <a
+                  href={siteConfig.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-[4px] border border-[#1D9E75]/40 bg-[#1D9E75]/10 px-6 py-3 text-[13px] font-medium text-[#5DCAA5] transition-colors hover:bg-[#1D9E75]/15"
+                  aria-label={`${t.ctaWhatsapp} +32466386565`}
+                >
+                  <WhatsAppIcon className="h-4 w-4" />
+                  {t.ctaWhatsapp}
+                </a>
+              </MagneticButton>
             </motion.div>
 
             <motion.p
