@@ -159,9 +159,9 @@ export const translations: Record<"en" | "fr", Translation> = {
     ],
 
     // Capabilities
-    capTitle: "What I build",
+    capTitle: "Services, end to end",
     capSubtitle:
-      "End-to-end development for products that need to be fast, solid and maintainable.",
+      "Six ways to work together — each one backed by products already live in production, from Bloom to TorStock.",
     capServicesLabel: "services",
     capPlatformsDelivered: "platforms delivered",
     capClientsSatisfied: "happy clients",
@@ -370,9 +370,9 @@ export const translations: Record<"en" | "fr", Translation> = {
     ],
 
     // Capabilities
-    capTitle: "Ce que je construis",
+    capTitle: "Des services de bout en bout",
     capSubtitle:
-      "Du développement de bout en bout, pour des produits rapides, solides et évolutifs.",
+      "Six façons de travailler ensemble — chacune adossée à des produits déjà en production, de Bloom à TorStock.",
     capServicesLabel: "services",
     capPlatformsDelivered: "plateformes livrées",
     capClientsSatisfied: "clients satisfaits",

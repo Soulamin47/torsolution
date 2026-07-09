@@ -12,13 +12,13 @@ import GhostNumber from "./GhostNumber";
 // `slug` matches the /services/[slug] route.
 
 const SERVICE_META = [
-  { accent: "#AFA9EC", symbol: "</>",  area: "web",      large: true,  slug: "web" },
-  { accent: "#5DCAA5", symbol: "◎",    area: "mobile",   large: false, slug: "mobile" },
-  { accent: "#EF9F27", symbol: "∿",    area: "ai",       large: false, slug: "ai-automation" },
-  { accent: "#85B7EB", symbol: "⊞",    area: "platform", large: true,  slug: "platforms" },
-  { accent: "#F0997B", symbol: "⬡",    area: "web3",     large: false, slug: "web3" },
-  { accent: "#D4537E", symbol: "#",    area: "social",   large: false, slug: "social" },
-];
+  { accent: "#AFA9EC", symbol: "</>",  area: "web",      large: true,  slug: "web",           shipped: "Onstage" },
+  { accent: "#5DCAA5", symbol: "◎",    area: "mobile",   large: false, slug: "mobile",        shipped: "Torfix" },
+  { accent: "#EF9F27", symbol: "∿",    area: "ai",       large: false, slug: "ai-automation", shipped: "Bloom" },
+  { accent: "#85B7EB", symbol: "⊞",    area: "platform", large: true,  slug: "platforms",     shipped: "TorStock" },
+  { accent: "#F0997B", symbol: "⬡",    area: "web3",     large: false, slug: "web3",          shipped: null },
+  { accent: "#D4537E", symbol: "#",    area: "social",   large: false, slug: "social",        shipped: "Bloom" },
+] as const;
 
 // Tech pills shown in the "Web" large card
 const WEB_TECH = ["Next.js", "TypeScript", "Tailwind", "PostgreSQL"];
@@ -139,7 +139,14 @@ function BentoCard({
   labels,
 }: {
   item: { title: string; desc: string; tag: string; icon: string };
-  meta: { accent: string; symbol: string; area: string; large: boolean; slug: string };
+  meta: {
+    accent: string;
+    symbol: string;
+    area: string;
+    large: boolean;
+    slug: string;
+    shipped: string | null;
+  };
   idx: number;
   labels: { platforms: string; clients: string };
 }) {
@@ -237,8 +244,8 @@ function BentoCard({
         </div>
       )}
 
-      {/* Tag — pushed to bottom */}
-      <div className="mt-auto pt-5">
+      {/* Tag + shipped ref — pushed to bottom */}
+      <div className="mt-auto flex items-center justify-between gap-3 pt-5">
         <span
           className="font-mono text-[9px] px-[10px] py-[4px] rounded-[3px]"
           style={{
@@ -249,6 +256,16 @@ function BentoCard({
         >
           {item.tag}
         </span>
+        {meta.shipped && (
+          <span className="flex items-center gap-1.5 font-mono text-[9px] text-[#F0EEE8]/35">
+            <span
+              className="inline-block h-1 w-1 rounded-full"
+              style={{ background: "#1D9E75", boxShadow: "0 0 5px #1D9E75" }}
+            />
+            {lang === "fr" ? "En prod : " : "Live: "}
+            {meta.shipped}
+          </span>
+        )}
       </div>
     </motion.div>
   );

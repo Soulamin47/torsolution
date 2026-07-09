@@ -266,7 +266,9 @@ export default function ShowcaseCarousel() {
               </span>
             </div>
             <h2 className="text-[clamp(22px,3vw,32px)] font-light text-[#F0EEE8]">
-              {lang === "fr" ? "Ce que je construis, concrètement" : "What I build, concretely"}
+              {lang === "fr"
+                ? "Le niveau de finition, en un coup d'œil"
+                : "The level of finish, at a glance"}
             </h2>
           </div>
           <span className="hidden font-mono text-[11px] text-[#F0EEE8]/25 sm:block">
