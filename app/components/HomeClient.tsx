@@ -19,7 +19,6 @@ import CookieBanner from "./CookieBanner";
 import FloatingWhatsApp from "./FloatingWhatsApp";
 import NowWidget from "./NowWidget";
 import GrainOverlay from "./GrainOverlay";
-import BigMarquee from "./BigMarquee";
 
 const IntroOverlay = dynamic(() => import("./IntroOverlay"), { ssr: false });
 
@@ -47,7 +46,6 @@ export default function HomeClient() {
         <Hero />
         <ProjectLauncher />
         <TechStack />
-        <BigMarquee />
         <Capabilities />
         <Systems />
         <Process />
