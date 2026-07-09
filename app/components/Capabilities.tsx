@@ -6,6 +6,7 @@ import { useLang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
 import { EASE } from "@/lib/animations";
 import { localizedHref } from "@/lib/locale";
+import GhostNumber from "./GhostNumber";
 
 // ─── Per-service config (index matches capItems order) ────────────────────────
 // `slug` matches the /services/[slug] route.
@@ -42,8 +43,9 @@ export default function Capabilities() {
   ];
 
   return (
-    <section id="capabilities" className="relative z-10 px-6 sm:px-10 py-20">
-      <div className="mx-auto max-w-5xl">
+    <section id="capabilities" className="relative z-10 overflow-hidden px-6 sm:px-10 py-20">
+      <GhostNumber n="01" side="right" />
+      <div className="relative mx-auto max-w-5xl">
 
         {/* Header */}
         <motion.div

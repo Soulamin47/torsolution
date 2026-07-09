@@ -6,6 +6,7 @@ import { useLang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
 import { EASE } from "@/lib/animations";
 import { siteConfig } from "@/lib/site";
+import GhostNumber from "./GhostNumber";
 
 const ACCENT_COLORS = ["#AFA9EC", "#85B7EB", "#5DCAA5", "#5DCAA5"];
 
@@ -398,8 +399,9 @@ export default function Process() {
   ];
 
   return (
-    <section id="process" className="relative z-10 px-6 sm:px-10 py-28">
-      <div className="mx-auto max-w-5xl">
+    <section id="process" className="relative z-10 overflow-hidden px-6 sm:px-10 py-28">
+      <GhostNumber n="03" side="left" />
+      <div className="relative mx-auto max-w-5xl">
 
         {/* Header */}
         <div className="mb-16">

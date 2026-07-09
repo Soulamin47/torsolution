@@ -7,6 +7,7 @@ import { translations } from "@/lib/translations";
 import { fadeUp, stagger, EASE } from "@/lib/animations";
 import { localizedHref } from "@/lib/locale";
 import TiltCard from "./TiltCard";
+import GhostNumber from "./GhostNumber";
 
 // Map the home-section ordering to the /work/[slug] URLs.
 const PROJECT_SLUGS = ["bloom", "onstage", "torstock", "torfix"];
@@ -160,8 +161,9 @@ export default function Systems() {
   const viewAllLabel = lang === "fr" ? "Voir tous les projets →" : "View all work →";
 
   return (
-    <section id="systems" className="relative z-10 px-6 sm:px-10 py-28">
-      <div className="mx-auto max-w-5xl">
+    <section id="systems" className="relative z-10 overflow-hidden px-6 sm:px-10 py-28">
+      <GhostNumber n="02" side="left" />
+      <div className="relative mx-auto max-w-5xl">
         {/* Header */}
         <motion.div
           variants={stagger}
