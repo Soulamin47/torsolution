@@ -5,6 +5,7 @@ import CursorSpotlight from "./CursorSpotlight";
 import CookieBanner from "./CookieBanner";
 import FloatingWhatsApp from "./FloatingWhatsApp";
 import NowWidget from "./NowWidget";
+import GrainOverlay from "./GrainOverlay";
 
 // Shared chrome for non-home pages (services, work).
 // Keeps the same backdrop, navbar, footer and floating CTAs as the
@@ -14,6 +15,7 @@ export default function PageShell({ children }: { children: React.ReactNode }) {
     <main className="min-h-screen bg-[#09080F] text-[#F0EEE8] pt-20 overflow-x-hidden">
       <BackgroundOrbs />
       <CursorSpotlight />
+      <GrainOverlay />
       <div className="relative z-10">
         <Navbar />
         {children}

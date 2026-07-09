@@ -6,6 +6,7 @@ import { useLang } from "@/app/providers/LangProvider";
 import { EASE, fadeUp, stagger } from "@/lib/animations";
 import type { ServiceEntry } from "@/lib/services";
 import BackLink from "@/app/components/BackLink";
+import TiltCard from "@/app/components/TiltCard";
 
 export default function ServicesIndex({ services }: { services: ServiceEntry[] }) {
   const { lang } = useLang();
@@ -64,7 +65,9 @@ export default function ServicesIndex({ services }: { services: ServiceEntry[] }
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.4, delay: idx * 0.05, ease: EASE }}
+                className="h-full"
               >
+                <TiltCard accent={service.accent} className="h-full rounded-[8px]">
                 <Link
                   href={`/services/${service.slug}`}
                   className="group relative flex h-full flex-col overflow-hidden rounded-[8px] border border-white/[0.08] bg-white/[0.02] p-6 transition-colors hover:border-white/[0.18]"
@@ -101,6 +104,7 @@ export default function ServicesIndex({ services }: { services: ServiceEntry[] }
                     {labels.explore}
                   </span>
                 </Link>
+                </TiltCard>
               </motion.div>
             );
           })}

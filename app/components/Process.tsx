@@ -7,6 +7,7 @@ import { translations } from "@/lib/translations";
 import { EASE } from "@/lib/animations";
 import { siteConfig } from "@/lib/site";
 import GhostNumber from "./GhostNumber";
+import NeonFrame from "./NeonFrame";
 
 const ACCENT_COLORS = ["#AFA9EC", "#85B7EB", "#5DCAA5", "#5DCAA5"];
 
@@ -459,12 +460,10 @@ export default function Process() {
         </div>
 
         {/* Content panel */}
+        <NeonFrame radius={12} className="mt-8" colors={["#AFA9EC", "#5DCAA5"]} speed={9}>
         <div
-          className="mt-8 grid grid-cols-1 md:grid-cols-2 overflow-hidden rounded-xl"
-          style={{
-            minHeight: 240,
-            border: "0.5px solid rgba(255,255,255,0.08)",
-          }}
+          className="grid grid-cols-1 md:grid-cols-2 overflow-hidden rounded-[10px] bg-[#0C0B12]"
+          style={{ minHeight: 240 }}
         >
           {/* Left — mockup visual */}
           <div
@@ -695,6 +694,7 @@ export default function Process() {
             </motion.div>
           </AnimatePresence>
         </div>
+        </NeonFrame>
 
       </div>
     </section>
