@@ -8,6 +8,7 @@ import { translations } from "@/lib/translations";
 import { EASE, fadeUp, stagger } from "@/lib/animations";
 import { localizedHref } from "@/lib/locale";
 import MagneticButton from "./MagneticButton";
+import NeonFrame from "./NeonFrame";
 import dynamic from "next/dynamic";
 const HeroParticles = dynamic(() => import("./HeroParticles"), { ssr: false });
 
@@ -75,7 +76,14 @@ function HeroConsole() {
       variants={fadeUp}
       className="relative hidden min-h-[360px] md:block"
     >
-      <div className="absolute inset-0 rounded-[10px] border border-white/[0.08] bg-[#0C0B12]/70 shadow-2xl shadow-black/30 backdrop-blur">
+      <NeonFrame
+        radius={10}
+        fill
+        className="absolute inset-0"
+        colors={["#5EEAD4", "#AFA9EC"]}
+        speed={9}
+      >
+      <div className="h-full w-full overflow-hidden rounded-[8px] bg-[#0C0B12] shadow-2xl shadow-black/30">
         <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-3">
           <div className="flex items-center gap-1.5">
             <span className="h-2 w-2 rounded-full bg-[#F0997B]/80" />
@@ -138,6 +146,7 @@ function HeroConsole() {
           </div>
         </div>
       </div>
+      </NeonFrame>
     </motion.div>
   );
 }

@@ -46,6 +46,11 @@ section[id] {
   scroll-margin-top: 96px;
 }
 
+@keyframes neon-rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
 @keyframes marquee-left {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }

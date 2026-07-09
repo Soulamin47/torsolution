@@ -6,6 +6,7 @@ import { useLang } from "@/app/providers/LangProvider";
 import { siteConfig } from "@/lib/site";
 import { EASE } from "@/lib/animations";
 import MagneticButton from "./MagneticButton";
+import NeonFrame from "./NeonFrame";
 
 type OptionKey = "mvp" | "automation" | "mobile" | "platform";
 
@@ -135,7 +136,8 @@ export default function ProjectLauncher() {
 
   return (
     <section className="relative z-10 px-6 py-12 sm:px-10">
-      <div className="mx-auto max-w-5xl overflow-hidden rounded-[8px] border border-white/[0.08] bg-[#0C0B12]/80 shadow-2xl shadow-black/30 backdrop-blur">
+      <NeonFrame radius={8} className="mx-auto max-w-5xl">
+        <div className="overflow-hidden rounded-[6px] bg-[#0C0B12] shadow-2xl shadow-black/30">
         <div className="grid md:grid-cols-[0.9fr_1.1fr]">
           <div className="border-b border-white/[0.06] p-6 sm:p-8 md:border-b-0 md:border-r">
             <div className="mb-6 flex items-center gap-3">
@@ -277,7 +279,8 @@ export default function ProjectLauncher() {
             </div>
           </motion.div>
         </div>
-      </div>
+        </div>
+      </NeonFrame>
     </section>
   );
 }
