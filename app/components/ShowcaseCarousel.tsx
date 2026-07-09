@@ -247,6 +247,24 @@ export default function ShowcaseCarousel() {
   const { lang } = useLang();
   const [index, setIndex] = useState(0);
   const count = SLIDES.length;
+  const copy = {
+    en: {
+      eyebrow: "Visual showcase",
+      title: "The level of finish, at a glance",
+      hint: "Drag, click or use the arrows",
+      previous: "Previous visual",
+      next: "Next visual",
+      show: "Show",
+    },
+    fr: {
+      eyebrow: "Aperçu en images",
+      title: "Le niveau de finition, en un coup d’œil",
+      hint: "Glissez, cliquez ou utilisez les flèches",
+      previous: "Visuel précédent",
+      next: "Visuel suivant",
+      show: "Afficher",
+    },
+  }[lang];
 
   const go = useCallback(
     (dir: number) => setIndex((i) => (i + dir + count) % count),
@@ -254,7 +272,21 @@ export default function ShowcaseCarousel() {
   );
 
   return (
-    <section className="relative z-10 overflow-hidden px-6 py-20 sm:px-10">
+    <section
+      aria-labelledby="showcase-title"
+      className="relative z-10 overflow-hidden px-6 py-24 sm:px-10"
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[520px] w-[min(92vw,980px)] -translate-x-1/2 -translate-y-1/2 rounded-[50%] opacity-70 blur-3xl transition-colors duration-700"
+        style={{
+          background: `radial-gradient(ellipse, ${SLIDES[index].accent}18 0%, transparent 68%)`,
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-white/[0.07] to-transparent"
+      />
       <div className="mx-auto max-w-5xl">
         {/* Header */}
         <div className="mb-10 flex items-end justify-between">
@@ -262,13 +294,14 @@ export default function ShowcaseCarousel() {
             <div className="mb-4 flex items-center gap-3">
               <span className="h-px w-7 bg-[#AFA9EC]" />
               <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#AFA9EC]">
-                {lang === "fr" ? "Aperçu en images" : "Visual showcase"}
+                {copy.eyebrow}
               </span>
             </div>
-            <h2 className="text-[clamp(22px,3vw,32px)] font-light text-[#F0EEE8]">
-              {lang === "fr"
-                ? "Le niveau de finition, en un coup d'œil"
-                : "The level of finish, at a glance"}
+            <h2
+              id="showcase-title"
+              className="max-w-2xl text-[clamp(24px,3vw,34px)] font-light tracking-[-0.02em] text-[#F0EEE8]"
+            >
+              {copy.title}
             </h2>
           </div>
           <span className="hidden font-mono text-[11px] text-[#F0EEE8]/25 sm:block">
@@ -279,6 +312,9 @@ export default function ShowcaseCarousel() {
 
       {/* 3D stage */}
       <motion.div
+        role="region"
+        aria-roledescription="carousel"
+        aria-label={copy.eyebrow}
         className="relative mx-auto h-[430px] max-w-6xl cursor-grab active:cursor-grabbing"
         style={{ perspective: 1400 }}
         drag="x"
@@ -312,6 +348,7 @@ export default function ShowcaseCarousel() {
               transition={{ duration: 0.55, ease: EASE }}
               style={{ transformStyle: "preserve-3d" }}
               onClick={() => offset !== 0 && go(offset > 0 ? 1 : -1)}
+              aria-hidden={offset !== 0}
             >
               <div
                 className="overflow-hidden rounded-xl border bg-[#0C0B12]"
@@ -344,11 +381,11 @@ export default function ShowcaseCarousel() {
       </motion.div>
 
       {/* Controls */}
-      <div className="mt-6 flex items-center justify-center gap-6">
+      <div className="relative mt-6 flex items-center justify-center gap-6">
         <button
           onClick={() => go(-1)}
-          aria-label="Previous"
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-white/[0.12] text-[#F0EEE8]/50 transition hover:border-white/30 hover:text-[#F0EEE8]"
+          aria-label={copy.previous}
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.12] bg-[#0C0B12]/70 text-[#F0EEE8]/60 backdrop-blur transition hover:-translate-x-0.5 hover:border-white/30 hover:text-[#F0EEE8] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#AFA9EC]"
         >
           ←
         </button>
@@ -357,8 +394,9 @@ export default function ShowcaseCarousel() {
             <button
               key={s.key}
               onClick={() => setIndex(i)}
-              aria-label={s.title.en}
-              className="h-1.5 rounded-full transition-all duration-300"
+              aria-label={`${copy.show} ${s.title[lang]}`}
+              aria-current={i === index ? "true" : undefined}
+              className="h-1.5 rounded-full transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#AFA9EC]"
               style={{
                 width: i === index ? 24 : 6,
                 background: i === index ? s.accent : "rgba(255,255,255,0.15)",
@@ -368,11 +406,18 @@ export default function ShowcaseCarousel() {
         </div>
         <button
           onClick={() => go(1)}
-          aria-label="Next"
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-white/[0.12] text-[#F0EEE8]/50 transition hover:border-white/30 hover:text-[#F0EEE8]"
+          aria-label={copy.next}
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.12] bg-[#0C0B12]/70 text-[#F0EEE8]/60 backdrop-blur transition hover:translate-x-0.5 hover:border-white/30 hover:text-[#F0EEE8] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#AFA9EC]"
         >
           →
         </button>
+      </div>
+      <div className="relative mt-4 flex items-center justify-center gap-3 font-mono text-[9px] uppercase tracking-[0.14em] text-[#F0EEE8]/25">
+        <span className="sm:hidden">
+          {String(index + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
+        </span>
+        <span aria-hidden="true" className="hidden h-px w-5 bg-white/10 sm:block" />
+        <span>{copy.hint}</span>
       </div>
     </section>
   );
