@@ -7,6 +7,7 @@ import { translations } from "@/lib/translations";
 import { siteConfig } from "@/lib/site";
 import { fadeUp, stagger } from "@/lib/animations";
 import MagneticButton from "./MagneticButton";
+import NeonFrame from "./NeonFrame";
 
 function WhatsAppIcon({ className = "" }: { className?: string }) {
   return (
@@ -147,14 +148,17 @@ export default function CTA() {
           </motion.div>
 
           {/* Form */}
-          <motion.form
-            id="contact-form"
-            onSubmit={handleSubmit}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-            className="space-y-3"
+          >
+          <NeonFrame radius={8} colors={["#AFA9EC", "#5EEAD4"]} speed={8}>
+          <form
+            id="contact-form"
+            onSubmit={handleSubmit}
+            className="space-y-3 rounded-[6px] bg-[#0C0B12] p-6"
           >
             {sent && (
               <div className="border border-[#1D9E75]/30 bg-[#1D9E75]/10 px-4 py-3 text-[13px] text-[#5DCAA5] rounded-[4px]">
@@ -212,7 +216,9 @@ export default function CTA() {
             >
               {sending ? t.contactSending : t.contactSend}
             </button>
-          </motion.form>
+          </form>
+          </NeonFrame>
+          </motion.div>
         </div>
       </div>
     </section>

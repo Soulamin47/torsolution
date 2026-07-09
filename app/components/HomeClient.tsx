@@ -19,6 +19,7 @@ import CookieBanner from "./CookieBanner";
 import FloatingWhatsApp from "./FloatingWhatsApp";
 import NowWidget from "./NowWidget";
 import GrainOverlay from "./GrainOverlay";
+import ShowcaseCarousel from "./ShowcaseCarousel";
 
 const IntroOverlay = dynamic(() => import("./IntroOverlay"), { ssr: false });
 
@@ -46,6 +47,7 @@ export default function HomeClient() {
         <Hero />
         <ProjectLauncher />
         <TechStack />
+        <ShowcaseCarousel />
         <Capabilities />
         <Systems />
         <Process />
