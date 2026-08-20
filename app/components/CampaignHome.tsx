@@ -112,7 +112,7 @@ export default function CampaignHome() {
           <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .75 }} className="relative z-10">
             <div className="inline-flex items-center gap-3 rounded-full border border-black/10 bg-white/55 px-4 py-2 font-mono text-[9px] uppercase tracking-[.18em] shadow-sm backdrop-blur-xl"><span className="h-2 w-2 rounded-full bg-[#00a878] shadow-[0_0_0_5px_rgba(0,168,120,.12)]" />{c.badge}</div>
             <h1 className="mt-8 max-w-3xl text-[clamp(48px,6.9vw,92px)] font-medium leading-[.91] tracking-[-.065em]">
-              <span className="block">{c.titleA}</span><span className="block">{c.titleB}</span><span className="campaign-ink block pb-2 italic">{c.titleC}</span>
+              <span className="block">{c.titleA}</span><span className="block">{c.titleB}</span><span className="campaign-ink block pb-2">{c.titleC}</span>
             </h1>
             <p className="mt-8 max-w-xl text-[16px] leading-7 text-[#15141a]/58">{c.subtitle}</p>
             <div className="mt-9 flex flex-wrap items-center gap-3">

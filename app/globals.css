@@ -86,8 +86,8 @@ body::before {
 }
 
 .campaign-ink {
-  color: #7c5cff;
-  text-shadow: 5px 5px 0 rgba(255,207,74,.62);
+  color: #a897ff;
+  text-shadow: 0 0 34px rgba(124, 92, 255, 0.4);
 }
 
 .campaign-main-cta {
