@@ -7,6 +7,7 @@ import { EASE, fadeUp, stagger } from "@/lib/animations";
 import type { ServiceEntry } from "@/lib/services";
 import BackLink from "@/app/components/BackLink";
 import TiltCard from "@/app/components/TiltCard";
+import { localizedHref } from "@/lib/locale";
 
 export default function ServicesIndex({ services }: { services: ServiceEntry[] }) {
   const { lang } = useLang();
@@ -25,9 +26,10 @@ export default function ServicesIndex({ services }: { services: ServiceEntry[] }
   };
 
   return (
-    <section className="relative z-10 px-6 sm:px-10 pt-20 pb-20">
-      <div className="mx-auto max-w-5xl">
-        <BackLink href="/" />
+    <section className="relative z-10 overflow-hidden px-6 pb-24 pt-20 sm:px-10">
+      <div className="pointer-events-none absolute -right-28 top-0 h-96 w-96 rounded-full bg-[#7c5cff]/15 blur-[90px]" />
+      <div className="relative mx-auto max-w-6xl">
+        <BackLink href={localizedHref("/", lang)} />
 
         <motion.div
           variants={stagger}
@@ -43,7 +45,7 @@ export default function ServicesIndex({ services }: { services: ServiceEntry[] }
           </motion.div>
           <motion.h1
             variants={fadeUp}
-            className="text-[clamp(28px,4vw,46px)] font-light leading-[1.1] tracking-tight text-[#F0EEE8]"
+            className="max-w-4xl text-[clamp(42px,6vw,76px)] font-medium leading-[.96] tracking-[-.055em] text-[#15141a]"
           >
             {labels.title}
           </motion.h1>
@@ -55,7 +57,7 @@ export default function ServicesIndex({ services }: { services: ServiceEntry[] }
           </motion.p>
         </motion.div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service, idx) => {
             const copy = service[lang];
             return (
@@ -67,10 +69,10 @@ export default function ServicesIndex({ services }: { services: ServiceEntry[] }
                 transition={{ duration: 0.4, delay: idx * 0.05, ease: EASE }}
                 className="h-full"
               >
-                <TiltCard accent={service.accent} className="h-full rounded-[8px]">
+                <TiltCard accent={service.accent} className="h-full rounded-[22px]">
                 <Link
-                  href={`/services/${service.slug}`}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-[8px] border border-white/[0.08] bg-white/[0.02] p-6 transition-colors hover:border-white/[0.18]"
+                  href={localizedHref(`/services/${service.slug}`, lang)}
+                  className="group relative flex h-full min-h-[290px] flex-col overflow-hidden rounded-[22px] border border-black/[0.08] bg-white/55 p-7 shadow-[0_20px_60px_rgba(30,25,20,.06)] backdrop-blur transition hover:-translate-y-1 hover:border-black/[0.16] hover:bg-white/80"
                 >
                   <span
                     aria-hidden="true"
@@ -90,10 +92,10 @@ export default function ServicesIndex({ services }: { services: ServiceEntry[] }
                   >
                     {copy.tag}
                   </span>
-                  <h2 className="mt-3 text-[20px] font-medium text-[#F0EEE8]">
+                  <h2 className="mt-10 text-[25px] font-medium tracking-[-.03em] text-[#15141a]">
                     {copy.title}
                   </h2>
-                  <p className="mt-3 flex-1 text-[13px] leading-relaxed text-[#F0EEE8]/50">
+                  <p className="mt-3 flex-1 text-[13px] leading-6 text-black/48">
                     {copy.tagline}
                   </p>
 

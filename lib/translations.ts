@@ -130,15 +130,15 @@ export const translations: Record<"en" | "fr", Translation> = {
     navStatus: "Available · Brussels",
 
     // Hero
-    heroBadge: "Full-stack engineer · Brussels / Remote",
-    heroLine1: "I build the product.",
-    heroLine2: "You build",
-    heroLine2italic: "the company.",
+    heroBadge: "Strategy · Design · Code · Brussels",
+    heroLine1: "Your idea deserves",
+    heroLine2: "to become",
+    heroLine2italic: "unforgettable.",
     heroTitle: "I build the product. You build the company.",
     heroSubtitle:
-      "Freelance developer based in Brussels — I help startups, agencies and businesses ship web apps, mobile apps, internal tools and AI platforms. From first commit to live product.",
+      "I turn ambitious ideas into web, mobile and AI products that look credible, feel effortless and are ready to grow — from first thought to launch.",
     viewSystems: "See my work",
-    startProject: "Let's talk",
+    startProject: "Bring my project to life",
     scroll: "Scroll",
     heroPoints: [
       "Delivered in weeks, not months",
@@ -341,15 +341,15 @@ export const translations: Record<"en" | "fr", Translation> = {
     navStatus: "Disponible · Bruxelles",
 
     // Hero
-    heroBadge: "Ingénieur full-stack · Bruxelles / Remote",
-    heroLine1: "Je construis le produit.",
-    heroLine2: "Vous construisez",
-    heroLine2italic: "l'entreprise.",
+    heroBadge: "Stratégie · Design · Code · Bruxelles",
+    heroLine1: "Votre idée mérite",
+    heroLine2: "de devenir",
+    heroLine2italic: "inoubliable.",
     heroTitle: "Je construis le produit. Vous construisez l'entreprise.",
     heroSubtitle:
-      "Développeur freelance à Bruxelles. J'aide startups, agences et entreprises à concevoir et déployer leurs applications web et mobiles, leurs outils internes et leurs plateformes IA. De la première ligne de code à la mise en production.",
+      "Je transforme les idées ambitieuses en produits web, mobile et IA qui inspirent confiance, donnent envie et sont prêts à grandir — de la première réflexion au lancement.",
     viewSystems: "Voir mes projets",
-    startProject: "On en parle",
+    startProject: "Donner vie à mon projet",
     scroll: "Défiler",
     heroPoints: [
       "En semaines, pas en mois",

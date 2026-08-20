@@ -70,7 +70,7 @@ export default function Capabilities() {
 
         {/* Bento grid — desktop */}
         <div
-          className="hidden md:grid gap-px"
+          className="hidden overflow-hidden rounded-[20px] md:grid md:gap-px"
           style={{
             background: "rgba(255,255,255,0.06)",
             gridTemplateAreas: `
@@ -98,7 +98,7 @@ export default function Capabilities() {
 
         {/* Mobile — single column */}
         <div
-          className="md:hidden grid gap-px"
+          className="grid gap-px overflow-hidden rounded-[20px] md:hidden"
           style={{ background: "rgba(255,255,255,0.06)" }}
         >
           {ordered.map(({ item, meta }, idx) => (
@@ -119,7 +119,7 @@ export default function Capabilities() {
         <div className="mt-10 flex justify-center">
           <Link
             href={servicesIndexHref}
-            className="inline-flex items-center gap-2 rounded-[4px] border border-white/[0.15] px-6 py-3 font-mono text-[11px] uppercase tracking-[0.14em] text-[#F0EEE8]/55 transition-colors hover:bg-white/[0.04] hover:text-[#F0EEE8]"
+            className="inline-flex items-center gap-2 rounded-full border border-white/[0.15] px-6 py-3 font-mono text-[11px] uppercase tracking-[0.14em] text-[#F0EEE8]/55 transition-colors hover:bg-white/[0.04] hover:text-[#F0EEE8]"
           >
             {viewAllLabel}
           </Link>

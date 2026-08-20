@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useMemo } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -18,7 +18,7 @@ function FloatingShape({
   rotAxis: [number, number, number];
 }) {
   const ref = useRef<THREE.Mesh>(null!);
-  const t = useRef(Math.random() * 100);
+  const t = useRef(17);
 
   useFrame((_, delta) => {
     t.current += delta * speed;
@@ -42,7 +42,7 @@ function FloatingShape({
 function Particles({ count = 280 }: { count?: number }) {
   const ref = useRef<THREE.Points>(null!);
   const mouse = useRef({ x: 0, y: 0 });
-  const { size } = useThree();
+  useThree();
 
   const [positions, colors] = useMemo(() => {
     const pos = new Float32Array(count * 3);
@@ -56,11 +56,15 @@ function Particles({ count = 280 }: { count?: number }) {
 
     for (let i = 0; i < count; i++) {
       // Spread across a wide area biased toward center
-      pos[i * 3]     = (Math.random() - 0.5) * 14;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 10;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 6 - 2;
+      const random = (offset: number) => {
+        const value = Math.sin((i + 1) * (offset + 12.9898)) * 43758.5453;
+        return value - Math.floor(value);
+      };
+      pos[i * 3]     = (random(1) - 0.5) * 14;
+      pos[i * 3 + 1] = (random(2) - 0.5) * 10;
+      pos[i * 3 + 2] = (random(3) - 0.5) * 6 - 2;
 
-      const c = palette[Math.floor(Math.random() * palette.length)];
+      const c = palette[Math.floor(random(4) * palette.length)];
       col[i * 3]     = c.r;
       col[i * 3 + 1] = c.g;
       col[i * 3 + 2] = c.b;
@@ -69,7 +73,7 @@ function Particles({ count = 280 }: { count?: number }) {
   }, [count]);
 
   // Track mouse
-  useMemo(() => {
+  useEffect(() => {
     if (typeof window === "undefined") return;
     const onMove = (e: MouseEvent) => {
       mouse.current.x = (e.clientX / window.innerWidth - 0.5) * 2;

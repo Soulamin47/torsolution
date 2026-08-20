@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { buildAlternates } from "@/lib/locale";
 import PrivacyContent from "./PrivacyContent";
+import PageShell from "@/app/components/PageShell";
 
 export const metadata: Metadata = {
   title: "Privacy policy",
@@ -9,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPage() {
-  return <PrivacyContent />;
+  return <PageShell><PrivacyContent /></PageShell>;
 }

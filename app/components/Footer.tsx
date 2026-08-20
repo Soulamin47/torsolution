@@ -37,6 +37,10 @@ export default function Footer() {
   const homeRoot = localizedHref("/", lang);
 
   const links = [
+    {
+      href: lang === "fr" ? "/fr/developpeur-freelance-bruxelles" : "/freelance-developer-brussels",
+      label: lang === "fr" ? "Freelance Bruxelles" : "Developer Brussels",
+    },
     { href: localizedHref("/work", lang), label: t.navSystems },
     { href: localizedHref("/services", lang), label: t.navCapabilities },
     { href: `${homeRoot}#process`, label: t.navProcess },
@@ -45,7 +49,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="border-t border-white/[0.06]">
+    <footer className="border-t border-white/[0.06] bg-[#15141a] text-[#F0EEE8]">
       <div className="mx-auto max-w-5xl px-6 sm:px-10 py-8 space-y-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <Link

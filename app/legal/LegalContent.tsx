@@ -99,22 +99,22 @@ export default function LegalContent() {
   const c = content[lang];
 
   return (
-    <main className="min-h-screen bg-[#07070A] text-white px-6 py-24 sm:px-8">
-      <div className="mx-auto max-w-2xl">
+    <section className="bg-[#f3f0e8] px-6 py-24 text-[#15141a] sm:px-8">
+      <div className="mx-auto max-w-3xl rounded-[24px] border border-black/[0.08] bg-white/55 p-7 shadow-[0_30px_90px_rgba(30,25,20,.07)] md:p-12">
         <Link
           href={localizedHref("/", lang)}
-          className="mb-10 inline-flex items-center gap-2 text-sm text-gray-400 transition hover:text-white"
+          className="mb-10 inline-flex items-center gap-2 text-sm text-black/40 transition hover:text-black"
         >
           ← {lang === "fr" ? "Retour" : "Back"}
         </Link>
-        <h1 className="text-3xl font-semibold tracking-tight">{c.title}</h1>
+        <h1 className="text-[clamp(36px,5vw,58px)] font-medium tracking-[-.05em]">{c.title}</h1>
         <div className="mt-10 space-y-10">
           {c.sections.map((s) => (
             <div key={s.heading}>
-              <h2 className="text-base font-semibold text-white">{s.heading}</h2>
+              <h2 className="text-base font-semibold text-[#15141a]">{s.heading}</h2>
               <ul className="mt-3 space-y-1.5">
                 {s.body.map((line, i) => (
-                  <li key={i} className="text-sm text-gray-400">
+                  <li key={i} className="text-sm leading-relaxed text-black/48">
                     {line}
                   </li>
                 ))}
@@ -123,6 +123,6 @@ export default function LegalContent() {
           ))}
         </div>
       </div>
-    </main>
+    </section>
   );
 }

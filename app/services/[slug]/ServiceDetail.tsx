@@ -8,6 +8,7 @@ import { EASE, fadeUp, stagger } from "@/lib/animations";
 import type { ServiceEntry } from "@/lib/services";
 import BackLink from "@/app/components/BackLink";
 import MagneticButton from "@/app/components/MagneticButton";
+import { localizedHref } from "@/lib/locale";
 
 export default function ServiceDetail({ service }: { service: ServiceEntry }) {
   const { lang } = useLang();
@@ -38,7 +39,7 @@ export default function ServiceDetail({ service }: { service: ServiceEntry }) {
       {/* Hero */}
       <section className="relative px-6 sm:px-10 pt-20 pb-16">
         <div className="mx-auto max-w-4xl">
-          <BackLink href="/" />
+          <BackLink href={localizedHref("/", lang)} />
 
           <motion.div
             variants={stagger}
@@ -58,7 +59,7 @@ export default function ServiceDetail({ service }: { service: ServiceEntry }) {
 
             <motion.h1
               variants={fadeUp}
-              className="text-[clamp(34px,5vw,56px)] font-light leading-[1.1] tracking-tight text-[#F0EEE8]"
+              className="max-w-4xl text-[clamp(42px,6vw,74px)] font-medium leading-[.96] tracking-[-.055em] text-[#15141a]"
             >
               {copy.title}
             </motion.h1>
@@ -73,8 +74,8 @@ export default function ServiceDetail({ service }: { service: ServiceEntry }) {
             <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-3">
               <MagneticButton>
                 <Link
-                  href="/#contact"
-                  className="inline-flex items-center justify-center rounded-[4px] px-5 py-3 text-[13px] font-medium text-[#09080F] transition-opacity hover:opacity-90"
+                  href={`${localizedHref("/", lang)}#contact`}
+                  className="inline-flex items-center justify-center rounded-full px-6 py-3.5 text-[13px] font-medium text-[#09080F] transition-opacity hover:opacity-90"
                   style={{ background: accent }}
                 >
                   {ctaLabels.contact}
@@ -85,7 +86,7 @@ export default function ServiceDetail({ service }: { service: ServiceEntry }) {
                   href={`${siteConfig.whatsapp}?text=${whatsappText}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-[4px] border border-[#1D9E75]/40 bg-[#1D9E75]/10 px-5 py-3 text-[13px] font-medium text-[#5DCAA5] transition-colors hover:bg-[#1D9E75]/15"
+                  className="inline-flex items-center justify-center rounded-full border border-[#1D9E75]/40 bg-[#1D9E75]/10 px-6 py-3.5 text-[13px] font-medium text-[#167a5d] transition-colors hover:bg-[#1D9E75]/15"
                 >
                   {ctaLabels.whatsapp}
                 </a>
@@ -104,7 +105,7 @@ export default function ServiceDetail({ service }: { service: ServiceEntry }) {
 
       {/* What you get */}
       <Section accent={accent} eyebrow={ctaLabels.whatYouGet}>
-        <div className="grid gap-px overflow-hidden rounded-[8px] bg-white/[0.06] sm:grid-cols-2">
+        <div className="grid gap-px overflow-hidden rounded-[20px] bg-white/[0.06] sm:grid-cols-2">
           {copy.whatYouGet.map((item, idx) => (
             <motion.div
               key={item.title}
@@ -135,7 +136,7 @@ export default function ServiceDetail({ service }: { service: ServiceEntry }) {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.4, delay: idx * 0.08, ease: EASE }}
-              className="rounded-[6px] border border-white/[0.08] bg-white/[0.02] p-5 sm:flex sm:items-start sm:gap-5"
+              className="rounded-[18px] border border-white/[0.08] bg-white/[0.02] p-5 sm:flex sm:items-start sm:gap-5"
             >
               <span
                 className="block font-mono text-[10px] uppercase tracking-[0.14em] shrink-0 sm:min-w-[180px]"
@@ -164,7 +165,7 @@ export default function ServiceDetail({ service }: { service: ServiceEntry }) {
           ))}
         </div>
 
-        <div className="mt-10 grid gap-px overflow-hidden rounded-[6px] bg-white/[0.06] sm:grid-cols-2">
+        <div className="mt-10 grid gap-px overflow-hidden rounded-[20px] bg-white/[0.06] sm:grid-cols-2">
           <div className="bg-[#09080F] p-5">
             <div className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#F0EEE8]/25">
               {ctaLabels.timeline}
@@ -186,7 +187,7 @@ export default function ServiceDetail({ service }: { service: ServiceEntry }) {
           {copy.faq.map((entry) => (
             <details
               key={entry.q}
-              className="group rounded-[6px] border border-white/[0.08] bg-white/[0.02] p-5 transition-colors hover:border-white/[0.15]"
+              className="group rounded-[18px] border border-white/[0.08] bg-white/[0.02] p-5 transition-colors hover:border-white/[0.15]"
             >
               <summary className="cursor-pointer list-none">
                 <span className="flex items-start justify-between gap-4">
@@ -209,7 +210,7 @@ export default function ServiceDetail({ service }: { service: ServiceEntry }) {
 
       {/* Footer CTA */}
       <section className="relative z-10 px-6 sm:px-10 py-20">
-        <div className="mx-auto max-w-3xl rounded-[8px] border border-white/[0.08] bg-[#0C0B12]/70 p-8 text-center shadow-2xl shadow-black/30 backdrop-blur">
+        <div className="mx-auto max-w-3xl rounded-[24px] border border-white/[0.08] bg-[#0C0B12]/70 p-8 text-center shadow-2xl shadow-black/10 backdrop-blur">
           <h2 className="text-[24px] font-light text-[#F0EEE8]">
             {lang === "fr"
               ? "On se lance ?"
@@ -223,16 +224,16 @@ export default function ServiceDetail({ service }: { service: ServiceEntry }) {
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <MagneticButton>
               <Link
-                href="/#contact"
-                className="inline-flex items-center justify-center rounded-[4px] bg-[#AFA9EC] px-6 py-3 text-[13px] font-medium text-[#09080F] transition-opacity hover:opacity-90"
+                href={`${localizedHref("/", lang)}#contact`}
+                className="inline-flex items-center justify-center rounded-full bg-[#7c5cff] px-6 py-3.5 text-[13px] font-medium text-white transition-opacity hover:opacity-90"
               >
                 {ctaLabels.contact}
               </Link>
             </MagneticButton>
             <MagneticButton>
               <Link
-                href="/services"
-                className="inline-flex items-center justify-center rounded-[4px] border border-white/[0.15] px-6 py-3 text-[13px] font-medium text-[#F0EEE8]/65 transition-colors hover:bg-white/[0.04] hover:text-[#F0EEE8]"
+                href={localizedHref("/services", lang)}
+                className="inline-flex items-center justify-center rounded-full border border-black/[0.15] px-6 py-3.5 text-[13px] font-medium text-black/65 transition-colors hover:bg-white/60 hover:text-black"
               >
                 {ctaLabels.other}
               </Link>

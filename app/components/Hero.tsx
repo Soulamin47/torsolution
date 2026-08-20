@@ -5,12 +5,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useLang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
-import { EASE, fadeUp, stagger } from "@/lib/animations";
+import { fadeUp, stagger } from "@/lib/animations";
 import { localizedHref } from "@/lib/locale";
 import MagneticButton from "./MagneticButton";
-import NeonFrame from "./NeonFrame";
 import dynamic from "next/dynamic";
-const HeroParticles = dynamic(() => import("./HeroParticles"), { ssr: false });
+const ProductOrbital = dynamic(() => import("./ProductOrbital"), { ssr: false });
 
 function useCountUp(target: number, duration = 1800) {
   const [count, setCount] = useState(0);
@@ -70,96 +69,13 @@ function StatItem({
   );
 }
 
-function HeroConsole() {
-  return (
-    <motion.div
-      variants={fadeUp}
-      className="relative hidden min-h-[360px] md:block"
-    >
-      <NeonFrame
-        radius={10}
-        fill
-        className="absolute inset-0"
-        colors={["#5EEAD4", "#AFA9EC"]}
-        speed={9}
-      >
-      <div className="h-full w-full overflow-hidden rounded-[8px] bg-[#0C0B12] shadow-2xl shadow-black/30">
-        <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-3">
-          <div className="flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full bg-[#F0997B]/80" />
-            <span className="h-2 w-2 rounded-full bg-[#EF9F27]/80" />
-            <span className="h-2 w-2 rounded-full bg-[#5DCAA5]/80" />
-          </div>
-          <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#F0EEE8]/25">
-            live build room
-          </span>
-        </div>
-
-        <div className="grid h-[calc(100%-45px)] grid-rows-[1fr_auto] p-5">
-          <div className="grid grid-cols-2 gap-3">
-            {[
-              { label: "Discovery", value: "01", color: "#AFA9EC" },
-              { label: "Prototype", value: "02", color: "#85B7EB" },
-              { label: "Build", value: "03", color: "#5DCAA5" },
-              { label: "Launch", value: "04", color: "#F0997B" },
-            ].map((item, index) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + index * 0.12, duration: 0.45, ease: EASE }}
-                className="relative overflow-hidden rounded-[6px] border border-white/[0.08] bg-white/[0.03] p-4"
-              >
-                <span
-                  className="absolute right-3 top-3 h-2 w-2 rounded-full"
-                  style={{ background: item.color, boxShadow: `0 0 16px ${item.color}` }}
-                />
-                <div className="font-mono text-[28px] leading-none text-[#F0EEE8]/80">
-                  {item.value}
-                </div>
-                <div className="mt-3 font-mono text-[10px] uppercase tracking-[0.12em] text-[#F0EEE8]/30">
-                  {item.label}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="mt-5 rounded-[6px] border border-[#5DCAA5]/20 bg-[#5DCAA5]/10 p-4">
-            <div className="mb-3 flex items-center justify-between">
-              <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#5DCAA5]">
-                conversion path
-              </span>
-              <span className="font-mono text-[10px] text-[#F0EEE8]/30">ready</span>
-            </div>
-            <div className="space-y-2">
-              {[82, 64, 91].map((width, index) => (
-                <div key={index} className="h-2 overflow-hidden rounded-full bg-white/[0.06]">
-                  <motion.div
-                    className="h-full rounded-full bg-[#5DCAA5]"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${width}%` }}
-                    transition={{ delay: 0.8 + index * 0.15, duration: 0.8, ease: EASE }}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-      </NeonFrame>
-    </motion.div>
-  );
-}
-
 export default function Hero() {
   const { lang } = useLang();
   const t = translations[lang];
   const workHref = localizedHref("/work", lang);
 
   return (
-    <section className="relative px-6 sm:px-10 pt-36 pb-0 overflow-hidden">
-      {/* 3D particle background */}
-      <HeroParticles />
+    <section className="hero-section relative min-h-[calc(100svh-20px)] overflow-hidden px-6 pb-0 pt-28 sm:px-10 md:pt-32">
 
       {/* Dot grid — subtle, behind particles */}
       <div
@@ -174,33 +90,34 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative z-10 mx-auto max-w-5xl">
+      <div className="pointer-events-none absolute left-1/2 top-[44%] h-[44rem] w-[44rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.025]" />
+      <div className="relative z-10 mx-auto max-w-6xl">
         {/* Zone haute */}
         <motion.div
           variants={stagger}
           initial="initial"
           animate="animate"
-          className="grid gap-12 pb-14 md:grid-cols-[1fr_0.9fr] md:items-center"
+          className="grid items-center gap-2 pb-10 md:grid-cols-[1.05fr_0.95fr] md:gap-4"
         >
           <div>
             <motion.div
               variants={fadeUp}
-              className="flex items-center gap-3 mb-8"
+              className="mb-8 flex items-center gap-3"
             >
-              <div className="w-6 h-px bg-[#AFA9EC]" />
-              <span className="font-mono text-[11px] text-[#F0EEE8]/40 tracking-wide">
+              <div className="h-px w-8 bg-[#a7f3d0]" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#a7f3d0]">
                 {t.heroBadge}
               </span>
             </motion.div>
 
             <motion.h1
               variants={fadeUp}
-              className="text-[clamp(34px,5vw,64px)] font-light leading-[1.1] tracking-tight text-[#F0EEE8]"
+              className="max-w-[720px] text-[clamp(46px,6.4vw,86px)] font-light leading-[0.96] tracking-[-0.055em] text-[#f7f5ef]"
             >
               <span className="block">{t.heroLine1}</span>
               <span className="block">
                 {t.heroLine2}{" "}
-                <em className="not-italic text-[#F0EEE8]/40">
+                <em className="hero-gradient not-italic">
                   {t.heroLine2italic}
                 </em>
               </span>
@@ -208,19 +125,19 @@ export default function Hero() {
 
             <motion.p
               variants={fadeUp}
-              className="mt-7 text-[14px] leading-relaxed text-[#F0EEE8]/45 max-w-[400px]"
+              className="mt-8 max-w-[510px] text-[15px] leading-7 text-[#F0EEE8]/48"
             >
               {t.heroSubtitle}
             </motion.p>
 
             <motion.div
               variants={fadeUp}
-              className="mt-8 flex flex-wrap gap-3 items-center"
+              className="mt-9 flex flex-wrap items-center gap-3"
             >
               <MagneticButton>
                 <a
                   href="#contact"
-                  className="inline-flex items-center justify-center rounded-[4px] bg-[#AFA9EC] px-6 py-3 text-[13px] font-medium text-[#09080F] transition-opacity hover:opacity-90"
+                  className="hero-primary-button inline-flex items-center justify-center rounded-full bg-[#a7f3d0] px-7 py-3.5 text-[13px] font-medium text-[#08110e] transition-transform hover:scale-[1.03]"
                 >
                   {t.startProject}
                 </a>
@@ -228,13 +145,13 @@ export default function Hero() {
               <MagneticButton>
                 <Link
                   href={workHref}
-                  className="inline-flex items-center justify-center rounded-[4px] border border-white/[0.15] px-6 py-3 text-[13px] font-medium text-[#F0EEE8] transition-colors hover:bg-white/[0.04]"
+                  className="inline-flex items-center justify-center rounded-full border border-white/[0.14] bg-white/[0.025] px-7 py-3.5 text-[13px] font-medium text-[#F0EEE8] backdrop-blur-md transition-colors hover:bg-white/[0.07]"
                 >
                   {t.viewSystems}
                 </Link>
               </MagneticButton>
 
-              <div className="flex items-center gap-2 ml-2">
+              <div className="ml-2 flex items-center gap-2">
                 <span className="relative flex h-1.5 w-1.5 shrink-0">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1D9E75] opacity-75" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#1D9E75]" style={{ boxShadow: "0 0 6px #1D9E75" }} />
@@ -246,7 +163,12 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          <HeroConsole />
+          <motion.div variants={fadeUp} className="relative -mx-6 md:mx-0">
+            <ProductOrbital />
+            <div className="pointer-events-none absolute left-[8%] top-[18%] rounded-full border border-white/10 bg-[#0d0c13]/70 px-3 py-2 font-mono text-[9px] uppercase tracking-[0.14em] text-white/45 backdrop-blur-xl">01 · Strategy</div>
+            <div className="pointer-events-none absolute right-[4%] top-[30%] rounded-full border border-[#a7f3d0]/20 bg-[#0d0c13]/70 px-3 py-2 font-mono text-[9px] uppercase tracking-[0.14em] text-[#a7f3d0] backdrop-blur-xl">02 · Product</div>
+            <div className="pointer-events-none absolute bottom-[21%] left-[14%] rounded-full border border-[#c4b5fd]/20 bg-[#0d0c13]/70 px-3 py-2 font-mono text-[9px] uppercase tracking-[0.14em] text-[#c4b5fd] backdrop-blur-xl">03 · Launch</div>
+          </motion.div>
         </motion.div>
 
         {/* Divider */}

@@ -38,6 +38,121 @@ body {
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255,255,255,.014) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.014) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at 50% 30%, black, transparent 72%);
+}
+
+::selection {
+  background: rgba(167, 243, 208, 0.85);
+  color: #07100d;
+}
+
+.hero-gradient {
+  background: linear-gradient(105deg, #f7f5ef 4%, #c4b5fd 46%, #a7f3d0 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 28px rgba(167, 243, 208, 0.08));
+}
+
+.hero-primary-button {
+  box-shadow: 0 12px 44px rgba(94, 234, 212, 0.16), inset 0 1px rgba(255,255,255,.65);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+.logo-space { perspective: 1100px; transform-style: preserve-3d; }
+.logo-orbit { transform-style: preserve-3d; }
+.logo-orbit-a { animation: logo-orbit-a 15s linear infinite; }
+.logo-orbit-b { animation: logo-orbit-b 11s linear infinite reverse; }
+.logo-orbit-c { animation: logo-orbit-c 9s linear infinite; }
+.logo-particle { animation: logo-drift 5s ease-in-out infinite; }
+
+@keyframes logo-orbit-a { from { transform: rotateX(68deg) rotateZ(0deg); } to { transform: rotateX(68deg) rotateZ(360deg); } }
+@keyframes logo-orbit-b { from { transform: rotateY(66deg) rotateZ(0deg); } to { transform: rotateY(66deg) rotateZ(360deg); } }
+@keyframes logo-orbit-c { from { transform: rotateX(58deg) rotateY(24deg) rotateZ(0deg); } to { transform: rotateX(58deg) rotateY(24deg) rotateZ(360deg); } }
+@keyframes logo-drift { 0%,100% { transform: translate3d(0,0,0) scale(.8); } 50% { transform: translate3d(4px,-9px,20px) scale(1.2); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-orbit, .logo-particle, .logo-float { animation: none !important; }
+}
+
+.campaign-aurora {
+  background:
+    radial-gradient(circle at 82% 20%, rgba(124,92,255,.22), transparent 29%),
+    radial-gradient(circle at 8% 82%, rgba(255,122,89,.20), transparent 25%),
+    radial-gradient(circle at 48% 6%, rgba(255,207,74,.20), transparent 24%);
+}
+
+.campaign-ink {
+  color: #7c5cff;
+  text-shadow: 5px 5px 0 rgba(255,207,74,.62);
+}
+
+.campaign-main-cta {
+  box-shadow: 0 14px 0 rgba(124,92,255,.18), 0 22px 50px rgba(21,20,26,.18);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.campaign-main-cta:hover {
+  transform: translateY(-3px) rotate(-1deg);
+  box-shadow: 0 18px 0 rgba(124,92,255,.20), 0 28px 60px rgba(21,20,26,.2);
+}
+
+.campaign-project-device i {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #15141a;
+  opacity: .25;
+}
+
+.campaign-project-device b {
+  display: block;
+  height: 9px;
+  border-radius: 99px;
+  background: rgba(21,20,26,.11);
+}
+
+.campaign-project-device span {
+  display: block;
+  height: 11px;
+  margin-bottom: 10px;
+  border-radius: 99px;
+  background: rgba(255,255,255,.22);
+}
+
+.editorial-page {
+  position: relative;
+  background:
+    radial-gradient(circle at 86% 4%, rgba(124,92,255,.12), transparent 24rem),
+    radial-gradient(circle at 4% 38%, rgba(255,122,89,.09), transparent 26rem),
+    #f3f0e8;
+  color: #15141a;
+}
+
+.editorial-page [class*="text-[#F0EEE8]"] { color: #15141a !important; }
+.editorial-page [class*="text-white/"] { color: rgba(21,20,26,.58) !important; }
+.editorial-page [class*="border-white"] { border-color: rgba(21,20,26,.09) !important; }
+.editorial-page [class*="bg-white/["] { background-color: rgba(255,255,255,.62) !important; }
+.editorial-page [class*="bg-[#09080F]"] { background-color: #f3f0e8 !important; }
+.editorial-page [class*="bg-[#0C0B12]"],
+.editorial-page [class*="bg-[#0d0c13]"] { background-color: rgba(255,255,255,.72) !important; }
+.editorial-page section[class*="border-t"] { border-color: rgba(21,20,26,.08) !important; }
+.editorial-page details { border-color: rgba(21,20,26,.09) !important; background: rgba(255,255,255,.56) !important; }
+
 html {
   scroll-behavior: smooth;
 }

@@ -10,19 +10,21 @@ import { localizedHref } from "@/lib/locale";
 function LangToggle({
   lang,
   setLang,
+  theme,
 }: {
   lang: Lang;
   setLang: (lang: Lang) => void;
+  theme: "dark" | "light";
 }) {
   return (
-    <div className="flex items-center gap-2 font-mono text-[11px] text-[#F0EEE8]/30">
+    <div className={`flex items-center gap-2 font-mono text-[11px] ${theme === "light" ? "text-black/35" : "text-[#F0EEE8]/30"}`}>
       <button
         type="button"
         onClick={() => setLang("en")}
         className={
           lang === "en"
-            ? "text-[#F0EEE8]/80"
-            : "hover:text-[#F0EEE8]/60 transition-colors"
+            ? theme === "light" ? "text-black/80" : "text-[#F0EEE8]/80"
+            : theme === "light" ? "transition-colors hover:text-black/65" : "hover:text-[#F0EEE8]/60 transition-colors"
         }
         aria-pressed={lang === "en"}
       >
@@ -34,8 +36,8 @@ function LangToggle({
         onClick={() => setLang("fr")}
         className={
           lang === "fr"
-            ? "text-[#F0EEE8]/80"
-            : "hover:text-[#F0EEE8]/60 transition-colors"
+            ? theme === "light" ? "text-black/80" : "text-[#F0EEE8]/80"
+            : theme === "light" ? "transition-colors hover:text-black/65" : "hover:text-[#F0EEE8]/60 transition-colors"
         }
         aria-pressed={lang === "fr"}
       >
@@ -45,7 +47,7 @@ function LangToggle({
   );
 }
 
-export default function Navbar() {
+export default function Navbar({ theme = "dark" }: { theme?: "dark" | "light" }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { lang, setLang } = useLang();
@@ -77,13 +79,15 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled || open
-          ? "border-b border-white/[0.06] bg-[#09080F]/90 backdrop-blur-sm"
-          : "bg-transparent"
-      }`}
+      className="fixed left-0 top-0 z-50 w-full px-3 pt-3"
     >
-      <div className="mx-auto max-w-6xl px-6 sm:px-10 py-4 flex items-center justify-between">
+      <div className={`mx-auto flex max-w-6xl items-center justify-between rounded-full border px-5 py-3 transition-all duration-500 sm:px-7 ${
+        scrolled || open
+          ? theme === "light"
+            ? "border-black/[0.09] bg-[#f8f5ed]/82 shadow-[0_18px_70px_rgba(43,35,25,.12)] backdrop-blur-xl"
+            : "border-white/[0.09] bg-[#09080F]/78 shadow-[0_18px_70px_rgba(0,0,0,.35)] backdrop-blur-xl"
+          : "border-transparent bg-transparent"
+      }`}>
         {/* Logo */}
         <Link
           href={homeRoot}
@@ -94,12 +98,12 @@ export default function Navbar() {
             src="/logo-horizontal.svg"
             alt="TOR_SOLUTION"
             height={32}
-            className="h-11 w-auto"
+            className={`h-9 w-auto ${theme === "light" ? "invert" : ""}`}
           />
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className={`hidden items-center gap-8 md:flex ${theme === "light" ? "[&>a]:!text-black/55 [&>a:hover]:!text-black" : ""}`}>
           {links.map(({ href, label }) => (
             <Link
               key={href}
@@ -118,21 +122,21 @@ export default function Navbar() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1D9E75] opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#1D9E75]" />
             </span>
-            <span className="font-mono text-[10px] text-[#F0EEE8]/30 tracking-wide">
+            <span className={`font-mono text-[10px] tracking-wide ${theme === "light" ? "text-black/42" : "text-[#F0EEE8]/30"}`}>
               {t.navStatus}
             </span>
           </div>
 
           <div className="h-3 w-px bg-white/10" />
-          <LangToggle lang={lang} setLang={setLang} />
+          <LangToggle lang={lang} setLang={setLang} theme={theme} />
         </div>
 
         {/* Mobile */}
         <div className="md:hidden flex items-center gap-4">
-          <LangToggle lang={lang} setLang={setLang} />
+          <LangToggle lang={lang} setLang={setLang} theme={theme} />
           <button
             onClick={() => setOpen((v) => !v)}
-            className="font-mono text-[11px] text-[#F0EEE8]/40 hover:text-[#F0EEE8]/80 transition-colors"
+            className={`font-mono text-[11px] transition-colors ${theme === "light" ? "text-black/50 hover:text-black" : "text-[#F0EEE8]/40 hover:text-[#F0EEE8]/80"}`}
             aria-label="Menu"
           >
             {open ? "CLOSE" : "MENU"}

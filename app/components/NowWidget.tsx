@@ -18,9 +18,12 @@ function useBrusselsTime(): string {
   const [time, setTime] = useState<string>("");
 
   useEffect(() => {
-    setTime(formatBrussels(new Date()));
+    const initial = window.setTimeout(() => setTime(formatBrussels(new Date())), 0);
     const id = setInterval(() => setTime(formatBrussels(new Date())), 30_000);
-    return () => clearInterval(id);
+    return () => {
+      clearTimeout(initial);
+      clearInterval(id);
+    };
   }, []);
 
   return time;

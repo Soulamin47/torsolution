@@ -135,9 +135,9 @@ export default function ProjectLauncher() {
   );
 
   return (
-    <section className="relative z-10 px-6 py-12 sm:px-10">
-      <NeonFrame radius={8} className="mx-auto max-w-5xl">
-        <div className="overflow-hidden rounded-[6px] bg-[#0C0B12] shadow-2xl shadow-black/30">
+    <section className="relative z-10 px-6 py-20 sm:px-10 md:py-24">
+      <NeonFrame radius={22} className="mx-auto max-w-5xl">
+        <div className="overflow-hidden rounded-[20px] bg-[#0C0B12] shadow-2xl shadow-black/30">
         <div className="grid md:grid-cols-[0.9fr_1.1fr]">
           <div className="border-b border-white/[0.06] p-6 sm:p-8 md:border-b-0 md:border-r">
             <div className="mb-6 flex items-center gap-3">
@@ -161,7 +161,7 @@ export default function ProjectLauncher() {
                     key={key}
                     type="button"
                     onClick={() => setActive(key)}
-                    className={`relative min-h-16 rounded-[6px] border px-4 py-3 text-left transition ${
+                    className={`relative min-h-16 rounded-[12px] border px-4 py-3 text-left transition ${
                       selected
                         ? "border-[#AFA9EC]/60 bg-[#AFA9EC]/12 text-[#F0EEE8]"
                         : "border-white/[0.08] bg-white/[0.02] text-[#F0EEE8]/45 hover:border-white/[0.18] hover:text-[#F0EEE8]/75"
@@ -204,7 +204,7 @@ export default function ProjectLauncher() {
                     {option.title}
                   </h3>
                 </div>
-                <div className="rounded-[6px] border border-[#5DCAA5]/30 bg-[#5DCAA5]/10 px-3 py-2 text-right">
+                <div className="rounded-[12px] border border-[#5DCAA5]/30 bg-[#5DCAA5]/10 px-3 py-2 text-right">
                   <div className="font-mono text-[9px] uppercase text-[#5DCAA5]/70">
                     {copy.momentum}
                   </div>
@@ -223,7 +223,7 @@ export default function ProjectLauncher() {
                 />
               </div>
 
-              <dl className="mt-8 grid gap-px overflow-hidden rounded-[6px] border border-white/[0.06] bg-white/[0.06] sm:grid-cols-2">
+              <dl className="mt-8 grid gap-px overflow-hidden rounded-[14px] border border-white/[0.06] bg-white/[0.06] sm:grid-cols-2">
                 <div className="bg-[#09080F] p-5">
                   <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#F0EEE8]/25">
                     {copy.timeline}
@@ -248,7 +248,7 @@ export default function ProjectLauncher() {
                   {option.stack.map((tech) => (
                     <span
                       key={tech}
-                      className="rounded-[4px] border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 font-mono text-[10px] text-[#F0EEE8]/55"
+                      className="rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 font-mono text-[10px] text-[#F0EEE8]/55"
                     >
                       {tech}
                     </span>
@@ -262,7 +262,7 @@ export default function ProjectLauncher() {
                     href={whatsappHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center rounded-[4px] bg-[#5DCAA5] px-5 py-3 text-[13px] font-medium text-[#06100D] transition hover:bg-[#76ddb9]"
+                    className="inline-flex items-center justify-center rounded-full bg-[#5DCAA5] px-5 py-3 text-[13px] font-medium text-[#06100D] transition hover:bg-[#76ddb9]"
                   >
                     {copy.cta}
                   </a>
@@ -270,7 +270,7 @@ export default function ProjectLauncher() {
                 <MagneticButton>
                   <a
                     href={`mailto:${siteConfig.email}`}
-                    className="inline-flex items-center justify-center rounded-[4px] border border-white/[0.12] px-5 py-3 text-[13px] font-medium text-[#F0EEE8]/65 transition hover:bg-white/[0.04] hover:text-[#F0EEE8]"
+                    className="inline-flex items-center justify-center rounded-full border border-white/[0.12] px-5 py-3 text-[13px] font-medium text-[#F0EEE8]/65 transition hover:bg-white/[0.04] hover:text-[#F0EEE8]"
                   >
                     {copy.email}
                   </a>

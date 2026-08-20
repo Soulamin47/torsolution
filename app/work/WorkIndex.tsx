@@ -7,6 +7,7 @@ import { EASE, fadeUp, stagger } from "@/lib/animations";
 import type { WorkEntry } from "@/lib/work";
 import BackLink from "@/app/components/BackLink";
 import TiltCard from "@/app/components/TiltCard";
+import { localizedHref } from "@/lib/locale";
 
 export default function WorkIndex({ work }: { work: WorkEntry[] }) {
   const { lang } = useLang();
@@ -25,9 +26,10 @@ export default function WorkIndex({ work }: { work: WorkEntry[] }) {
   };
 
   return (
-    <section className="relative z-10 px-6 sm:px-10 pt-20 pb-20">
-      <div className="mx-auto max-w-5xl">
-        <BackLink href="/" />
+    <section className="relative z-10 overflow-hidden px-6 pb-24 pt-20 sm:px-10">
+      <div className="pointer-events-none absolute -left-28 top-10 h-96 w-96 rounded-full bg-[#ff7a59]/15 blur-[90px]" />
+      <div className="relative mx-auto max-w-6xl">
+        <BackLink href={localizedHref("/", lang)} />
 
         <motion.div
           variants={stagger}
@@ -43,7 +45,7 @@ export default function WorkIndex({ work }: { work: WorkEntry[] }) {
           </motion.div>
           <motion.h1
             variants={fadeUp}
-            className="text-[clamp(28px,4vw,46px)] font-light leading-[1.1] tracking-tight text-[#F0EEE8]"
+            className="max-w-4xl text-[clamp(42px,6vw,76px)] font-medium leading-[.96] tracking-[-.055em] text-[#15141a]"
           >
             {labels.title}
           </motion.h1>
@@ -69,11 +71,11 @@ export default function WorkIndex({ work }: { work: WorkEntry[] }) {
               >
                 <TiltCard
                   accent={project.accent}
-                  className="h-full rounded-[8px]"
+                  className="h-full rounded-[24px]"
                 >
                 <Link
-                  href={`/work/${project.slug}`}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-[8px] border border-white/[0.08] bg-white/[0.02] p-6 transition-colors hover:border-white/[0.18]"
+                  href={localizedHref(`/work/${project.slug}`, lang)}
+                  className="group relative flex h-full min-h-[330px] flex-col overflow-hidden rounded-[24px] border border-black/[0.08] bg-white/60 p-7 shadow-[0_22px_70px_rgba(30,25,20,.07)] transition hover:-translate-y-1 hover:border-black/[0.16] hover:bg-white/85"
                 >
                   <div className="flex items-center justify-between mb-4">
                     <span
@@ -93,10 +95,10 @@ export default function WorkIndex({ work }: { work: WorkEntry[] }) {
                     )}
                   </div>
 
-                  <h2 className="text-[24px] font-medium text-[#F0EEE8]">
+                  <h2 className="mt-8 text-[32px] font-medium tracking-[-.04em] text-[#15141a]">
                     {copy.title}
                   </h2>
-                  <p className="mt-3 flex-1 text-[13px] leading-relaxed text-[#F0EEE8]/50">
+                  <p className="mt-3 flex-1 text-[13px] leading-6 text-black/48">
                     {copy.tagline}
                   </p>
 

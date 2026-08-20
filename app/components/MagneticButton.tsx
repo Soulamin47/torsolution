@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 type Props = {
@@ -37,19 +37,18 @@ export default function MagneticButton({
   const springX = useSpring(x, { stiffness: 280, damping: 22, mass: 0.6 });
   const springY = useSpring(y, { stiffness: 280, damping: 22, mass: 0.6 });
 
-  const [enabled, setEnabled] = useState(true);
+  const enabled = useRef(true);
 
   // Disable on touch-only devices + when reduced motion is requested.
   useEffect(() => {
     const coarse = window.matchMedia("(pointer: coarse)").matches;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (coarse || reduced) setEnabled(false);
+    enabled.current = !coarse && !reduced;
   }, []);
 
   useEffect(() => {
-    if (!enabled) return;
-
     const onMove = (e: MouseEvent) => {
+      if (!enabled.current) return;
       const el = ref.current;
       if (!el) return;
 
@@ -82,11 +81,7 @@ export default function MagneticButton({
       x.set(0);
       y.set(0);
     };
-  }, [enabled, radius, strength, x, y]);
-
-  if (!enabled) {
-    return <span className={className}>{children}</span>;
-  }
+  }, [radius, strength, x, y]);
 
   return (
     <motion.span

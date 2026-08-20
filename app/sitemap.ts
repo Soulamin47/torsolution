@@ -31,10 +31,19 @@ function entry(
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const localEn = `${siteConfig.url}/freelance-developer-brussels`;
+  const localFr = `${siteConfig.url}/fr/developpeur-freelance-bruxelles`;
   const staticPaths: MetadataRoute.Sitemap = [
     entry("/", 1.0, "monthly"),
     entry("/services", 0.9, "monthly"),
     entry("/work", 0.9, "monthly"),
+    {
+      url: localEn,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+      alternates: { languages: { en: localEn, fr: localFr, "x-default": localEn } },
+    },
     entry("/privacy", 0.2, "yearly"),
     entry("/legal", 0.2, "yearly"),
   ];

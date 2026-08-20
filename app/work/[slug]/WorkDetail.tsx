@@ -8,6 +8,7 @@ import { EASE, fadeUp, stagger } from "@/lib/animations";
 import type { WorkEntry } from "@/lib/work";
 import BackLink from "@/app/components/BackLink";
 import MagneticButton from "@/app/components/MagneticButton";
+import { localizedHref } from "@/lib/locale";
 
 export default function WorkDetail({ project }: { project: WorkEntry }) {
   const { lang } = useLang();
@@ -39,7 +40,7 @@ export default function WorkDetail({ project }: { project: WorkEntry }) {
       {/* Hero */}
       <section className="relative px-6 sm:px-10 pt-20 pb-14">
         <div className="mx-auto max-w-4xl">
-          <BackLink href="/" />
+          <BackLink href={localizedHref("/", lang)} />
 
           <motion.div
             variants={stagger}
@@ -68,7 +69,7 @@ export default function WorkDetail({ project }: { project: WorkEntry }) {
 
             <motion.h1
               variants={fadeUp}
-              className="text-[clamp(38px,5.5vw,62px)] font-light leading-[1.05] tracking-tight text-[#F0EEE8]"
+              className="max-w-4xl text-[clamp(44px,6vw,78px)] font-medium leading-[.96] tracking-[-.055em] text-[#15141a]"
             >
               {copy.title}
             </motion.h1>
@@ -82,7 +83,7 @@ export default function WorkDetail({ project }: { project: WorkEntry }) {
 
             <motion.div
               variants={fadeUp}
-              className="mt-8 grid gap-px overflow-hidden rounded-[6px] bg-white/[0.06] sm:grid-cols-3"
+              className="mt-8 grid gap-px overflow-hidden rounded-[20px] bg-white/[0.06] sm:grid-cols-3"
             >
               <div className="bg-[#09080F] p-4">
                 <div className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#F0EEE8]/25">
@@ -136,7 +137,7 @@ export default function WorkDetail({ project }: { project: WorkEntry }) {
       </Section>
 
       <Section accent={accent} eyebrow={labels.approach}>
-        <div className="grid gap-px overflow-hidden rounded-[8px] bg-white/[0.06] sm:grid-cols-2">
+        <div className="grid gap-px overflow-hidden rounded-[20px] bg-white/[0.06] sm:grid-cols-2">
           {copy.approach.map((item, idx) => (
             <motion.div
               key={item.title}
@@ -166,7 +167,7 @@ export default function WorkDetail({ project }: { project: WorkEntry }) {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.35, delay: idx * 0.08, ease: EASE }}
-              className="flex items-start gap-3 rounded-[6px] border border-white/[0.08] bg-white/[0.02] px-5 py-4"
+              className="flex items-start gap-3 rounded-[18px] border border-white/[0.08] bg-white/[0.02] px-5 py-4"
             >
               <span
                 aria-hidden="true"
@@ -192,7 +193,7 @@ export default function WorkDetail({ project }: { project: WorkEntry }) {
 
       {/* Footer CTA */}
       <section className="relative z-10 px-6 sm:px-10 py-20">
-        <div className="mx-auto max-w-3xl rounded-[8px] border border-white/[0.08] bg-[#0C0B12]/70 p-8 text-center shadow-2xl shadow-black/30 backdrop-blur">
+        <div className="mx-auto max-w-3xl rounded-[24px] border border-white/[0.08] bg-[#0C0B12]/70 p-8 text-center shadow-2xl shadow-black/10 backdrop-blur">
           <h2 className="text-[24px] font-light text-[#F0EEE8]">
             {lang === "fr"
               ? "Un projet du même genre en tête ?"
@@ -209,15 +210,15 @@ export default function WorkDetail({ project }: { project: WorkEntry }) {
                 href={`${siteConfig.whatsapp}?text=${whatsappText}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-[4px] bg-[#5DCAA5] px-6 py-3 text-[13px] font-medium text-[#06100D] transition hover:bg-[#76ddb9]"
+                className="inline-flex items-center justify-center rounded-full bg-[#00a878] px-6 py-3.5 text-[13px] font-medium text-white transition hover:bg-[#058f68]"
               >
                 {labels.similar}
               </a>
             </MagneticButton>
             <MagneticButton>
               <Link
-                href="/work"
-                className="inline-flex items-center justify-center rounded-[4px] border border-white/[0.15] px-6 py-3 text-[13px] font-medium text-[#F0EEE8]/65 transition-colors hover:bg-white/[0.04] hover:text-[#F0EEE8]"
+                href={localizedHref("/work", lang)}
+                className="inline-flex items-center justify-center rounded-full border border-black/[0.15] px-6 py-3.5 text-[13px] font-medium text-black/65 transition-colors hover:bg-white/60 hover:text-black"
               >
                 {labels.seeOthers}
               </Link>

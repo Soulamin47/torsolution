@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useLang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
-import { fadeUp, stagger, EASE } from "@/lib/animations";
+import { fadeUp, stagger } from "@/lib/animations";
 import { localizedHref } from "@/lib/locale";
 import TiltCard from "./TiltCard";
 import GhostNumber from "./GhostNumber";
