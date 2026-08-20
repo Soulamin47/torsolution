@@ -7,6 +7,7 @@ import { useLang } from "@/app/providers/LangProvider";
 import { localizedHref } from "@/lib/locale";
 
 import LogoSpace from "./LogoSpace";
+import HeroAurora from "./HeroAurora";
 
 const COPY = {
   fr: {
@@ -106,6 +107,7 @@ export default function CampaignHome() {
     <div className="campaign-home bg-[#f3f0e8] text-[#15141a]">
       <section className="relative min-h-[100svh] overflow-hidden px-6 pb-14 pt-28 sm:px-10 md:pt-36">
         <div className="campaign-aurora absolute inset-0" />
+        <HeroAurora />
         <div className="absolute -left-24 top-40 h-64 w-64 rounded-full border-[42px] border-[#ff7a59]/15" />
         <div className="absolute -right-20 bottom-16 h-72 w-72 rounded-full border border-[#7c5cff]/25" />
         <div className="relative mx-auto grid max-w-6xl items-center gap-4 lg:grid-cols-[1.02fr_.98fr]">
