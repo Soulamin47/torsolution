@@ -10,7 +10,7 @@ import GrainOverlay from "./GrainOverlay";
 // landing page so the experience stays consistent.
 export default function PageShell({ children }: { children: React.ReactNode }) {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#f3f0e8] pt-20 text-[#15141a]">
+    <main className="min-h-screen overflow-x-hidden pt-20 text-[#15141a]">
       <GrainOverlay />
       <div className="relative z-10">
         <Navbar theme="light" />

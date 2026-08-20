@@ -16,25 +16,12 @@
 }
 
 body {
-  background: #09080F;
-  background-image:
-    radial-gradient(
-      ellipse 80vw 60vh at 10% 20%,
-      rgba(175, 169, 236, 0.07) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 60vw 50vh at 90% 80%,
-      rgba(29, 158, 117, 0.05) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 50vw 40vh at 50% 50%,
-      rgba(133, 183, 235, 0.03) 0%,
-      transparent 70%
-    );
+  /* Cream base so the fixed 3D backdrop (transparent WebGL canvas mounted
+     in the layout) reads over a light ground on every page. Dark/coloured
+     sections paint their own opaque background on top. */
+  background: #f3f0e8;
   background-attachment: fixed;
-  color: var(--ts-text);
+  color: #15141a;
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
 }
 
@@ -136,10 +123,9 @@ body::before {
 
 .editorial-page {
   position: relative;
-  background:
-    radial-gradient(circle at 86% 4%, rgba(124,92,255,.12), transparent 24rem),
-    radial-gradient(circle at 4% 38%, rgba(255,122,89,.09), transparent 26rem),
-    #f3f0e8;
+  /* Transparent so the fixed 3D backdrop (mounted in PageShell) shows
+     through. The cream base still comes from the parent <main>. */
+  background: transparent;
   color: #15141a;
 }
 
@@ -223,45 +209,45 @@ section[id] {
 .hero-aurora__blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(70px);
-  opacity: 0.55;
+  filter: blur(64px);
+  opacity: 0.72;
   will-change: transform, opacity;
   mix-blend-mode: multiply;
 }
 
 .hero-aurora__blob--orange {
-  width: 46vw;
-  height: 46vw;
-  top: -14vw;
-  left: -10vw;
-  background: radial-gradient(circle, rgba(255, 122, 89, 0.55) 0%, transparent 70%);
+  width: 52vw;
+  height: 52vw;
+  top: -16vw;
+  left: -12vw;
+  background: radial-gradient(circle, rgba(255, 122, 89, 0.62) 0%, transparent 70%);
   animation: aurora-drift-a 22s ease-in-out infinite;
 }
 
 .hero-aurora__blob--purple {
-  width: 52vw;
-  height: 52vw;
-  top: -8vw;
-  right: -16vw;
-  background: radial-gradient(circle, rgba(124, 92, 255, 0.42) 0%, transparent 70%);
+  width: 58vw;
+  height: 58vw;
+  top: -10vw;
+  right: -18vw;
+  background: radial-gradient(circle, rgba(124, 92, 255, 0.50) 0%, transparent 70%);
   animation: aurora-drift-b 26s ease-in-out infinite;
 }
 
 .hero-aurora__blob--green {
-  width: 40vw;
-  height: 40vw;
-  bottom: -14vw;
-  left: 18vw;
-  background: radial-gradient(circle, rgba(0, 168, 120, 0.38) 0%, transparent 70%);
+  width: 46vw;
+  height: 46vw;
+  bottom: -16vw;
+  left: 16vw;
+  background: radial-gradient(circle, rgba(0, 168, 120, 0.46) 0%, transparent 70%);
   animation: aurora-drift-c 30s ease-in-out infinite;
 }
 
 .hero-aurora__blob--yellow {
-  width: 34vw;
-  height: 34vw;
-  bottom: -10vw;
-  right: 8vw;
-  background: radial-gradient(circle, rgba(255, 207, 74, 0.40) 0%, transparent 70%);
+  width: 40vw;
+  height: 40vw;
+  bottom: -12vw;
+  right: 6vw;
+  background: radial-gradient(circle, rgba(255, 207, 74, 0.48) 0%, transparent 70%);
   animation: aurora-drift-a 19s ease-in-out infinite reverse;
 }
 

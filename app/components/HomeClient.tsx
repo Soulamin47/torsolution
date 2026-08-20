@@ -24,7 +24,7 @@ export default function HomeClient() {
   };
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#09080F] text-[#F0EEE8]">
+    <main className="min-h-screen overflow-x-hidden text-[#F0EEE8]">
       {!alreadySeen && <IntroOverlay onDone={handleIntroDone} />}
 
       <GrainOverlay />
