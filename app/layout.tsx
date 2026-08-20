@@ -97,7 +97,7 @@ export default async function RootLayout({
       className={`${spaceGrotesk.variable} ${spaceMono.variable}`}
     >
       <body
-        className="bg-[#f3f0e8] text-[#15141a] antialiased"
+        className="bg-[#09080f] text-[#ecebf5] antialiased"
         suppressHydrationWarning
       >
         <Background3D />

@@ -103,7 +103,7 @@ export default function CampaignHome() {
   const workHref = localizedHref("/work", lang);
 
   return (
-    <div className="campaign-home text-[#15141a]">
+    <div className="campaign-home tech-dark">
       <section className="relative isolate min-h-[100svh] overflow-hidden px-6 pb-14 pt-28 sm:px-10 md:pt-36">
         <div className="campaign-aurora absolute inset-0" />
         <div className="absolute -left-24 top-40 h-64 w-64 rounded-full border-[42px] border-[#ff7a59]/15" />
@@ -116,7 +116,7 @@ export default function CampaignHome() {
             </h1>
             <p className="mt-8 max-w-xl text-[16px] leading-7 text-[#15141a]/58">{c.subtitle}</p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
-              <a href="#contact" className="campaign-main-cta rounded-full bg-[#15141a] px-7 py-4 text-[13px] font-medium text-white">{c.primary} <span className="ml-2">↗</span></a>
+              <a href="#contact" className="campaign-main-cta rounded-full bg-[#7c5cff] px-7 py-4 text-[13px] font-medium text-white">{c.primary} <span className="ml-2">↗</span></a>
               <Link href={workHref} className="rounded-full border border-black/15 bg-white/45 px-7 py-4 text-[13px] font-medium backdrop-blur-md transition hover:bg-white">{c.secondary}</Link>
             </div>
             <div className="mt-6 flex items-center gap-3 text-[11px] text-black/42"><span className="flex -space-x-2">{["#ff7a59", "#7c5cff", "#00a878"].map(color => <span key={color} className="h-7 w-7 rounded-full border-2 border-[#f3f0e8]" style={{ background: color }} />)}</span>{c.availability}</div>
@@ -147,7 +147,7 @@ export default function CampaignHome() {
       <section className="px-6 py-24 sm:px-10 md:py-32">
         <div className="mx-auto max-w-6xl"><Eyebrow>{c.workEyebrow}</Eyebrow><div className="mt-7 grid gap-6 md:grid-cols-2 md:items-end"><h2 className="text-[clamp(38px,5vw,68px)] font-medium leading-[.98] tracking-[-.055em]">{c.workTitle}</h2><p className="max-w-md text-[14px] leading-7 text-black/48 md:justify-self-end">{c.workText}</p></div>
           <div className="mt-12 grid gap-4 lg:grid-cols-3">
-            {c.works.map((work, index) => <Link href={localizedHref(`/work/${work.slug}`, lang)} key={work.name} className="group relative min-h-[440px] overflow-hidden rounded-[26px] p-7 transition-transform duration-500 hover:-translate-y-2" style={{ background: work.color }}><div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[.12em] text-black/45"><span>0{index + 1}</span><span>{work.type}</span></div><div className="campaign-project-device absolute left-[12%] right-[12%] top-[23%] h-[180px] rounded-[18px] border-[6px] border-[#15141a] bg-[#f8f6ef] p-4 shadow-[0_30px_60px_rgba(0,0,0,.22)] transition-transform duration-500 group-hover:rotate-[-2deg] group-hover:scale-[1.04]"><div className="flex gap-1"><i /><i /><i /></div><div className="mt-5 grid grid-cols-[.35fr_.65fr] gap-3"><div className="space-y-2">{[1,2,3,4].map(x => <b key={x} />)}</div><div className="rounded-lg bg-[#15141a] p-3"><span /><span /><span /></div></div></div><div className="absolute inset-x-7 bottom-7"><h3 className="text-[40px] font-medium tracking-[-.05em]">{work.name}</h3><p className="mt-2 text-[13px] leading-5 text-black/55">{work.result}</p><div className="mt-5 font-mono text-[10px] uppercase tracking-[.12em]">Voir le projet <span className="inline-block transition-transform group-hover:translate-x-2">→</span></div></div></Link>)}
+            {c.works.map((work, index) => <Link href={localizedHref(`/work/${work.slug}`, lang)} key={work.name} className="work-card group relative min-h-[440px] overflow-hidden rounded-[26px] p-7 transition-transform duration-500 hover:-translate-y-2" style={{ background: work.color }}><div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[.12em] text-black/45"><span>0{index + 1}</span><span>{work.type}</span></div><div className="campaign-project-device absolute left-[12%] right-[12%] top-[23%] h-[180px] rounded-[18px] border-[6px] border-[#15141a] bg-[#f8f6ef] p-4 shadow-[0_30px_60px_rgba(0,0,0,.22)] transition-transform duration-500 group-hover:rotate-[-2deg] group-hover:scale-[1.04]"><div className="flex gap-1"><i /><i /><i /></div><div className="mt-5 grid grid-cols-[.35fr_.65fr] gap-3"><div className="space-y-2">{[1,2,3,4].map(x => <b key={x} />)}</div><div className="rounded-lg bg-[#15141a] p-3"><span /><span /><span /></div></div></div><div className="absolute inset-x-7 bottom-7"><h3 className="text-[40px] font-medium tracking-[-.05em]">{work.name}</h3><p className="mt-2 text-[13px] leading-5 text-black/55">{work.result}</p><div className="mt-5 font-mono text-[10px] uppercase tracking-[.12em]">Voir le projet <span className="inline-block transition-transform group-hover:translate-x-2">→</span></div></div></Link>)}
           </div>
         </div>
       </section>
@@ -155,7 +155,7 @@ export default function CampaignHome() {
       <section className="border-y border-black/[.08] bg-[#e7e1ff] px-6 py-24 sm:px-10 md:py-32">
         <div className="mx-auto max-w-6xl"><Eyebrow>{c.offerEyebrow}</Eyebrow><h2 className="mt-7 max-w-4xl text-[clamp(38px,5.4vw,72px)] font-medium leading-[.98] tracking-[-.055em]">{c.offerTitle}</h2>
           <div className="mt-14 grid gap-px overflow-hidden rounded-[24px] border border-black/10 bg-black/10 md:grid-cols-2">
-            {c.offers.map((offer) => <motion.div key={offer.n} whileHover={{ backgroundColor: "rgba(255,255,255,.78)" }} className="bg-[#f6f3ff] p-7 md:p-9"><div className="flex items-center justify-between"><span className="font-mono text-[10px] text-black/35">{offer.n}</span><span className="h-3 w-3 rounded-full bg-[#7c5cff]" /></div><h3 className="mt-10 text-[32px] font-medium tracking-[-.04em]">{offer.title}</h3><p className="mt-4 max-w-lg text-[13px] leading-6 text-black/48">{offer.text}</p><div className="mt-7 flex flex-wrap gap-2">{offer.tags.map(tag => <span key={tag} className="rounded-full border border-black/10 bg-white/50 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[.1em] text-black/50">{tag}</span>)}</div></motion.div>)}
+            {c.offers.map((offer) => <motion.div key={offer.n} whileHover={{ backgroundColor: "rgba(255,255,255,.07)" }} className="bg-[#f6f3ff] p-7 md:p-9"><div className="flex items-center justify-between"><span className="font-mono text-[10px] text-black/35">{offer.n}</span><span className="h-3 w-3 rounded-full bg-[#7c5cff]" /></div><h3 className="mt-10 text-[32px] font-medium tracking-[-.04em]">{offer.title}</h3><p className="mt-4 max-w-lg text-[13px] leading-6 text-black/48">{offer.text}</p><div className="mt-7 flex flex-wrap gap-2">{offer.tags.map(tag => <span key={tag} className="rounded-full border border-black/10 bg-white/50 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[.1em] text-black/50">{tag}</span>)}</div></motion.div>)}
           </div>
         </div>
       </section>

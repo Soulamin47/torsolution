@@ -33,7 +33,7 @@ export default function HomeClient() {
         style={{ opacity: introDone ? 1 : 0 }}
       >
         <ScrollProgress />
-        <Navbar theme="light" />
+        <Navbar theme="dark" />
         <CampaignHome />
         <CTA />
         <Footer />

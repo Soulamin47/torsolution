@@ -16,12 +16,15 @@
 }
 
 body {
-  /* Cream base so the fixed 3D backdrop (transparent WebGL canvas mounted
-     in the layout) reads over a light ground on every page. Dark/coloured
-     sections paint their own opaque background on top. */
-  background: #f3f0e8;
+  /* Dark base so the fixed particle-network backdrop (transparent WebGL
+     canvas mounted in the layout) glows over a deep ground on every page.
+     Sections that need a lighter surface paint their own background. */
+  background: #09080f;
+  background-image:
+    radial-gradient(ellipse 90vw 60vh at 15% 0%, rgba(124, 92, 255, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 70vw 50vh at 100% 100%, rgba(0, 168, 120, 0.07) 0%, transparent 60%);
   background-attachment: fixed;
-  color: #15141a;
+  color: #ecebf5;
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
 }
 
@@ -123,21 +126,33 @@ body::before {
 
 .editorial-page {
   position: relative;
-  /* Transparent so the fixed 3D backdrop (mounted in PageShell) shows
-     through. The cream base still comes from the parent <main>. */
+  /* Transparent so the fixed particle backdrop shows through. */
   background: transparent;
-  color: #15141a;
 }
 
-.editorial-page [class*="text-[#F0EEE8]"] { color: #15141a !important; }
-.editorial-page [class*="text-white/"] { color: rgba(21,20,26,.58) !important; }
-.editorial-page [class*="border-white"] { border-color: rgba(21,20,26,.09) !important; }
-.editorial-page [class*="bg-white/["] { background-color: rgba(255,255,255,.62) !important; }
-.editorial-page [class*="bg-[#09080F]"] { background-color: #f3f0e8 !important; }
-.editorial-page [class*="bg-[#0C0B12]"],
-.editorial-page [class*="bg-[#0d0c13]"] { background-color: rgba(255,255,255,.72) !important; }
-.editorial-page section[class*="border-t"] { border-color: rgba(21,20,26,.08) !important; }
-.editorial-page details { border-color: rgba(21,20,26,.09) !important; background: rgba(255,255,255,.56) !important; }
+/* ── Dark "tech" theme overrides ──────────────────────────────────────
+   Remap the light editorial utilities used across CampaignHome,
+   ServicesIndex, WorkIndex, etc. to the dark palette, so the particle
+   backdrop reads through and text stays legible on the deep base.
+   Apply on any content wrapper via the .tech-dark class. */
+.tech-dark { color: #ecebf5; }
+.tech-dark [class*="text-[#15141a]"] { color: #ecebf5 !important; }
+.tech-dark [class*="text-black/"] { color: rgba(236, 235, 245, 0.55) !important; }
+.tech-dark [class*="border-black"] { border-color: rgba(255, 255, 255, 0.1) !important; }
+.tech-dark [class*="border-[#f3f0e8]"] { border-color: rgba(255, 255, 255, 0.14) !important; }
+.tech-dark [class*="bg-white/"] { background-color: rgba(255, 255, 255, 0.045) !important; }
+.tech-dark [class*="bg-[#e7e1ff]"],
+.tech-dark [class*="bg-[#f3f0e8]"] { background-color: transparent !important; }
+.tech-dark [class*="bg-[#f6f3ff]"] { background-color: rgba(255, 255, 255, 0.03) !important; }
+.tech-dark section[class*="border-y"] { border-color: rgba(255, 255, 255, 0.08) !important; }
+.tech-dark details {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* Bright project cards keep their dark-on-colour text. */
+.tech-dark .work-card { color: #15141a; }
+.tech-dark .work-card [class*="text-black/"] { color: rgba(0, 0, 0, 0.55) !important; }
 
 html {
   scroll-behavior: smooth;

@@ -10,11 +10,11 @@ import GrainOverlay from "./GrainOverlay";
 // landing page so the experience stays consistent.
 export default function PageShell({ children }: { children: React.ReactNode }) {
   return (
-    <main className="min-h-screen overflow-x-hidden pt-20 text-[#15141a]">
+    <main className="min-h-screen overflow-x-hidden pt-20 text-[#ecebf5]">
       <GrainOverlay />
       <div className="relative z-10">
-        <Navbar theme="light" />
-        <div className="editorial-page">{children}</div>
+        <Navbar theme="dark" />
+        <div className="editorial-page tech-dark">{children}</div>
         <Footer />
         <CookieBanner />
         <FloatingWhatsApp />
