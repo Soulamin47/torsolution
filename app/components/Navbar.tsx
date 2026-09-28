@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useLang } from "@/app/providers/LangProvider";
 import type { Lang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
@@ -17,7 +18,7 @@ function LangToggle({
   theme: "dark" | "light";
 }) {
   return (
-    <div className={`flex items-center gap-2 font-mono text-[11px] ${theme === "light" ? "text-black/35" : "text-[#F0EEE8]/30"}`}>
+    <div className={`flex items-center gap-2 font-mono text-[11px] ${theme === "light" ? "text-black/35" : "text-[#F0EEE8]/65"}`}>
       <button
         type="button"
         onClick={() => setLang("en")}
@@ -66,26 +67,31 @@ export default function Navbar({ theme = "dark" }: { theme?: "dark" | "light" })
     };
   }, [open]);
 
-  // Real pages get full URLs (locale-aware). Anchors (#process, #contact)
-  // live on the home page — we prefix them with the locale root so they
-  // also work when the user is currently on /services/* or /work/*.
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => { if (event.key === "Escape") setOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  // Locale-aware navigation to dedicated pages.
   const homeRoot = localizedHref("/", lang);
   const links = [
     { href: localizedHref("/work", lang), label: t.navSystems, real: true },
     { href: localizedHref("/services", lang), label: t.navCapabilities, real: true },
-    { href: `${homeRoot}#process`, label: t.navProcess, real: false },
-    { href: `${homeRoot}#contact`, label: t.navContact, real: false },
+    { href: localizedHref("/method", lang), label: t.navProcess, real: false },
+    { href: localizedHref("/about", lang), label: lang === "fr" ? "À propos" : "About" },
+    { href: localizedHref("/contact", lang), label: t.navContact, real: false },
   ];
 
   return (
     <nav
       className="fixed left-0 top-0 z-50 w-full px-3 pt-3"
     >
-      <div className={`mx-auto flex max-w-6xl items-center justify-between rounded-full border px-5 py-3 transition-all duration-500 sm:px-7 ${
+      <div className={`relative z-50 mx-auto flex max-w-6xl items-center justify-between rounded-full border px-5 py-3 transition-all duration-500 sm:px-7 ${
         scrolled || open
           ? theme === "light"
             ? "border-black/[0.09] bg-[#f8f5ed]/82 shadow-[0_18px_70px_rgba(43,35,25,.12)] backdrop-blur-xl"
-            : "border-white/[0.09] bg-[#09080F]/78 shadow-[0_18px_70px_rgba(0,0,0,.35)] backdrop-blur-xl"
+            : "border-white/[0.09] bg-[#0b1423]/95 shadow-[0_18px_70px_rgba(0,0,0,.35)] backdrop-blur-xl"
           : "border-transparent bg-transparent"
       }`}>
         {/* Logo */}
@@ -94,21 +100,22 @@ export default function Navbar({ theme = "dark" }: { theme?: "dark" | "light" })
           className="group transition-opacity hover:opacity-90"
           aria-label="Torsolution"
         >
-          <img
+          <Image
             src="/logo-horizontal.svg"
             alt="TOR_SOLUTION"
-            height={32}
+            width={210}
+            height={36}
             className={`h-9 w-auto ${theme === "light" ? "invert" : ""}`}
           />
         </Link>
 
         {/* Desktop nav */}
-        <div className={`hidden items-center gap-8 md:flex ${theme === "light" ? "[&>a]:!text-black/55 [&>a:hover]:!text-black" : ""}`}>
+        <div className={`hidden items-center gap-5 lg:flex ${theme === "light" ? "[&>a]:!text-black/55 [&>a:hover]:!text-black" : ""}`}>
           {links.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              className="text-[11px] uppercase tracking-[0.1em] text-[#F0EEE8]/40 hover:text-[#F0EEE8]/80 transition-colors"
+              className="text-[11px] uppercase tracking-[0.1em] text-[#F0EEE8]/75 hover:text-[#F0EEE8]/80 transition-colors"
             >
               {label}
             </Link>
@@ -132,21 +139,23 @@ export default function Navbar({ theme = "dark" }: { theme?: "dark" | "light" })
         </div>
 
         {/* Mobile */}
-        <div className="md:hidden flex items-center gap-4">
+        <div className="lg:hidden flex items-center gap-4">
           <LangToggle lang={lang} setLang={setLang} theme={theme} />
           <button
             onClick={() => setOpen((v) => !v)}
             className={`font-mono text-[11px] transition-colors ${theme === "light" ? "text-black/50 hover:text-black" : "text-[#F0EEE8]/40 hover:text-[#F0EEE8]/80"}`}
             aria-label="Menu"
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
           >
-            {open ? "CLOSE" : "MENU"}
+            {open ? (lang === "fr" ? "FERMER" : "CLOSE") : "MENU"}
           </button>
         </div>
       </div>
 
       {/* Mobile overlay */}
       {open && (
-        <div className="fixed inset-0 z-40 bg-[#09080F]/95 backdrop-blur-sm md:hidden">
+        <div id="mobile-navigation" className="fixed inset-0 z-40 bg-[#0b1423]/98 backdrop-blur-sm md:hidden">
           <div
             className="absolute inset-0"
             onClick={() => setOpen(false)}

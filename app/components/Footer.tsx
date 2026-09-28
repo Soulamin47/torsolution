@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useLang } from "@/app/providers/LangProvider";
 import { translations } from "@/lib/translations";
 import { siteConfig } from "@/lib/site";
@@ -43,13 +44,14 @@ export default function Footer() {
     },
     { href: localizedHref("/work", lang), label: t.navSystems },
     { href: localizedHref("/services", lang), label: t.navCapabilities },
-    { href: `${homeRoot}#process`, label: t.navProcess },
-    { href: `${homeRoot}#contact`, label: t.navContact },
+    { href: localizedHref("/method", lang), label: t.navProcess },
+    { href: localizedHref("/about", lang), label: lang === "fr" ? "À propos" : "About" },
+    { href: localizedHref("/contact", lang), label: t.navContact },
     { href: `mailto:${siteConfig.email}`, label: siteConfig.email },
   ];
 
   return (
-    <footer className="border-t border-white/[0.06] bg-[#15141a] text-[#F0EEE8]">
+    <footer className="border-t border-white/[0.06] bg-[#0b1423] text-[#F0EEE8]">
       <div className="mx-auto max-w-5xl px-6 sm:px-10 py-8 space-y-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <Link
@@ -57,7 +59,9 @@ export default function Footer() {
             className="inline-flex items-center transition-opacity hover:opacity-80"
             aria-label="Torsolution"
           >
-            <img
+            <Image
+              width={210}
+              height={36}
               src="/logo-horizontal.svg"
               alt="TOR_SOLUTION"
               className="h-9 w-auto opacity-80"
@@ -69,7 +73,7 @@ export default function Footer() {
               <Link
                 key={href + label}
                 href={href}
-                className="font-mono text-[11px] text-[#F0EEE8]/30 hover:text-[#F0EEE8]/60 transition-colors"
+                className="font-mono text-[11px] text-[#F0EEE8]/65 hover:text-[#F0EEE8]/60 transition-colors"
               >
                 {label}
               </Link>

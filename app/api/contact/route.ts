@@ -6,6 +6,7 @@ type ContactPayload = {
   email?: string;
   subject?: string;
   message?: string;
+  website?: string;
 };
 
 function escapeHtml(value: string) {
@@ -123,10 +124,50 @@ async function sendWithSmtp({
 }
 
 export async function POST(req: NextRequest) {
-  const { name, email, subject, message } = (await req.json()) as ContactPayload;
-
-  if (!name || !email || !message) {
-    return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
+  const origin = req.headers.get("origin");
+  if (origin && origin !== req.nextUrl.origin) {
+    return NextResponse.json({ error: "Invalid origin." }, { status: 403 });
+  }
+  // Bound the actual stream, including requests without Content-Length.
+  const reader = req.body?.getReader();
+  if (!reader) return NextResponse.json({ error: "Missing body." }, { status: 400 });
+  let payload: ContactPayload;
+  try {
+    const chunks: Uint8Array[] = [];
+    let size = 0;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > 24000) {
+        await reader.cancel();
+        return NextResponse.json({ error: "Message too large." }, { status: 413 });
+      }
+      chunks.push(value);
+    }
+    const parsed: unknown = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error("Invalid payload");
+    payload = parsed as ContactPayload;
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
+  }
+  // Honeypot: humans leave this off-screen field empty.
+  if (typeof payload.website === "string" && payload.website.trim()) {
+    return NextResponse.json({ ok: true });
+  }
+  if (typeof payload.name !== "string" || typeof payload.email !== "string" ||
+      typeof payload.message !== "string" ||
+      (payload.subject !== undefined && typeof payload.subject !== "string")) {
+    return NextResponse.json({ error: "Invalid fields." }, { status: 400 });
+  }
+  const name = payload.name.trim();
+  const email = payload.email.trim();
+  const subject = payload.subject?.trim();
+  const message = payload.message.trim();
+  if (!name || name.length > 120 || !message || message.length > 5000 ||
+      email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
+      (subject?.length ?? 0) > 200 || /[\r\n]/.test(name + email + (subject ?? ""))) {
+    return NextResponse.json({ error: "Invalid fields." }, { status: 400 });
   }
 
   const toEmail = process.env.CONTACT_TO ?? "info@torsolution.be";

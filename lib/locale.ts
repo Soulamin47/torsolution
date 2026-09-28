@@ -8,6 +8,7 @@ export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "en";
 
 const FR_PREFIX = "/fr";
+const translatedPaths: Record<string, string> = { "/method": "/methode", "/about": "/a-propos" };
 
 /**
  * Detect the locale of any pathname.
@@ -31,7 +32,10 @@ export function detectLocale(pathname: string | null | undefined): Locale {
  */
 export function stripLocale(pathname: string): string {
   if (pathname === FR_PREFIX) return "/";
-  if (pathname.startsWith(`${FR_PREFIX}/`)) return pathname.slice(FR_PREFIX.length);
+  if (pathname.startsWith(`${FR_PREFIX}/`)) {
+    const path = pathname.slice(FR_PREFIX.length);
+    return Object.entries(translatedPaths).find(([, fr]) => fr === path)?.[0] ?? path;
+  }
   return pathname;
 }
 
@@ -54,7 +58,7 @@ export function localizedHref(path: string, locale: Locale): string {
 
   if (locale === "fr") {
     if (clean === "/") return FR_PREFIX;
-    return `${FR_PREFIX}${clean}`;
+    return `${FR_PREFIX}${translatedPaths[clean] ?? clean}`;
   }
   return clean;
 }

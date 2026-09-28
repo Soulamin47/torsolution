@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Space_Grotesk, Space_Mono } from "next/font/google";
 import { LangProvider } from "./providers/LangProvider";
-import Background3D from "./components/Background3D";
 import { siteConfig } from "@/lib/site";
 import { detectLocale } from "@/lib/locale";
 
@@ -97,10 +96,9 @@ export default async function RootLayout({
       className={`${spaceGrotesk.variable} ${spaceMono.variable}`}
     >
       <body
-        className="bg-[#09080f] text-[#ecebf5] antialiased"
+        className="bg-[#0b1423] text-[#ecebf5] antialiased"
         suppressHydrationWarning
       >
-        <Background3D />
         <LangProvider initialLang={lang}>{children}</LangProvider>
       </body>
     </html>

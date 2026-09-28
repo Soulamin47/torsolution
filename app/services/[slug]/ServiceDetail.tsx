@@ -74,7 +74,7 @@ export default function ServiceDetail({ service }: { service: ServiceEntry }) {
             <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-3">
               <MagneticButton>
                 <Link
-                  href={`${localizedHref("/", lang)}#contact`}
+                  href={localizedHref("/contact", lang)}
                   className="inline-flex items-center justify-center rounded-full px-6 py-3.5 text-[13px] font-medium text-[#09080F] transition-opacity hover:opacity-90"
                   style={{ background: accent }}
                 >
@@ -224,7 +224,7 @@ export default function ServiceDetail({ service }: { service: ServiceEntry }) {
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <MagneticButton>
               <Link
-                href={`${localizedHref("/", lang)}#contact`}
+                href={localizedHref("/contact", lang)}
                 className="inline-flex items-center justify-center rounded-full bg-[#7c5cff] px-6 py-3.5 text-[13px] font-medium text-white transition-opacity hover:opacity-90"
               >
                 {ctaLabels.contact}

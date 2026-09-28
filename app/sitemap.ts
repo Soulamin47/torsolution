@@ -37,6 +37,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/", 1.0, "monthly"),
     entry("/services", 0.9, "monthly"),
     entry("/work", 0.9, "monthly"),
+    entry("/method", 0.7, "monthly"),
+    entry("/about", 0.7, "monthly"),
+    entry("/contact", 0.7, "yearly"),
     {
       url: localEn,
       lastModified: new Date(),
@@ -60,5 +63,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // URL with hreflang="fr".  siteConfig.url is used as base.
   void siteConfig;
 
-  return [...staticPaths, ...servicePaths, ...workPaths];
+  return [...staticPaths, ...servicePaths, ...workPaths].flatMap((page) => {
+    const frenchUrl = page.alternates?.languages?.fr;
+    return frenchUrl ? [page, { ...page, url: String(frenchUrl) }] : [page];
+  });
 }

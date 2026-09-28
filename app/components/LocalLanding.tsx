@@ -85,7 +85,7 @@ export default function LocalLanding({ lang }: { lang: Lang }) {
           <h1 className="mx-auto mt-7 max-w-4xl text-[clamp(42px,6.6vw,82px)] font-light leading-[0.98] tracking-[-0.055em] text-[#f7f5ef]">{c.title}</h1>
           <p className="mx-auto mt-7 max-w-2xl text-[15px] leading-7 text-white/48">{c.intro}</p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
-            <Link href={`${prefix || "/"}#contact`} className="rounded-full bg-[#a7f3d0] px-7 py-3.5 text-[13px] font-medium text-[#07100d]">{c.primary}</Link>
+            <Link href={`${prefix}/contact`} className="rounded-full bg-[#a7f3d0] px-7 py-3.5 text-[13px] font-medium text-[#07100d]">{c.primary}</Link>
             <Link href={`${prefix}/services`} className="rounded-full border border-white/15 bg-white/[0.025] px-7 py-3.5 text-[13px] text-white/75">{c.secondary}</Link>
           </div>
           <div className="mt-14 grid overflow-hidden rounded-[20px] border border-white/[0.07] bg-white/[0.025] sm:grid-cols-4">

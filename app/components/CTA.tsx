@@ -7,7 +7,7 @@ import { translations } from "@/lib/translations";
 import { siteConfig } from "@/lib/site";
 import { fadeUp, stagger } from "@/lib/animations";
 import MagneticButton from "./MagneticButton";
-import NeonFrame from "./NeonFrame";
+
 
 function WhatsAppIcon({ className = "" }: { className?: string }) {
   return (
@@ -56,7 +56,7 @@ export default function CTA() {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, subject, message }),
+        body: JSON.stringify({ name, email, subject, message, website: (form.elements.namedItem("website") as HTMLInputElement).value }),
       });
 
       if (!response.ok) throw new Error("Contact request failed");
@@ -154,7 +154,7 @@ export default function CTA() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
           >
-          <NeonFrame radius={8} colors={["#AFA9EC", "#5EEAD4"]} speed={8}>
+          <div className="rounded-lg border border-white/15">
           <form
             id="contact-form"
             onSubmit={handleSubmit}
@@ -175,16 +175,16 @@ export default function CTA() {
               </div>
             )}
 
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="absolute -left-[10000px]" aria-hidden="true"><label>Website<input name="website" tabIndex={-1} autoComplete="off" /></label></div><div className="grid gap-3 sm:grid-cols-2">
               <input
-                name="name"
+                name="name" maxLength={120} autoComplete="name"
                 required
                 placeholder={t.contactName}
                 aria-label={t.contactName}
                 className={baseInput}
               />
               <input
-                name="email"
+                name="email" maxLength={254} autoComplete="email"
                 type="email"
                 required
                 placeholder={t.contactEmail}
@@ -194,14 +194,14 @@ export default function CTA() {
             </div>
 
             <input
-              name="subject"
+              name="subject" maxLength={200}
               placeholder={t.contactSubject}
               aria-label={t.contactSubject}
               className={baseInput}
             />
 
             <textarea
-              name="message"
+              name="message" maxLength={5000}
               required
               rows={5}
               placeholder={t.contactMessage}
@@ -217,7 +217,7 @@ export default function CTA() {
               {sending ? t.contactSending : t.contactSend}
             </button>
           </form>
-          </NeonFrame>
+          </div>
           </motion.div>
         </div>
       </div>

@@ -20,7 +20,7 @@ const content = {
         body: [
           "When you submit the contact form, we collect: your name, email address, and the content of your message.",
           "We do not collect any sensitive data. We do not use tracking cookies or analytics tools.",
-          "The only cookie used is a functional cookie to remember your language preference (EN/FR).",
+          "Your language is determined by the page URL (EN/FR). Some pages may store interface preferences locally in your browser.",
         ],
       },
       {
@@ -72,7 +72,7 @@ const content = {
         body: [
           "Lors de la soumission du formulaire de contact, nous collectons : votre nom, votre adresse e-mail et le contenu de votre message.",
           "Nous ne collectons aucune donnée sensible. Nous n'utilisons pas de cookies de traçage ni d'outils d'analytics.",
-          "Le seul cookie utilisé est un cookie fonctionnel permettant de mémoriser votre préférence de langue (FR/EN).",
+          "La langue est déterminée par l’adresse de la page (FR/EN). Certaines pages peuvent enregistrer des préférences d’interface localement dans votre navigateur.",
         ],
       },
       {

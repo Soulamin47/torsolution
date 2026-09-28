@@ -1,46 +1,11 @@
 "use client";
-
-import { useState } from "react";
-import dynamic from "next/dynamic";
 import Navbar from "./Navbar";
-import CTA from "./CTA";
+import Link from "next/link";
+import { useLang } from "@/app/providers/LangProvider";
+import { localizedHref } from "@/lib/locale";
 import Footer from "./Footer";
-import CookieBanner from "./CookieBanner";
-import FloatingWhatsApp from "./FloatingWhatsApp";
-import NowWidget from "./NowWidget";
-import GrainOverlay from "./GrainOverlay";
-import ScrollProgress from "./ScrollProgress";
 import CampaignHome from "./CampaignHome";
-
-const IntroOverlay = dynamic(() => import("./IntroOverlay"), { ssr: false });
-
 export default function HomeClient() {
-  const alreadySeen = typeof window !== "undefined" && sessionStorage.getItem("intro_seen") === "1";
-  const [introDone, setIntroDone] = useState(alreadySeen);
-
-  const handleIntroDone = () => {
-    sessionStorage.setItem("intro_seen", "1");
-    setIntroDone(true);
-  };
-
-  return (
-    <main className="min-h-screen overflow-x-hidden text-[#F0EEE8]">
-      {!alreadySeen && <IntroOverlay onDone={handleIntroDone} />}
-
-      <GrainOverlay />
-      <div
-        className="relative z-10 transition-opacity duration-700"
-        style={{ opacity: introDone ? 1 : 0 }}
-      >
-        <ScrollProgress />
-        <Navbar theme="dark" />
-        <CampaignHome />
-        <CTA />
-        <Footer />
-        <CookieBanner />
-        <FloatingWhatsApp />
-        <NowWidget />
-      </div>
-    </main>
-  );
+  const { lang } = useLang();
+  return <div className="premium-shell"><Navbar theme="dark" /><main id="main-content"><CampaignHome /><section id="contact" className="premium-container info-next"><h2>{lang === "fr" ? "Un projet en tête ?" : "Have a project in mind?"}</h2><Link className="premium-button" href={localizedHref("/contact", lang)}>{lang === "fr" ? "Parlons de votre projet" : "Let’s discuss your project"} ↗</Link></section></main><Footer /></div>;
 }
