@@ -5,7 +5,7 @@ import PageShell from "@/app/components/PageShell";
 
 export const metadata: Metadata = {
   title: "Legal notices",
-  description: "Legal notices — Torsolution.",
+  description: "Legal notices for torsolution.be: publisher details, company registration, hosting provider, intellectual property and liability.",
   alternates: buildAlternates("/legal"),
 };
 

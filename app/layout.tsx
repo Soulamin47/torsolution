@@ -83,7 +83,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Detect locale server-side from the pathname injected by middleware.
+  // Detect locale server-side from the pathname injected by proxy.ts.
   // This guarantees the SSR'd <html lang="..."> matches the page content.
   const headerList = await headers();
   const pathname = headerList.get("x-pathname") ?? "/";

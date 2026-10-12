@@ -5,7 +5,7 @@ import PageShell from "@/app/components/PageShell";
 
 export const metadata: Metadata = {
   title: "Mentions légales",
-  description: "Mentions légales — Torsolution.",
+  description: "Mentions légales du site torsolution.be : éditeur, numéro d’entreprise, hébergeur, propriété intellectuelle et responsabilité.",
   alternates: buildAlternates("/legal", "fr"),
 };
 

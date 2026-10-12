@@ -38,7 +38,7 @@ export function infoMetadata(kind: InfoPageKind, lang: Locale): Metadata {
   const { title, description } = infoPages[lang][kind];
   return {
     title, description, alternates: buildAlternates(`/${kind}`, lang),
-    openGraph: { title, description, type: "website", url: siteConfig.url + localizedHref(`/${kind}`, lang), locale: lang === "fr" ? "fr_BE" : "en_US", alternateLocale: [lang === "fr" ? "en_US" : "fr_BE"], images: ["/og"] },
-    twitter: { card: "summary_large_image", title, description, images: ["/og"] },
+    openGraph: { title, description, type: "website", url: siteConfig.url + localizedHref(`/${kind}`, lang), locale: lang === "fr" ? "fr_BE" : "en_US", alternateLocale: [lang === "fr" ? "en_US" : "fr_BE"], images: [lang === "fr" ? "/og?lang=fr" : "/og"] },
+    twitter: { card: "summary_large_image", title, description, images: [lang === "fr" ? "/og?lang=fr" : "/og"] },
   };
 }

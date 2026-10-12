@@ -9,7 +9,9 @@ const description =
   "Développeur freelance basé à Bruxelles. Je conçois et développe des applications web, mobile, des plateformes métier et des outils IA fiables et performants.";
 
 export const metadata: Metadata = {
-  title: `${siteConfig.name} | Développeur Freelance — Web, Mobile & IA`,
+  // `absolute` skips the root "%s | Torsolution" template, which would
+  // otherwise repeat the brand name.
+  title: { absolute: `${siteConfig.name} | Développeur Freelance — Web, Mobile & IA` },
   description,
   alternates: buildAlternates("/", "fr"),
   openGraph: {
@@ -20,7 +22,7 @@ export const metadata: Metadata = {
     description,
     locale: "fr_BE",
     alternateLocale: ["en_US"],
-    images: ["/og"],
+    images: ["/og?lang=fr"],
   },
 };
 

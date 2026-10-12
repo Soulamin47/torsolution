@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { services, getService } from "@/lib/services";
-import { siteConfig } from "@/lib/site";
+import { metaDescription, siteConfig } from "@/lib/site";
 import { buildAlternates } from "@/lib/locale";
 import { serviceSchemas } from "@/lib/schemas";
 import PageShell from "@/app/components/PageShell";
@@ -24,7 +24,7 @@ export async function generateMetadata({
   if (!service) return {};
 
   const title = `${service.fr.title} — Développement freelance ${service.fr.tag}`;
-  const description = service.fr.tagline + " " + service.fr.intro.slice(0, 140);
+  const description = metaDescription(service.fr.tagline, service.fr.intro);
   const canonicalPath = `/services/${service.slug}`;
 
   return {
@@ -40,13 +40,13 @@ export async function generateMetadata({
       siteName: siteConfig.name,
       locale: "fr_BE",
       alternateLocale: ["en_US"],
-      images: ["/og"],
+      images: ["/og?lang=fr"],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: ["/og"],
+      images: ["/og?lang=fr"],
     },
   };
 }

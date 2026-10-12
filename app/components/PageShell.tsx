@@ -1,6 +1,5 @@
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import CookieBanner from "./CookieBanner";
 import FloatingWhatsApp from "./FloatingWhatsApp";
 import NowWidget from "./NowWidget";
 import GrainOverlay from "./GrainOverlay";
@@ -16,7 +15,6 @@ export default function PageShell({ children }: { children: React.ReactNode }) {
         <Navbar theme="dark" />
         <div className="editorial-page tech-dark">{children}</div>
         <Footer />
-        <CookieBanner />
         <FloatingWhatsApp />
         <NowWidget />
       </div>

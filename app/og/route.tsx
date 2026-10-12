@@ -2,7 +2,14 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export async function GET() {
+const COPY = {
+  en: { tagline: "Freelance Developer — Web, Mobile & AI", place: "Brussels / Remote" },
+  fr: { tagline: "Développeur Freelance — Web, Mobile & IA", place: "Bruxelles / Remote" },
+};
+
+export async function GET(request: Request) {
+  const lang = new URL(request.url).searchParams.get("lang") === "fr" ? "fr" : "en";
+  const copy = COPY[lang];
   return new ImageResponse(
     (
       <div
@@ -56,7 +63,7 @@ export async function GET() {
             Torsolution
           </div>
           <div style={{ fontSize: 28, marginTop: 20, opacity: 0.85 }}>
-            Freelance Developer — Web, Mobile & AI
+            {copy.tagline}
           </div>
           <div
             style={{
@@ -66,7 +73,7 @@ export async function GET() {
               opacity: 0.5,
             }}
           >
-            Brussels / Remote
+            {copy.place}
           </div>
         </div>
       </div>

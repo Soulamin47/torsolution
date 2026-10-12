@@ -9,16 +9,18 @@ import type { WorkEntry } from "./work";
 
 const PERSON = {
   "@type": "Person",
-  name: "Torsolution",
+  name: "Amin Torkhani",
   jobTitle: "Freelance Developer",
+  worksFor: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
   url: siteConfig.url,
+  image: `${siteConfig.url}/amin.png`,
   email: `mailto:${siteConfig.email}`,
+  telephone: siteConfig.phone,
   address: {
     "@type": "PostalAddress",
     addressLocality: "Brussels",
     addressCountry: "BE",
   },
-  sameAs: [siteConfig.whatsapp],
 };
 
 function urlFor(path: string, locale: Locale): string {
@@ -36,11 +38,6 @@ export function homeSchemas(locale: Locale): object[] {
     name: siteConfig.name,
     url: siteConfig.url,
     inLanguage: locale === "fr" ? "fr-BE" : "en",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${siteConfig.url}/?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
   };
 
   const person = {
@@ -69,8 +66,9 @@ export function homeSchemas(locale: Locale): object[] {
       addressLocality: "Brussels",
       addressCountry: "BE",
     },
+    email: siteConfig.email,
+    telephone: siteConfig.phone,
     founder: PERSON,
-    sameAs: [siteConfig.whatsapp],
   };
 
   return [website, person, professionalService];

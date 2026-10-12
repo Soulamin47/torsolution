@@ -5,7 +5,7 @@ import type { NextRequest } from "next/server";
 // components (the root layout in particular) can detect the locale
 // without relying on client-side state. Required for correct
 // <html lang="..."> SSR.
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-pathname", request.nextUrl.pathname);
 

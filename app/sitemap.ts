@@ -8,7 +8,9 @@ type ChangeFreq = NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
 
 // Generate a sitemap entry for a canonical EN path. Adds the FR URL
 // as an hreflang alternate via the `alternates.languages` field so
-// Google indexes both versions in parallel.
+// Google indexes both versions in parallel. No `lastModified`: a build
+// timestamp would claim every page changed on every deploy, so Google
+// would learn to ignore it.
 function entry(
   canonicalPath: string,
   priority: number,
@@ -17,7 +19,6 @@ function entry(
   const urls = bothLocaleUrls(canonicalPath);
   return {
     url: urls.en,
-    lastModified: new Date(),
     changeFrequency,
     priority,
     alternates: {
@@ -42,7 +43,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/contact", 0.7, "yearly"),
     {
       url: localEn,
-      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.9,
       alternates: { languages: { en: localEn, fr: localFr, "x-default": localEn } },
@@ -58,10 +58,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const workPaths: MetadataRoute.Sitemap = work.map((w) =>
     entry(`/work/${w.slug}`, 0.8, "monthly"),
   );
-
-  // Hint: the `url` field is the EN canonical, alternates carry the FR
-  // URL with hreflang="fr".  siteConfig.url is used as base.
-  void siteConfig;
 
   return [...staticPaths, ...servicePaths, ...workPaths].flatMap((page) => {
     const frenchUrl = page.alternates?.languages?.fr;

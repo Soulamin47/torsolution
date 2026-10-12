@@ -110,11 +110,6 @@ export type Translation = {
   contactSuccess: string;
   contactError: string;
 
-  // Cookie banner
-  cookieText: string;
-  cookieDecline: string;
-  cookieAccept: string;
-
   // Footer
   footerTagline: string;
 };
@@ -322,11 +317,6 @@ export const translations: Record<"en" | "fr", Translation> = {
     contactSuccess: "✓ Message sent — I'll get back to you shortly.",
     contactError: "The message could not be sent. Please email me directly.",
 
-    // Cookie banner
-    cookieText: "We use essential cookies to keep the site running smoothly.",
-    cookieDecline: "Decline",
-    cookieAccept: "Accept",
-
     // Footer
     footerTagline: "Freelance developer · Brussels / Remote · Torsolution.be",
   },
@@ -531,11 +521,6 @@ export const translations: Record<"en" | "fr", Translation> = {
     contactSending: "Envoi…",
     contactSuccess: "✓ Message bien reçu — je reviens vers vous rapidement.",
     contactError: "Le message n'est pas parti. Écrivez-moi directement par email.",
-
-    // Cookie banner
-    cookieText: "On utilise uniquement des cookies essentiels au bon fonctionnement du site.",
-    cookieDecline: "Refuser",
-    cookieAccept: "Accepter",
 
     // Footer
     footerTagline: "Développeur freelance · Bruxelles / Remote · Torsolution.be",

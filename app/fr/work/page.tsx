@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     locale: "fr_BE",
     alternateLocale: ["en_US"],
-    images: ["/og"],
+    images: ["/og?lang=fr"],
   },
 };
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { work, getWork } from "@/lib/work";
-import { siteConfig } from "@/lib/site";
+import { metaDescription, siteConfig } from "@/lib/site";
 import { buildAlternates } from "@/lib/locale";
 import { workSchemas } from "@/lib/schemas";
 import PageShell from "@/app/components/PageShell";
@@ -24,7 +24,7 @@ export async function generateMetadata({
   if (!project) return {};
 
   const title = `${project.fr.title} — Étude de cas`;
-  const description = project.fr.tagline + " " + project.fr.intro.slice(0, 140);
+  const description = metaDescription(project.fr.tagline, project.fr.intro);
   const canonicalPath = `/work/${project.slug}`;
 
   return {
@@ -40,13 +40,13 @@ export async function generateMetadata({
       siteName: siteConfig.name,
       locale: "fr_BE",
       alternateLocale: ["en_US"],
-      images: ["/og"],
+      images: ["/og?lang=fr"],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: ["/og"],
+      images: ["/og?lang=fr"],
     },
   };
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { work, getWork } from "@/lib/work";
-import { siteConfig } from "@/lib/site";
+import { metaDescription, siteConfig } from "@/lib/site";
 import { buildAlternates } from "@/lib/locale";
 import { workSchemas } from "@/lib/schemas";
 import PageShell from "@/app/components/PageShell";
@@ -24,7 +24,7 @@ export async function generateMetadata({
   if (!project) return {};
 
   const title = `${project.en.title} — Case study`;
-  const description = project.en.tagline + " " + project.en.intro.slice(0, 140);
+  const description = metaDescription(project.en.tagline, project.en.intro);
   const canonicalPath = `/work/${project.slug}`;
 
   return {

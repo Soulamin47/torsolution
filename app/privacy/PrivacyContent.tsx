@@ -27,7 +27,16 @@ const content = {
         heading: "Purpose and legal basis",
         body: [
           "Your data is collected solely to respond to your inquiry (legitimate interest, Art. 6.1.f GDPR).",
-          "We do not use your data for marketing, profiling or third-party sharing.",
+          "We do not use your data for marketing or profiling, and we do not share it with third parties other than the service providers listed below.",
+        ],
+      },
+      {
+        heading: "Service providers and transfers",
+        body: [
+          "Hosting: Vercel Inc. (United States) hosts this website and processes technical connection data (IP address, browser) to deliver it.",
+          "Email delivery: messages sent through the contact form are delivered by our email provider (Resend, Inc., United States, or our mailbox provider).",
+          "WhatsApp: if you choose to contact us via WhatsApp, your message is processed by WhatsApp (Meta Platforms Ireland Ltd.) under its own privacy policy.",
+          "Transfers outside the European Union rely on appropriate safeguards (EU–US Data Privacy Framework or the European Commission's standard contractual clauses).",
         ],
       },
       {
@@ -53,7 +62,7 @@ const content = {
       {
         heading: "Updates",
         body: [
-          `This policy was last updated on ${new Date().toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" })}.`,
+          "This policy was last updated on 12 October 2026.",
         ],
       },
     ],
@@ -79,7 +88,16 @@ const content = {
         heading: "Finalité et base légale",
         body: [
           "Vos données sont collectées uniquement pour répondre à votre demande (intérêt légitime, Art. 6.1.f RGPD).",
-          "Nous n'utilisons pas vos données à des fins marketing, de profilage ou de transmission à des tiers.",
+          "Nous n'utilisons pas vos données à des fins marketing ou de profilage, et nous ne les transmettons à aucun tiers en dehors des prestataires listés ci-dessous.",
+        ],
+      },
+      {
+        heading: "Prestataires et transferts",
+        body: [
+          "Hébergement : Vercel Inc. (États-Unis) héberge ce site et traite les données techniques de connexion (adresse IP, navigateur) nécessaires à son affichage.",
+          "Envoi des e-mails : les messages du formulaire de contact sont acheminés par notre prestataire e-mail (Resend, Inc., États-Unis, ou notre fournisseur de messagerie).",
+          "WhatsApp : si vous choisissez de nous contacter via WhatsApp, votre message est traité par WhatsApp (Meta Platforms Ireland Ltd.) selon sa propre politique de confidentialité.",
+          "Les transferts hors de l'Union européenne reposent sur des garanties appropriées (EU–US Data Privacy Framework ou clauses contractuelles types de la Commission européenne).",
         ],
       },
       {
@@ -105,7 +123,7 @@ const content = {
       {
         heading: "Mises à jour",
         body: [
-          `Cette politique a été mise à jour le ${new Date().toLocaleDateString("fr-BE", { year: "numeric", month: "long", day: "numeric" })}.`,
+          "Cette politique a été mise à jour le 12 octobre 2026.",
         ],
       },
     ],

@@ -5,7 +5,7 @@ import PageShell from "@/app/components/PageShell";
 
 export const metadata: Metadata = {
   title: "Privacy policy",
-  description: "Privacy policy — Torsolution.",
+  description: "How Torsolution collects, uses and protects your personal data under the GDPR: contact form data, service providers, retention and your rights.",
   alternates: buildAlternates("/privacy"),
 };
 

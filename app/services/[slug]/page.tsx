@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { services, getService } from "@/lib/services";
-import { siteConfig } from "@/lib/site";
+import { metaDescription, siteConfig } from "@/lib/site";
 import { buildAlternates } from "@/lib/locale";
 import { serviceSchemas } from "@/lib/schemas";
 import PageShell from "@/app/components/PageShell";
@@ -25,7 +25,7 @@ export async function generateMetadata({
   if (!service) return {};
 
   const title = `${service.en.title} — Freelance ${service.en.tag} development`;
-  const description = service.en.tagline + " " + service.en.intro.slice(0, 140);
+  const description = metaDescription(service.en.tagline, service.en.intro);
   const canonicalPath = `/services/${service.slug}`;
 
   return {

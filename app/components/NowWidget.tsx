@@ -48,7 +48,7 @@ export default function NowWidget() {
   return (
     <div
       // Bottom-left, hidden on small screens (the FloatingWhatsApp button
-      // owns the bottom-right corner, the cookie banner owns the centre).
+      // owns the bottom-right corner).
       className="pointer-events-none fixed bottom-5 left-5 z-[260] hidden sm:block"
     >
       <div

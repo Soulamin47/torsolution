@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "Développeur freelance basé à Bruxelles pour vos applications web, mobiles, plateformes métier et automatisations IA. Un interlocuteur de l'idée au lancement.",
   keywords: ["développeur freelance Bruxelles", "développeur web Bruxelles", "création application Bruxelles", "développeur Next.js Belgique", "développeur Flutter Bruxelles"],
   alternates: { canonical: frUrl, languages: { en: enUrl, fr: frUrl, "x-default": enUrl } },
-  openGraph: { type: "website", url: frUrl, title: "Développeur Freelance Bruxelles — Torsolution", description: "Création de produits web, mobiles et IA à Bruxelles.", images: ["/og"] },
+  openGraph: { type: "website", url: frUrl, title: "Développeur Freelance Bruxelles — Torsolution", description: "Création de produits web, mobiles et IA à Bruxelles.", images: ["/og?lang=fr"] },
 };
 
 export default function DeveloppeurBruxellesPage() {
